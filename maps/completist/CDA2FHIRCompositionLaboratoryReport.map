@@ -1,0 +1,326 @@
+map "http://hl7.org/fhir/cda2fhir/StructureMap/CDA2FHIRCompositionLaboratoryReport" = "TransformationCDA2FHIRCompositionLaboratoryReport"
+
+// Adapted from:
+// https://github.com/HL7/ccda-to-fhir/tree/master/mappings
+// https://github.com/hl7ch/cda-fhir-maps/tree/master/input/maps
+
+// CDA: https://elga.art-decor.org/elga-html-20200429T211548/project.html
+// FHIR: http://hl7.org/fhir/R4/
+
+conceptmap "ELGAFachaerzteFHIRPerformerRole" { 
+  prefix s = "https://www.hl7.org/fhir/cda/ELGA_Fachaerzte"
+  prefix t = "https://www.hl7.org/fhir/valueset-performer-role"
+  
+  s:"102" == t:"88189002" // Fachärztin/Facharzt für Anästhesiologie und Intensivmedizin -> Anesthesiologist (doctor, not nurse - auch Intensivmedizin?)
+  s:"103" == t:"83273008" // Fachärztin/Facharzt für Anatomie -> Anatomic pathologist
+  s:"104" == t:"682131381000087105" // Fachärztin/Facharzt für Arbeitsmedizin -> Occupational medicine specialist
+  s:"105" == t:"28229004" // Fachärztin/Facharzt für Augenheilkunde und Optometrie -> Optometrist (FRAGE: auch Augenheilkúnde?)
+  s:"106" == t:"309341008" // Fachärztin/Facharzt für Blutgruppenserologie und Transfusionsmedizin -> Blood transfusion doctor
+  s:"107" == t:"78703002" // Fachärztin/Facharzt für Chirurgie -> General surgeon
+  s:"108" == t:"309367003" // Fachärztin/Facharzt für Frauenheilkunde und Geburtshilfe -> Obstetrician and gynecologist
+  s:"109" == t:"310193003 " // Fachärztin/Facharzt für Gerichtsmedizin -> Coroner
+  s:"110" == t:"61345009" // Fachärztin/Facharzt für Hals-, Nasen- und Ohrenkrankheiten -> Otorhinolaryngologist
+  s:"111" == t:"18803008" // Fachärztin/Facharzt für Haut- und Geschlechtskrankheiten -> Dermatologist (FRAGE: auch für Geschlechtskrankheiten zuständig??)
+  s:"112" == t:"309371000" // Fachärztin/Facharzt für Herzchirurgie -> Cardiac surgeon (alternatively: cardiothoracic surgeon)
+  s:"113" == t:"309342001" // Fachärztin/Facharzt für Histologie und Embryologie -> Histopathologist (FRAGE: auch für Embryologie zuständig??)
+  s:"114" == t:"14698002" // Fachärztin/Facharzt für Hygiene und Mikrobiologie -> Medical microbiologist (FRAGE: Auch für Hygiene zuständig?? Ansonsten nur Zahnhygiene gefunden...)
+  s:"115" == t:"63098009" // Fachärztin/Facharzt für Immunologie -> Clinical immunologist (alternatively: Immunopathologist 310171008)
+  s:"116" == t:"39677007" // Fachärztin/Facharzt für Innere Medizin -> Internal medicine specialist
+  s:"117" == t:"309383003" // Fachärztin/Facharzt für Kinder- und Jugendchirurgie -> Pediatric surgeon (FRAGE: auch für Jugendchirurgie?)
+  s:"118" == t:"82296001" // Fachärztin/Facharzt für Kinder- und Jugendheilkunde -> Pediatrician (FRAGE: auch für Jugendheilkunde?)
+  s:"119" == t:"309361002" // Fachärztin/Facharzt für Kinder- und Jugendpsychiatrie -> Child and adolescent psychiatrist
+  s:"120" == t:"41672002" // Fachärztin/Facharzt für Lungenkrankheiten -> Respiratory physician
+  s:"121" == t:"14698002" // Fachärztin/Facharzt für Medizinische Biologie -> Medical microbiologist
+  s:"122" == t:"24430003" // Fachärztin/Facharzt für Medizinische Biophysik -> Physical medicine specialist (ANM: Biophysik nicht vorhanden)
+  s:"123" == t:"159141008" // Fachärztin/Facharzt für Medizinische Genetik -> Geneticist (alternatively: clinical geneticist, 309355000)
+  s:"124" == t:"61246008" // Fachärztin/Facharzt für Medizinische und Chemische Labordiagnostik -> Laboratory medicine specialist (FRAGE: auch chemische Labordiagnostik inkludiert?)
+  s:"125" == t:"309348002" // Fachärztin/Facharzt für Medizinische Leistungsphysiologie -> Clinical physiologist (FRAGE: auch Leistungsphysiologie?)
+  s:"126" == t:"18850004" // Fachärztin/Facharzt für Mikrobiologisch-Serologische Labordiagnostik -> Laboratory hematologist (FRAGE: korrekte Übersetzung?)
+  s:"127" == t:"49993003" // Fachärztin/Facharzt für Mund-, Kiefer- und Gesichtschirurgie -> Maxillofacial surgeon
+  s:"128" == t:"doctor" // Fachärztin/Facharzt für Neurobiologie -> ?? (nicht vorhanden)
+  s:"129" == t:"45544007" // Fachärztin/Facharzt für Neurochirurgie -> Neurosurgeon
+  s:"130" == t:"56397003 " // Fachärztin/Facharzt für Neurologie -> Neurologist 
+  s:"131" == t:"21450003" // Fachärztin/Facharzt für Neurologie und Psychiatrie -> Neuropsychiatrist (FRAGE: auch Neurologie?)
+  s:"132" == t:"11661002" // Fachärztin/Facharzt für Neuropathologie -> Neuropathologist
+  s:"133" == t:"80933006" // Fachärztin/Facharzt für Nuklearmedizin -> Nuclear medicine physician
+  s:"134" == t:"22731001" // Fachärztin/Facharzt für Orthopädie und Orthopädische Chirurgie -> Orthopedic surgeon (FRAGE: auch Orthopädie?)
+  s:"135" == t:"61207006" // Fachärztin/Facharzt für Pathologie -> Medical pathologist
+  s:"136" == t:"doctor" // Fachärztin/Facharzt für Pathophysiologie -> ?? (ANMERKUNG: keine Pathophysiologie vorhanden)
+  s:"137" == t:"310173006" // Fachärztin/Facharzt für Pharmakologie und Toxikologie -> Clinical pharmacologist (FRAGE: auch Toxikologie?)
+  s:"138" == t:"309360001" // Fachärztin/Facharzt für Physikalische Medizin und Allgemeine Rehabilitation -> Rehabilitation physician (alternatively: Physical medicine specialist, 24430003)
+  s:"139" == t:"309349005" // Fachärztin/Facharzt für Physiologie -> Clinical physiologist
+  s:"140" == t:"8724009" // Fachärztin/Facharzt für Plastische, Ästhetische und Rekonstruktive Chirurgie -> Plastic surgeon (ANM: auch ästhetische und rekonstruktive Chirurgie?)
+  s:"141" == t:"80584001" // Fachärztin/Facharzt für Psychiatrie -> Psychiatrist (alternatively: forensic psychiatrist, liaison psychiatrist, psychiatrist for mental handicap, rehabilitation psychiatrist)
+  s:"142" == t:"21450003" // Fachärztin/Facharzt für Psychiatrie und Neurologie -> Neuropsychiatrist
+  s:"143" == t:"224588003" // Fachärztin/Facharzt für Psychiatrie und Psychotherapeutische Medizin -> Psychotherapist (FRAGE: auch Psychiatrie?)
+  s:"144" == t:"66862007" // Fachärztin/Facharzt für Radiologie -> Radiologist (alternatively: disgnostic/interventional/pediatric radiologist, neuroradiologist)
+  s:"145" == t:"doctor" // Fachärztin/Facharzt für Sozialmedizin -> ??
+  s:"146" == t:"766788081000087100" // Fachärztin/Facharzt für Spezifische Prophylaxe und Tropenmedizin -> Travel medicine specialist (FRAGE: auch spezifische Prophylaxe?)
+  s:"147" == t:"3430008" // Fachärztin/Facharzt für Strahlentherapie-Radioonkologie -> Radiation therapist (FRAGE: auch Radioonkologie?)
+  s:"148" == t:"doctor" // Fachärztin/Facharzt für Theoretische Sonderfächer -> ?? (nicht vorhanden)
+  s:"149" == t:"22983004" // Fachärztin/Facharzt für Thoraxchirurgie -> Thoracic surgeon
+  s:"150" == t:"doctor" // Fachärztin/Facharzt für Tumorbiologie -> Oncologist ??
+  s:"151" == t:"309386006" // Fachärztin/Facharzt für Unfallchirurgie -> Trauma surgeon
+  s:"152" == t:"24590004" // Fachärztin/Facharzt für Urologie -> Urologist
+  s:"153" == t:"76899008" // Fachärztin/Facharzt für Virologie -> Infectious disease specialist ??
+  s:"154" == t:"66476003" // Fachärztin/Facharzt für Zahn-, Mund- und Kieferheilkunde -> Oral pathologist, Specialized dentist (21365001), Orthodontist (37504001)
+}
+
+uses "http://hl7.org/fhir/cda/StructureDefinition/ClinicalDocument" alias CD as source
+uses "http://hl7.org/fhir/cda/StructureDefinition/AssignedAuthor" alias AssignedAuthor as queried
+uses "http://hl7.org/fhir/cda/StructureDefinition/AssignedEntity" alias AssignedEntity as queried
+uses "http://hl7.org/fhir/cda/StructureDefinition/CustodianOrganization" alias CustodianOrganization as queried
+uses "http://hl7.org/fhir/cda/StructureDefinition/Section" alias Section as queried
+uses "http://hl7.org/fhir/cda/StructureDefinition/PatientRole" alias PatientRole as queried
+uses "http://hl7.org/fhir/StructureDefinition/Bundle" alias Bundle as target
+uses "http://hl7.org/fhir/StructureDefinition/Composition" alias Composition as produced
+uses "http://hl7.org/fhir/StructureDefinition/Patient" alias Patient as produced
+uses "http://hl7.org/fhir/StructureDefinition/Person" alias Patient as produced
+uses "http://hl7.org/fhir/StructureDefinition/Practitioner" alias Practitioner as produced
+uses "http://hl7.org/fhir/StructureDefinition/Organization" alias Organization as produced
+
+imports "http://hl7.org/fhir/cda2fhir/StructureMap/CDA2FHIRTypes"
+
+group CDA2Bundle(source cda:ClinicalDocument, target bundle:Bundle, target composition:Composition){
+	cda -> bundle.entry as entry share entry, entry.resource = create('Composition') share composition, composition.id = uuid() as compuuid, entry.fullUrl = append('urn:uuid:',compuuid), bundle.entry as entry2, entry2.resource = create('Patient') as patient share patient, patient.id = uuid() as patuuid, entry2.fullUrl = append('urn:uuid:', patuuid) then {
+		cda then ClinicalDocument2Bundle(cda,composition,patient,bundle) "clinicalDoc2Bundle";
+	} "CDA2Bundle";
+}
+
+group ClinicalDocument2Bundle(source cda:ClinicalDocument, target patient:Patient, target composition:Composition, target bundle:Bundle){
+
+	cda -> bundle.id = uuid() "bundleId";
+	cda.effectiveTime -> bundle.timestamp "cdaEffTimeTimestamp"; // (Composition.date would be time of last edit)
+
+	// General information - Header
+
+	cda then ClinicalDocument2Composition(cda,composition,patient,bundle) "CDComp";
+
+	// microbiology specific information - body
+
+	cda.component as component then {
+		component.structuredBody as body then {
+			body.component as component log 'component' then {
+				component.section as srcSection where $this.code.empty() -> composition.section as tgtSection then ClinicalDocumentSection(srcSection,patient,tgtSection,bundle) "sectionContent";
+			} "componentValue";
+		} "body";
+	} "component";
+}
+
+group ClinicalDocument2Composition(source cda:ClinicalDocument, target composition:Composition, target patientResource:Patient,target bundle:Bundle){
+
+	//cda.realmCode not transformable (CS)
+	//cda.typeId not transformable (II)
+	//cda.templateId -> composition.meta.profile needs the CDA templates to be depicted via a StructureDefinition-Ressource (II)
+	cda.id as identCDA -> composition.identifier = create('Identifier') as value then II(identCDA,value) "identValue"; // internal identifier
+	cda.code as codeCDA -> composition.type = create('CodeableConcept') as value then CECodeableConcept(codeCDA,value) "codeValue"; // LOINC-Code microbiology studies
+	cda.title as titleCDA -> composition.title = create('string') as value then STString(titleCDA,value) "titleValue";
+	cda.confidentalityCode as confidentCDA -> composition.confidentality = create('code') as value then CSCode(confidentCDA,value) "confidentCodeValue"; // no code conversion needed
+	cda.languageCode as langCDA -> composition.language = create('code') as value then CSCode(langCDA,value) "langCodeValue";
+	cda.setId as setIdCDA -> composition.identifier = create('Identifier') as value then II(setIdCDA,value) "setIdValue"; // see FHIR Composition-Resource definition: A composition is a logical construct- its identifier matches to the CDA ClinicalDocument.setId
+	//cda.versionNumber not transformable (CS)
+
+	// RecordTarget/Patient
+	cda.recordTarget as recTarget then {
+		//recordTarget.patientRole as patient -> composition.subject = create('Reference') as reference, reference.reference = reference(patientResource) then PatientRolePatient(patient, patientResource) "recordTargetValue";
+		recTarget.patientRole as patientRole -> composition.subject = create('Reference') as reference, reference.reference = reference(patientResource) then {
+			patientRole.id as identCDA -> patientResource.identifier = create('Identifier') as value then II(identCDA,value) "identValue";
+			patientRole.addr as addrCDA -> patientResource.address = create('Address') as value then ADAddress(addrCDA,value) "addrValue";
+			patientRole.telecom as teleCDA -> patientResource.telecom = create('ContactPoint') as value then TELContactPoint(teleCDA,value) "teleValue";
+			patientRole.patient as patient then {
+				patient.name as patName -> patientResource.name = create('HumanName') as value then ENHumanName(patName,value) "nameValue";
+				patient.administrativeGenderCode as gender then {
+					gender.code as patGender -> patientResource.gender = translate(patGender, '#ELGA2FHIRGender', 'code') "gender";
+				} "genderCode";
+				patient.birthTime as birthTime -> patientResource.extension as ext then {
+					birthTime -> ext.url = 'http://hl7.org/fhir/StructureDefinition/patient-birthTime' "birthTimeExtensionUrl";
+					birthTime -> ext.value = create('dateTime') as v then TSDateTime(birthTime,v) "birthTimeExtensionValue";
+				} "birthTimeExtension";
+				patient.maritalStatusCode as marrPat -> patientResource.maritalStatus = create('CodeableConcept') as value then CECodeableConcept(marrPat,value) "maritalStatus";
+				patient.religiousAffiliationCode as relAff -> patientResource.extension as ext then {
+					relAff -> ext.url = 'http://hl7.org/fhir/StructureDefinition/patient-religion' "religiousAffiliationUrl";
+					relAff -> ext.value = create('CodeableConcept') as v then CECodeableConcept(relAff,v) "religiousAffiliationExtensionValue";
+					//relAff -> ext.extension as ext2 then {
+					//    relAff -> ext2.url = 'http://hl7.at/fhir/3.0/StructureDefinition/patientReligion' "religiousAffiliationUrl";
+					//    relAff -> ext2.value = create('CodeableConcept') as v then CECodeableConcept(relAff,v) "religiousAffiliationExtensionValue";
+					//} "religiousAffiliationExtension2";
+				} "religiousAffilationExtension1";
+				patient.birthplace as patBirthPlace -> patientResource.extension as ext then {
+					patBirthPlace.place as patBirthAddress then {
+						patBirthAddress -> ext.url = 'http://hl7.org/fhir/StructureDefinition/patient-birthPlace' "birthPlaceExtensionUrl";
+						patBirthAddress.addr as birthAddr -> ext.value = create('Address') as v then ADAddress(birthAddr,v) "birthPlaceExtensionValue";
+					} "birthPlaceAddress";
+				} "birthPlaceExtension";
+			} "patient";
+		} "patientRole";
+	} "recordTargetValue";
+
+	// Author (Practitioner | PractitionerRole | Device | Patient | RelatedPerson | Organization)
+	// Bundle -> Composition -> PractitionerRole/Device -> Practitioner/Organization
+	cda.author as authorCDA -> bundle.entry as entry1, entry1.resource = create('PractitionerRole') as practitionerRole, practitionerRole.id = uuid() as uuid0, entry1.fullUrl = append('urn:uuid:',uuid0), composition.author = create('Reference') as reference, reference.reference = reference(practitionerRole) then {
+		authorCDA.functionCode as funcCDA -> practitionerRole.code = create('CodeableConcept') as value then CECodeableConcept(funcCDA,value) "funcCode"; // internal function code
+		authorCDA.time as timeCDA -> composition.date = create('dateTime') as value then TSDateTime(timeCDA,value) "dateTimeCreation"; // ATTENTION: composition.date states composition editing time, whereas timeCDA states creation time of content by author! 
+		
+		// at least one natural person has to be specified -> assignedAuthor is assumed to be a practitioner
+		authorCDA.assignedAuthor as assCDA -> bundle.entry as entry2, entry2.resource = create('Practitioner') as practitioner, practitioner.id = uuid() as uuid1, entry2.fullUrl = append('urn:uuid:',uuid1), practitionerRole.practitioner = create('Reference') as reference1, reference1.reference = reference(practitioner) then {
+			assCDA.id as assId -> practitioner.identifier = create('Identifier') as value then II(assId,value) "assignedAuthorId"; // internal identifier
+			assCDA.code as assCode -> practitionerRole.code = create('CodeableConcept') as codeConc then CECodeableConcept(assCode,codeConc) "assignedAuthorCode"; // function Code, maps to ELGA_Fachaerzte (mapping incomplete)
+			// translate(assCode,'#ELGAFachaerzteFHIRPerformerRole','CodeableConcept') "performer function code"; // does that work?? (CodeableConcept instead of code)
+			assCDA.telecom as teleCDA -> practitioner.telecom = create('ContactPoint') as value then TELContactPoint(teleCDA,value) "teleValue";
+			assCDA.address as addrCDA -> practitioner.address = create('Address') as value then ADAddress(addrCDA,value) "addrValue";
+			assCDA.assignedPerson as assPer then {
+				assPer.name as assPerName -> practitioner.name = create('HumanName') as pracName then ENHumanName(assPerName,pracName) "assPerNameValue";
+			} "assignedPersonAuthor";
+			assCDA.assignedAuthoringDevice as assDev -> bundle.entry as entry3, entry3.resource = create('Device') as authoringDevice, authoringDevice.id = uuid() as uuid2, entry3.fullUrl = append('urn:uuid:',uuid2), composition.author = create('Reference') as reference2, reference2.reference = reference(authoringDevice) then {
+				assDev.manufacturerModelName as model -> authoringDevice.deviceName as devName then {
+					model -> devName.type = 'model-name' "modelNameType";
+					model as m -> devName.name = create('string') as value then STString(m,value) "modelName"; // model name, SC Type
+					model.softwareName as softName -> authoringDevice.version as version then {
+						softName -> version.value = cast(softName,'string') "versionValue"; // software name AND version, SC Type
+					} "softwareName";
+				} "manufacturerModelName";
+			} "assignedDeviceAuthor";
+			assCDA.representedOrganization as repOrg -> bundle.entry as entry4, entry4.resource = create('Organization') as representedOrganization, representedOrganization.id = uuid() as uuid3, representedOrganization.fullUrl = append('urn:uuid:',uuid3), practitionerRole.organization = create('Reference') as reference3, reference3.reference = reference(representedOrganization) then {
+				repOrg.id as repOrgId -> representedOrganization.identifier = create('Identifier') as value then II(repOrgId,value) "representedOrganizationId"; // internal identifier
+				repOrg.name as repOrgName -> representedOrganization.name = create('string') as value then STString(repOrgName,value) "repOrgNameValue";
+				repOrg.telecom as repOrgTele -> representedOrganization.telecom = create('ContactPoint') as value then TELContactPoint(teleCDA,value) "repOrgTeleValue";
+				repOrg.addr as repOrgAddr -> representedOrganization.address = create('Address') as value then ADAddress(repOrgAddr,value) "repOrgAddrValue";
+			} "representedOrganizationAuthor";
+		} "assignedAuthor";
+	} "author";
+
+
+	// dataEnterer (resuse code) -> FHIR Extension dataEnterer
+	// Bundle -> Composition -> PractitionerRole -> Practitioner/Organization
+	cda.dataEnterer as datEnterer -> bundle.entry as entry5, entry5.resource = create('PractitionerRole') as pracRole, pracRole.id = uuid() as uuid4, entry5.fullUrl = append('urn:uuid:',uuid4), composition.extension as ext then {
+
+		datEnterer -> bundle.entry as entry6, entry6.resource = create('Practitioner') as pracDatEntr, pracDatEntr.id = uuid() as uuid5, entry6.fullUrl = append('urn:uuid:',uuid5), pracRole.practitioner = reference(pracDatEntr) then {
+			
+			//datEnterer.time as datEntrTime -> composition.date = create('dateTime') as value then TSDateTime(datEntrTime,value) "dataEntererTimeValue"; can be either date of creation by author (see above) or date of creation by dataEnterer
+			datEnterer.assignedEntity as assEnt then {
+				assEnt.id as assEntId -> pracDatEntr.identifier = create('Identifier') as value then II(assEntId,value) "assignedEntityId"; // internal identifier
+				assEnt.addr as assEntAddr -> pracDatEntr.address = create('Address') as value then ADAddress(assEntAddr,value) "assEntAddrValue";
+				assEnt.telecom as assEntTele -> pracDatEntr.telecom = create('ContactPoint') as value then TELContactPoint(assEntTele,value) "assEntTeleValue";
+				assEnt.assignedPerson as assPerEnt then {
+					assPerEnt.name as assPerEntName -> pracDatEntr.name = create('HumanName') as pracEntName then ENHumanName(assPerEntName,pracEntName) "assPerEntNameValue";
+				} "assignedPersonDataEnterer";
+				assEnt.representedOrganization as repOrg2 -> bundle.entry as entry7, entry7.resource = create('Organization') as representedOrganization, representedOrganization.id = uuid() as uuid6, entry7.fullUrl = append('urn:uuid:',uuid6), pracRole.organization = create('Reference') as reference4, reference4.reference = reference(representedOrganization) then {
+					repOrg.id as repOrgId -> representedOrganization.identifier = create('Identifier') as value then II(repOrgId,value) "representedOrganizationId"; // internal identifier
+					repOrg.name as repOrgName -> representedOrganization.name = create('string') as value then STString(repOrgName,value) "repOrgNameValue";
+					repOrg.telecom as repOrgTele -> representedOrganization.telecom = create('ContactPoint') as value then TELContactPoint(teleCDA,value) "repOrgTeleValue";
+					repOrg.addr as repOrgAddr -> representedOrganization.address = create('Address') as value then ADAddress(repOrgAddr,value) "repOrgAddrValue";
+				} "representedOrganizationAuthor";
+			} "assignedEntityDataEnterer";
+		} "dataEntererDatatypes";
+
+		datEnterer -> ext.url = 'http://www.hl7.org/fhir/us/ccda/StructureDefinition-CCDA-on-FHIR-Data-Enterer.html' "dataEntererExtensionUrl";
+		datEnterer -> ext.value = create('Reference') as reference5, reference5.reference = reference(pracRole) "dataEntererExtensionValue";
+
+	} "dataEntererExtension";
+
+	// custodian (reuse code) -> custodian, Organization
+	// Bundle -> Composition -> Organization
+	cda.custodian as custCDA -> bundle.entry as entry8, entry8.resource = create('Organization') as custOrg, custOrg.id = uuid() as uuid7, entry8.fullUrl = append('urn:uuid:',uuid7), composition.custodian = create('Reference') as reference5, reference5.reference = reference(custOrg) then {
+		custCDA.assignedCustodian as assCust then {
+			assCust.representedCustodianOrganization as assCustOrg then {
+				assCustOrg.id as assCustOrgId -> custOrg.identifier = create('Identifier') as value then II(assCustOrgId,value) "representedCustodianOrganizationId"; // internal identifier
+				assCustOrg.name as assCustOrgName -> custOrg.name = create('string') as value then STString(assCustOrgName,value) "repCustOrgNameValue";
+				assCustOrg.telecom as assCustOrgTelecom -> custOrg.telecom = create('ContactPoint') as value then TELContactPoint(assCustOrgTelecom,value) "repCustOrgTeleValue";
+				assCustOrg.addr as assCustOrgAddr -> custOrg.address = create('Address') as value then ADAddress(assCustOrgAddr,value) "repCustOrgAddrValue";
+			} "representedCustodianOrganization";
+		} "assignedCustodian";
+	} "custodian";
+
+	// informationRecipient (Practitioner, Organization) -> FHIR Extension informationRecipient
+	// Bundle -> Composition -> Extension -> PractitionerRole -> Practitioner/Organization
+	cda.informationRecipient as infRec -> bundle.entry as entry9, entry9.resource = create('Practitioner') as pracRec, pracRec.id = uuid() as uuid8, entry9.fullUrl = append('urn:uuid:',uuid8) then {
+
+		infRec.indendedRecipient as intRec then {
+			intRec.id as intRecId -> pracRec.identifier = create('Identifier') as value then II(intRecId,value) "intendedRecipientId"; // internal identifier
+			intRec.informationRecipient as intRec2 then {
+				intRec2.name as intRec2Name -> pracRec.name = create('string') as value then STString(intRec2Name,value) "intendedInformationRecipientName";
+			} "informationRecipient";
+			intRec.receivedOrganization as recOrgCDA -> bundle.entry as entry10, entry10.resource = create('Organization') as recOrg, recOrg.id = uuid() as uuid9, entry10.fullUrl = append('urn:uuid:',uuid9), 
+			bundle.entry as entry11, entry11.resource = create('PractitionerRole') as pracRole, pracRole.id = uuid() as uuid10, pracRole.fullUrl = append('urn:uuid:',uuid10), pracRole.practitioner = reference(pracRec), pracRole.organization = reference(recOrg) then {
+				recOrgCDA.id as recOrgCDAId -> recOrg.identifier = create('Identifier') as value then II(recOrgCDAId,value) "receivedOrganizationId"; // internal identifier
+				recOrgCDA.name as recOrgCDAName -> recOrg.name = create('string') as value then STString(recOrgCDAName,value) "recOrgNameValue";
+				recOrgCDA.telecom as recOrgCDATelecom -> recOrg.telecom = create('ContactPoint') as value then TELContactPoint(recOrgCDATelecom,value) "recOrgTeleValue";
+				recOrgCDA.addr as recOrgCDAAddr -> recOrg.address = create('Address') as value then ADAddress(recOrgCDAAddr,value) "recOrgAddrValue";
+			} "receivedOrganization";
+		} "indendedRecipient";
+
+		infRec -> composition.extension as ext then {
+			infRec -> ext.url = 'http://www.hl7.org/fhir/us/ccda/StructureDefinition-CCDA-on-FHIR-Information-Recipient.html' "informationRecipientExtensionUrl";
+			infRec -> ext.value = create('Reference') as reference6, reference6.reference = reference(pracRole) "informationRecipientExtensionValue";
+		} "informationRecipientExtension";
+
+	} "informationRecipient";
+
+	// legalAuthenticator -> attester (Patient | RelatedPerson | Practitioner | PractitionerRole | Organization)
+	//cda.legalAuthenticator as legalAuth -> bundle.entry as entry11, entry11.resource = create('Practitioner') as legPar, legPar.id = uuid() as uuid10, entry11.fullUrl = append('urn:uuid:',uuid10) then {
+	//	
+	//	legalAuth.time as legAuth -> composition.attester as compAtt then {
+	//		legAuth as a -> compAtt.time = create('dateTime') as value then TSDateTime(a,value) "authTime";
+	//	}
+	//	legalAuth.signatureCode as sigCode -> composition. 
+	//}
+
+	// Authenticator -> attester
+
+	// participant  -> FHIR Extension participant
+
+	// inFulfillmentOf -> FHIR Extension inFulfullmentOf
+
+	// documentationOf/serviceEvent -> FHIR Extension event
+}
+
+group AssignedPersonPractitioner(source src:ClinicalDocument, target tgt:Practitioner){
+	src.assignedPerson as assPer then {
+				assPer.name as assPerName -> tgt.name = create('HumanName') as pracName then ENHumanName(assPerName,pracName) "assPerNameValue";
+	} "assignedPersonAuthor";
+}
+
+group ClinicalDocumentSection(source src:ClinicalDocument, target tgt:Composition, target patientResource:Patient, target bundle:Bundle){
+
+	// TODO: transform content of clinical document section (id, title, code, text, section AND entry)
+
+}
+
+// --------------------------------------------------------------------------------------------
+
+// Helper groups
+
+//group PatientRolePatient(source src:PatientRole, target patient:Patient){
+//	src.recordTarget as recordTarget then {
+//		recordTarget.patientRole as patientRole then {
+//			patientRole.id as identCDA -> patient.identifier = create('Identifier') as value then II(identCDA,value) "identValue";
+//			patientRole.addr as addrCDA -> patient.address = create('Address') as value then ADAddress(addrCDA,value) "addrValue";
+//			patientRole.telecom as teleCDA -> patient.telecom = create('ContactPoint') as value then TELContactPoint(teleCDA,value) "teleValue";
+//			patientRole.patient as patient then {
+//				patient.name as patName -> patient.name = create('HumanName') as value then ENHumanName(patName,value) "nameValue";
+//				patient.administrativeGenderCode as gender then {
+//					gender.code as patGender -> patient.gender = translate(patGender, '#ELGA2FHIRGender', 'code') "gender";
+//				} "genderCode";
+//				patient.birthTime as birthTime -> patient.extension as ext then {
+//					birthTime -> ext.url = 'http://hl7.org/fhir/StructureDefinition/patient-birthTime' "birthTimeExtensionUrl";
+//					birthTime -> ext.value = create('dateTime') as v then TSDateTime(birthTime,v) "birthTimeExtensionValue";
+//				} "birthTimeExtension";
+//				patient.maritalStatusCode as marrPat-> patient.maritalStatus = create('CodeableConcept') as value then CECodeableConcept(marrPat,value) "maritalStatus";
+//				patient.religiousAffiliationCode as relAff -> patient.extension as ext then {
+//					relAff -> ext.url = 'http://hl7.org/fhir/StructureDefinition/patient-religion' "religiousAffiliationUrl";
+//					relAff -> ext.value = create('CodeableConcept') as v then CECodeableConcept(relAff,v) "religiousAffiliationExtensionValue";
+//					//relAff -> ext.extension as ext2 then {
+//					//    relAff -> ext2.url = 'http://hl7.at/fhir/3.0/StructureDefinition/patientReligion' "religiousAffiliationUrl";
+//					//    relAff -> ext2.value = create('CodeableConcept') as v then CECodeableConcept(relAff,v) "religiousAffiliationExtensionValue";
+//					//} "religiousAffiliationExtension2";
+//				} "religiousAffilationExtension1";
+//				patient.birthplace as patBirthPlace -> patient.extension as ext then {
+//					patBirthPlace.place as patBirthAddress then {
+//						patBirthAddress -> ext.url = 'http://hl7.org/fhir/StructureDefinition/patient-birthPlace' "birthPlaceExtensionUrl";
+//						patBirthAddress.addr as birthAddr -> ext.value = create('Address') as v then ADAddress(birthAddr,v) "birthPlaceExtensionValue";
+//					} "birthPlaceAddress";
+//				} "birthPlaceExtension";
+//			} "patient";
+//		} "patientRole";
+//	} "recordTarget";
+//}

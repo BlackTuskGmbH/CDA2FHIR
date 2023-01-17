@@ -1,0 +1,120 @@
+map "http://hl7.org/fhir/cda2fhir/StructureMap/CDA2FHIRTranslateTest" = "TransformationCDA2FHIRTranslateTest"
+
+// Adapted from:
+// https://github.com/HL7/ccda-to-fhir/tree/master/mappings
+// https://github.com/hl7ch/cda-fhir-maps/tree/master/input/maps
+
+// CDA: https://elga.art-decor.org/elga-html-20200429T211548/project.html
+// FHIR: http://hl7.org/fhir/R4/
+
+conceptmap "ELGAReligiousAffilationFHIRReligiousAffilation" { 
+  prefix s = "https://www.hl7.org/fhir/cda/ELGA_ReligiousAffilation"
+  prefix t = "https://www.hl7.org/fhir/v3/ReligiousAffiliation/vs"
+  
+  s:"100" == t:"??" // Katholische Kirchen -> keine Abbildung möglich (ausschließlich Christlich (nicht-katholisch) und nicht römisch-katholisch vorhanden)
+  s:"101" == t:"1041" // Römisch-Katholische Kirche -> Roman Catholic Church
+  s:"102" == t:"1034" // Griechisch-Katholische Kirche -> non-Roman Catholic
+  s:"103" == t:"1034" // Armenisch-Katholische Kirche -> non-Roman Catholic
+  s:"104" == t:"1034" // Bulgarisch-Katholische Kirche -> non-Roman Catholic
+  s:"105" == t:"1034" // Rumänische Griechisch-Katholische Kirche -> non-Roman Catholic
+  s:"106" == t:"1034" // Russisch-Katholische Kirche -> non-Roman Catholic
+  s:"107" == t:"1034" // Syrisch-Katholische Kirche -> non-Roman Catholic
+  s:"108" == t:"1034" // Ukrainische Griechisch-Katholische Kirche -> non-Roman Catholic
+  s:"109" == t:"1034" // Katholische Ostkirche (ohne nähere Angaben) -> non-Roman Catholic
+
+  s:"110" == t:"1068" // Griechisch-Orientalische Kirchen -> Eastern Orthodox
+  s:"111" == t:"1036" // Orthodoxe Kirchen (ohne nähere Angabe) -> Orthodox
+  s:"112" == t:"1068" // Griechisch-Orthodoxe Kirche (Hl. Dreifaltigkeit) -> Eastern Orthodox
+  s:"113" == t:"1068" // Griechisch-Orthodoxe Kirche (Hl. Georg) -> Eastern Orthodox
+  s:"114" == t:"1068" // Bulgarisch-Orthodoxe Kirche -> Eastern Orthodox
+  s:"115" == t:"1068" // Rumänisch-griechisch-orientalische Kirche -> Eastern Orthodox
+  s:"116" == t:"1068" // Russisch-Orthodoxe Kirche -> Eastern Orthodox
+  s:"117" == t:"1068" // Serbisch-griechisch-Orthodoxe Kirche -> Eastern Orthodox
+  s:"118" == t:"1068" // Ukrainisch-Orthodoxe Kirche -> Eastern Orthodox
+  
+  s:"119" == t:"1036" // Orientalisch-Orthodoxe Kirchen -> Orthodox
+  s:"120" == t:"1036" // Armenisch-apostolische Kirche -> Orthodox
+  s:"121" == t:"1036" // Syrisch-orthodoxe Kirche -> Orthodox
+  s:"122" == t:"1036" // Syrisch-orthodoxe Kirche -> Orthodox
+  s:"123" == t:"1036" // Koptisch-orthodoxe Kirche -> Orthodox
+  s:"124" == t:"1036" // Armenisch-apostolische Kirche -> Orthodox
+  s:"125" == t:"1036" // Äthiopisch-Orthodoxe Kirche -> Orthodox
+  
+  s:"126" == t:"1077" // Evangelische Kirchen Österreich -> Protestant
+  s:"127" == t:"1078" // Evangelische Kirche (ohne nähere Angabe) -> Protestant, No Denomintion
+  s:"128" == t:"1028" // Evangelische Kirche A. B. -> Lutheran
+  s:"129" == t:"1079" // Evangelische Kirche H. B. -> Reformed
+  
+  s:"130" == t:"1013" // Andere Christliche Kirchen -> Christian (non-Catholic, non-specific)
+  s:"131" == t:"1034" // Altkatholische Kirche Österreichs -> non-Roman Catholic
+  s:"132" == t:"1005" // Anglikanische Kirche -> Anglican
+  s:"133" == t:"1073" // Evangelisch-methodistische Kirche (EmK) -> Methodist
+
+  s:"134" == t:"1013" // Sonstige Christliche Gemeinschaften -> Christian (non-Catholic, non-specific)
+  s:"135" == t:"1009" // Baptisten -> Baptist
+  s:"136" == t:"1078" // Bund evangelikaler Gemeinden in Österreich -> Protestant, No Denomination
+  s:"137" == t:"1013" // Freie Christengemeinde/Pfingstgemeinde -> Christian (non-Catholic, non-specific)
+  s:"138" == t:"1077" // Mennoritische Freikirche -> Protestant
+  s:"139" == t:"1077" // Kirche der Siebenten-Tags-Adventisten -> Protestant
+  s:"140" == t:"1077" // Christengemeinschaft -> Christian (non-Catholic, non-specific)
+  s:"141" == t:"1025" // Jehovas Zeugen -> Jehovah's Witnesses
+  s:"142" == t:"1013" // Neuapostolische Kirche -> Christian (non-Catholic, non-specific)
+  s:"143" == t:"1013" // Mormonen -> Christian (non-Catholic, non-specific)
+  s:"144" == t:"1013" // Sonstige Christliche Gemeinschaften (ohne nähere Angabe) -> Christian (non-Catholic, non-specific)
+  s:"145" == t:"1013" // ELAIA Christengemeinden -> Christian (non-Catholic, non-specific)
+  s:"146" == t:"1038" // Pfingstkirche Gemeinde Gottes -> Pentecostal
+ 
+  s:"148" == t:"??" // Nicht-christliche Gemeinschaften -> nicht abbildbar, da zu grob definiert
+  s:"149" == t:"1026" // Israelitische Religionsgesellschaft -> Judaism
+  s:"150" == t:"1023" // Islamische Glaubensgemeinschaft -> Islam
+  s:"151" == t:"1023" // Alevitische Religionsgemeinschaft -> Islam
+  s:"152" == t:"1059" // Buddhistische Religionsgemeinschaft -> Zen Buddhism
+  s:"153" == t:"1008" // Baha`i -> Babi & Baha'I faiths
+  s:"154" == t:"1020" // Hinduistische Religionsgemeinschaft -> Hinduism
+  s:"155" == t:"1047" // Sikh -> Sikism
+  s:"156" == t:"1046" // Shintoismus -> Shinto
+  s:"157" == t:"1022" // Vereinigungskirche -> Independent
+  s:"162" == t:"1022" // Pastafarianismus -> Independent
+}
+
+
+uses "http://hl7.org/fhir/cda/StructureDefinition/ClinicalDocument" alias CD as source
+uses "http://hl7.org/fhir/StructureDefinition/Patient" as target
+
+group TranslateTest(source cda:CD, target patient:Patient){
+    cda.recordTarget as cdaPatient then {
+        cdaPatient.patientRole as cdaPatientRole then {
+            cdaPatientRole.patient as cdaPatientRolePatient then {
+                cdaPatientRolePatient.religiousAffiliationCode as relAff -> patient.extension as ext then {
+			            relAff -> ext.url = 'http://hl7.org/fhir/StructureDefinition/patient-religion' "religiousAffiliationUrl";
+			            relAff -> ext.value = translate(relAff,'#ELGAReligiousAffilationFHIRReligiousAffilation','CodeableConcept') "religiousAffiliationExtensionValue";
+                  //relAff -> ext.value = create('CodeableConcept') as v then CECodeableConcept(relAff,v) "religiousAffiliationExtensionValue";
+		        } "religiousAffilationExtension";
+            } "patientRolePatient";
+        } "patientRole";
+    } "recordTarget";
+}
+
+// CE CWE (Coded with equivalents - coded with exceptions): defined vocabulary should be used, but exceptions can be defined
+// source: Allgemeiner ELGA-CDA Implementierungsleitfaden, Abschnitt 6.2.1.2 (Spezifikation)
+// target: https://www.hl7.org/fhir/datatypes.html#code
+group CECodeableConcept(source src : CE, target tgt : CodeableConcept) extends Any <<types>> {
+  src.originalText -> tgt.text; // either original text or codeSystemName can be depicted
+  src -> tgt.coding as coding then {
+    src.code as code -> coding.code = code;
+    src.codeSystem as system -> coding.system = translate(system, 'http://hl7.org/fhir/ConceptMap/special-oid2uri', 'uri');
+    src.displayName as display -> coding.display = display "displayNameWhitespaces"; //.replace('[ ]{2,}','')
+    //src.codeSystemName as codeSystemName -> tgt.text = codeSystemName;
+    //src.codeSystemVersion as codeSystemVersion -> tgt.text = codeSystemVersion;
+  } "code";
+}
+
+// NullFlavour
+group Any(source src, target tgt) {
+  src.nullFlavor as nullFlavor -> tgt.extension as ext then {
+    nullFlavor -> ext.url = 'http://hl7.org/fhir/StructureDefinition/iso21090-nullFlavor' "url";
+    nullFlavor -> ext.value = create('code') as valueCode then {
+      nullFlavor.value as v -> valueCode.value = v "value";
+    } "valueCode";
+  } "extension";
+}

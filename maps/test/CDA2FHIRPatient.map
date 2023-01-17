@@ -1,0 +1,61 @@
+map "http://hl7.org/fhir/cda2fhir/StructureMap/CDA2FHIRPatient" = "TransformationCDA2FHIRPatient"
+
+// Adapted from:
+// https://github.com/HL7/ccda-to-fhir/tree/master/mappings
+// https://github.com/hl7ch/cda-fhir-maps/tree/master/input/maps
+
+// CDA: https://elga.art-decor.org/elga-html-20200429T211548/project.html
+// FHIR: http://hl7.org/fhir/R4/
+
+conceptmap "ELGA2FHIRGender" { 
+  prefix s = "https://www.hl7.org/fhir/cda/ELGA_AdministrativeGender"
+  prefix t = "https://www.hl7.org/fhir/valueset-gender-identity.html"
+  
+  s:"M" == t:"male" // gender M -> male
+  s:"F" == t: "female" // gender F -> female
+  s:"UN" == t: "non-binary" // gender UN (undifferentiated) -> non-binary (patient identifies with neither/both female and male)
+  s:"UNK" == t:"??" // NullFlavour cannot be depicted
+}
+
+uses "http://hl7.org/fhir/cda/StructureDefinition/ClinicalDocument" alias CD as source
+uses "http://hl7.org/fhir/StructureDefinition/Patient" as target
+
+imports "http://hl7.org/fhir/cda2fhir/StructureMap/CDA2FHIRTypes"
+
+group recordTargetPatient(source src:CD, target tgt:Patient){
+    src.recordTarget as recordTarget then {
+        recordTarget.patientRole as patientRole then {
+            patientRole -> tgt.id = uuid() as uuid2 then {
+                patientRole -> tgt.id = append('urn:uuid:',uuid2) "uuidPatient1";
+            }"uuidPatient2"; 
+            patientRole.id as identCDA -> tgt.identifier = create('Identifier') as value then IIIdentifier(identCDA,value) "identValue";
+            patientRole.addr as addrCDA -> tgt.address = create('Address') as value then ADAddress(addrCDA,value) "addrValue";
+            patientRole.telecom as teleCDA -> tgt.telecom = create('ContactPoint') as value then TELContactPoint(teleCDA,value) "teleValue";
+            patientRole.patient as patient then {
+                patient.name as patName -> tgt.name = create('HumanName') as value then ENHumanName(patName,value) "nameValue";
+                patient.administrativeGenderCode as gender then {
+                    gender.code as patGender -> tgt.gender = translate(patGender, '#ELGA2FHIRGender', 'code') "gender";
+                } "genderCode";
+                patient.birthTime as birthTime -> tgt.extension as ext then {
+                    birthTime -> ext.url = 'http://hl7.org/fhir/StructureDefinition/patient-birthTime' "birthTimeExtensionUrl";
+                    birthTime -> ext.value = create('dateTime') as v then TSDateTime(birthTime,v) "birthTimeExtensionValue";
+                } "birthTimeExtension";
+                patient.maritalStatusCode as marrPat-> tgt.maritalStatus = create('CodeableConcept') as value then CECodeableConcept(marrPat,value) "maritalStatus";
+                patient.religiousAffiliationCode as relAff -> tgt.extension as ext then {
+                    relAff -> ext.url = 'http://hl7.org/fhir/StructureDefinition/patient-religion' "religiousAffiliationUrl";
+                    relAff -> ext.value = create('CodeableConcept') as v then CECodeableConcept(relAff,v) "religiousAffiliationExtensionValue";
+                    //relAff -> ext.extension as ext2 then {
+                    //    relAff -> ext2.url = 'http://hl7.at/fhir/3.0/StructureDefinition/patientReligion' "religiousAffiliationUrl";
+                    //    relAff -> ext2.value = create('CodeableConcept') as v then CECodeableConcept(relAff,v) "religiousAffiliationExtensionValue";
+                    //} "religiousAffiliationExtension2";
+                } "religiousAffilationExtension1";
+                patient.birthplace as patBirthPlace -> tgt.extension as ext then {
+                    patBirthPlace.place as patBirthAddress then {
+                        patBirthAddress -> ext.url = 'http://hl7.org/fhir/StructureDefinition/patient-birthPlace' "birthPlaceExtensionUrl";
+                        patBirthAddress.addr as birthAddr -> ext.value = create('Address') as v then ADAddress(birthAddr,v) "birthPlaceExtensionValue";
+                    } "birthPlaceAddress";
+                } "birthPlaceExtension";
+            } "patient";
+        } "patientRole";
+    } "recordTarget";
+}

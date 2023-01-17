@@ -1,0 +1,122 @@
+### Create and Update CDA maps for converting to FHIR with RESTClient and running vonk
+### Note: POST the maps in the following order, if you update one map you need to repost also the maps below
+
+##@host = http://bmpqadocker.westeurope.cloudapp.azure.com:4080
+
+@host = http://0.0.0.0:4080
+
+#@host = https://vonk-highmed-qat.swarm.healex.systems/
+
+#@host = https://server.fire.ly/
+
+### Capability Statement
+GET {{host}}/metadata HTTP/1.1
+Content-Type: application/fhir+json;fhirVersion=4.0
+
+### ConceptMap-Ressources -----------------------------------------------------------------------
+
+### only for usage with Vonk
+
+### 1a. POST ELGA_AddressUse ConceptMap-Ressource
+POST {{host}}/ConceptMap HTTP/1.1
+Accept: application/fhir+xml;fhirVersion=4.0
+Content-Type: application/xml;fhirVersion=4.0
+
+< ./conceptMaps/ELGAAddressUse_ConceptMap.xml
+
+### 1b. POST ELGAEntityNameUse ConceptMap-Ressource
+POST {{host}}/ConceptMap HTTP/1.1
+Accept: application/fhir+xml;fhirVersion=4.0
+Content-Type: application/xml;fhirVersion=4.0
+
+< ./conceptMaps/ELGAEntityNameUse_ConceptMap.xml
+
+### 1c. POST ELGA_Fachaerzte ConceptMap-Ressource
+POST {{host}}/ConceptMap HTTP/1.1
+Accept: application/fhir+xml;fhirVersion=4.0
+Content-Type: application/xml;fhirVersion=4.0
+
+< ./conceptMaps/ELGAFachaerzte_ConceptMap.xml
+
+### 1d. POST ELGA_Gender ConceptMap-Ressource
+POST {{host}}/ConceptMap HTTP/1.1
+Accept: application/fhir+xml;fhirVersion=4.0
+Content-Type: application/xml;fhirVersion=4.0
+
+< ./conceptMaps/ELGAGender_ConceptMap.xml
+
+### 1e. POST ELGA_ObservationCode ConceptMap-Ressource
+POST {{host}}/ConceptMap HTTP/1.1
+Accept: application/fhir+xml;fhirVersion=4.0
+Content-Type: application/xml;fhirVersion=4.0
+
+< ./conceptMaps/ELGAObservationCode_ConceptMap.xml
+
+### 1f. POST ELGAReligiousAffilation ConceptMap-Ressource - no longer needed
+POST {{host}}/ConceptMap HTTP/1.1
+Accept: application/fhir+xml;fhirVersion=4.0
+Content-Type: application/xml;fhirVersion=4.0
+
+< ./conceptMaps/ELGAReligiousAffilation_ConceptMap.xml
+
+### 1g. POST ELGATelecomAddressUse ConceptMap-Ressource
+POST {{host}}/ConceptMap HTTP/1.1
+Accept: application/fhir+xml;fhirVersion=4.0
+Content-Type: application/xml;fhirVersion=4.0
+
+< ./conceptMaps/ELGATelecomAddressUse_ConceptMap.xml
+
+
+### StructureMap-Ressorces ---------------------------------------------------------------------
+
+### only for usage with Firely Server
+### 2. POST CDA2FHIRTypes_Firely.map
+POST {{host}}/administration/$convert?persist=true HTTP/1.1
+Accept: application/fhir+xml;fhirVersion=4.0
+Content-Type: text/fhir-mapping;charset=utf-8
+
+< ./maps/Firely/CDA2FHIRTypes_Firely.map
+
+
+### 2a. POST CDA2FHIRDiagnosticReport.map (selective approach)
+POST {{host}}/administration/$convert?persist=true HTTP/1.1
+Accept: application/fhir+xml;fhirVersion=4.0
+Content-Type: text/fhir-mapping;charset=utf-8
+
+< ./maps/Firely/CDA2FHIRDiagnosticReport_Firely.map
+
+### execute Transformation ----------------------------------------------------------------------
+
+### 3. POST Mikrobiologischer_Befund_3.0.0.xml (selective approach)
+POST {{host}}/administration/StructureMap/CDA2FHIRDiagnosticReport/$transform
+Accept: application/fhir+xml;fhirVersion=4.0
+Content-Type: application/hl7-sda+xml;fhirVersion=4.0
+
+< ./input/Mikrobiologischer_Befund_teilweise_3.0.0.xml
+
+### issue tracking ------------------------------------------------------------------------------
+
+### 1. POST CDA2FHIRTypes_Minimal.map
+POST {{host}}/administration/$convert?persist=true HTTP/1.1
+Accept: application/fhir+xml;fhirVersion=4.0
+Content-Type: text/fhir-mapping;charset=utf-8
+
+< ./maps/Firely/CDA2FHIRTypes_Minimal.map
+
+### 2. POST CDA2FHIRDiagnosticReport.map (selective approach)
+POST {{host}}/administration/$convert?persist=true HTTP/1.1
+Accept: application/fhir+xml;fhirVersion=4.0
+Content-Type: text/fhir-mapping;charset=utf-8
+
+< ./maps/Firely/CDA2FHIRDiagnosticReport_Minimal.map
+
+### 3. POST Mikrobiologischer_Befund_3.0.0.xml (selective approach)
+POST {{host}}/administration/StructureMap/CDA2FHIRDiagnosticReport/$transform
+Accept: application/fhir+xml;fhirVersion=4.0
+Content-Type: application/hl7-sda+xml;fhirVersion=4.0
+
+< ./input/Mikrobiologischer_Befund_teilweise_3.0.0.xml
+
+
+
+

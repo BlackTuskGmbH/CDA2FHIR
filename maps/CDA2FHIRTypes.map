@@ -1,0 +1,550 @@
+map "http://hl7.org/fhir/cda2fhir/StructureMap/CDA2FHIRTypes" = "TransformationCDA2FHIRTypes"
+
+// Adapted from:
+// https://github.com/HL7/ccda-to-fhir/tree/master/mappings
+// https://github.com/hl7ch/cda-fhir-maps/tree/master/input/maps
+
+// CDA: https://art-decor.org/art-decor/decor-templates--at-lab-
+// FHIR: http://hl7.org/fhir/R4/
+
+conceptmap "ELGATelecomAddressUseFHIRContactPointUse" {
+  prefix s = "https://www.hl7.org/fhir/cda/ELGA_TelecomAddressUse"
+  prefix t = "http://hl7.org/fhir/ValueSet/contact-point-use"
+
+  s:"H" == t:"home"  // telephone home -> home
+  s:"HP" == t:"home" // telephone primary home -> home
+  s:"HV" == t:"home" // telephone vacation home -> home
+
+  s:"WP" == t:"work" // telephone work -> work
+  s:"AS" == t:"work" // answering service -> work
+  s:"EC" == t:"home" // emergency contact -> home, FHIR home "typically used with urgent cases"
+  s:"MC" == t:"mobile" // mobile contact -> mobile
+  s:"PG" == t:"mobile" // pager -> mobile
+  s:"TMP" == t:"temp" // temporary contact
+}
+
+conceptmap "ELGA2FHIRAddressUse" { 
+  prefix s = "https://www.hl7.org/fhir/cda/ELGA_AddressUse" 
+  prefix t = "http://hl7.org/fhir/valueset-address-use"
+  
+  s:"H" == t:"home" // home address -> home
+  s:"HP" == t: "home" // primary home -> home
+  s:"HV" == t: "home" // vacation home -> home
+
+  s:"WP" == t:"work" // work place -> work
+  s:"DIR" == t:"work" // direct -> work
+  s:"PUB" == t:"work" // public -> work
+
+  s:"TMP" == t:"temp" // temporary address -> Temporary
+  
+  s:"PHYS" == t:"temp" // physical visit address -> Temporary
+  s:"PST" == t:"billing" // billing address -> billing address
+}
+
+conceptmap "ELGAEntityNameUseFHIRNameUse" {
+  prefix s = "https://www.hl7.org/fhir/cda/ELGA_EntityNameUse"
+  prefix t = "https://www.hl7.org/fhir/valueset-name-use"
+
+  s:"ASGN" == t:"usual" // assigned -> usual (Name normally used)
+  s:"C" == t:"usual" // License -> usual (Potential information loss?)
+  s:"I" == t:"anonymous" // Indigenious/Tribal -> anonymous (nickname would not be part of their formal/usual name)
+  s:"L" == t:"official" // Legal -> official (official name, no common use implied)
+  s:"OR" == t:"official" // official registry -> official (legal)
+  s:"P" == t:"anonymous" // pseudonym -> anonymous
+  s:"A" == t:"anonymous" // Artist/Stage -> anonymous (pseudonym)
+  s:"R" == t:"anonymous" // Religious -> anonymous (nickname would not be part of their formal/usual name)
+  s:"SRCH" == t:"??" // SearchUse -> ??
+  s:"PHON" == t:"nickname" // phonetic -> nickname (SearchUse)
+  s:"SNDX" == t:"nickname" // soundex ->  nickname (SearchUse)
+  s:"ABC" == t:"nickname" // alphabetic -> nickname (NameRepresentationUse)
+  s:"IDE" == t:"nickname" // ideographic -> nickname (NameRepresentationUse)
+  s:"SYL" == t:"nickname" // syllabic -> nickname (NameRepresentationUse)
+}
+
+conceptmap "ELGAInsuredAssocEntityFHIRSubscriberRelationship" { 
+  prefix s = "https://www.hl7.org/fhir/cda/ELGA_InsuredAssocEntity"
+  prefix t = "https://www.hl7.org/fhir/valueset-subscriber-relationship"
+  
+  s:"FAMDEP" == t:"child" // family dependent insured (mitversichert) -> unklar, da FHIR hier eine deutlich höhere Granularität aufweist (Kind, Elternteil, Frau, Schwiegermutter, andere); Child ausgewählt, da mutmaßlich am häufigsten der Fall
+  s:"SELF" == t: "self" // self insured -> Beneficiary is the Subscriber
+}
+
+conceptmap "ELGASectionsFHIRDocSectionCodes" { 
+  prefix s = "https://www.hl7.org/fhir/cda/ELGA_Sections"
+  prefix t = "https://www.hl7.org/fhir/valueset-doc-section-codes"
+  
+  s:"BRIEFT" == t:"??" // Brieftext -> ?? (nur Anrede und Logo beinhaltet, überhaupt benötigt?)
+  s:"ABBEM" == t: "51848-0" // abschließende Bemerkungen -> Evaluation note (https://loinc.org/51848-0/)
+  s:"TERMIN" == t:"59772-4" // Termine, Kontrollen, Wiederbestellung -> Planned procedure narrative (https://loinc.org/59772-4/) oder Plan of care notes (https://loinc.org/18776-5/) oder Instructions (https://loinc.org/69730-0/)
+  s:"BEFAUS" == t: "self" // Aussstehende Befunde -> Plan of care notes (https://loinc.org/18776-5/) -> inkludiert offene Untersuchungen, Eingriffe, Termine und Vorgangsweisen (Prozeduren)
+  s:"BEFERH" == t:"30654-2" // Auszüge aus erhobenen Befunden -> Relevant diagnostic tests/laboratory data narrative (https://loinc.org/30954-2/) 
+  s:"BEFBEI" == t: "30954-2" // Beigelegte erhobene Befunde -> Relevant diagnostic tests/laboratory data narrative (https://loinc.org/30954-2/)
+  s:"BEIL" == t:"42348-3" // Beilagen -> Advance directives (https://loinc.org/42348-3/) -> enthält Informationen zur Behandlungsrichtung des Patienten und Referenzen für weitere diesbezügliche Informationen
+  s:"ANM" == t: "??" // Anmerkungen -> ??
+  s:"RES" == t:"46264-8" // Hilfsmittel und Ressourcen -> History of medical device use (https://loinc.org/46264-8/)
+  s:"PFDIAG" == t: "11329-0" // Pflegediagnosen -> History geeneral Narrative - Reported (https://loinc.org/11329-0/) - kann auch Pflegediagnosen beinhalten, alternativ Review of systems Narrative (https://loinc.org/10187-3/) -> Symptome und Funktionen eines Patienten, allerdings von Ärzten erhoben
+  s:"PFMOB" == t:"10210-3" // Mobilität -> physical findings of General status Narrative (https://loinc.org/10210-3/)
+  s:"PFKLEI" == t: "10210-3" // Körperpflege und Kleiden -> physical findings of General status Narrative (https://loinc.org/10210-3/)
+  s:"PFERN" == t:"10210-3" // Ernährung -> physical findings of General status Narrative (https://loinc.org/10210-3/) oder Discharge diet (https://loinc.org/42344-2/)
+  s:"PFAUS" == t: "10210-3" // Ausscheidung -> physical findings of General status Narrative (https://loinc.org/10210-3/)
+  s:"PFHAUT" == t:"10210-3" // Hautzustand -> physical findings of General status Narrative (https://loinc.org/10210-3/)
+  s:"PFATM" == t: "8716-3" // Atmung -> Vital signs (https://loinc.org/8716-3/)
+  s:"PFSCHL" == t:"8716-3" // Schlaf -> Vital signs (https://loinc.org/8716-3/)
+  s:"PFORIE" == t: "47420-5" // Orientierung und Bewusstseinslage -> Funtional status assessment role (https://loinc.org/47420-5/)
+  s:"PFSOZV" == t:"29762-2" // Soziales Verhalten -> Social history Narrative (https://loinc.org/29762-2/)
+  s:"PFKOMM" == t: "47420-5" // Kommunikation -> Functional status assessment role (https://loinc.org/47420-5/)
+  s:"PFROLL" == t:"47420-5" //  Rollenwahrnehmung und Sinnfindung -> Functional status assessment role (https://loinc.org/47420-5/)
+  s:"PFMED" == t: "29549-3" // Medikamentenverabreichung -> Medication administered Narrative (https://loinc.org/29549-3/)
+  s:"PFMEDBEH" == t:"18776-5" // Pflegerelevante Informationen zur medizinischen Behandlung -> Plan of care note (https://loinc.org/18776-5/)
+  s:"PUBUMF" == t: "18776-5" // Pflege- und Betreuungsumfang -> Plan of care note (https://loinc.org/18776-5/)
+
+  s:"ANGEFUNTERS" == t:"42349-1" // Angeforderte Untersuchungen -> Reason for referral ? (https://loinc.org/42349-1/) - Als Überweisungsgrund könnten Untersuchungen angeführt werden
+  s:"INFEKTSER" == t:"30954-2" // Infektionsserologie -> Relevant diagnostic tests/laboratory data Narrative (https://loinc.org/30954-2/) ?
+  s:"LISTGDA" == t:"46240-8" // Liste der behandelnden GDA -> History of Hospitalizations+Outpatient visits Narrative (https://loinc.org/46240-8/)
+  s:"MELDEPERR" == t:"30954-2" // Meldepflichtige Erreger -> Relevant diagnostic tests/laboratory data Narrative (https://loinc.org/30954-2/) ?
+  s:"MOLEKERN" == t:"30954-2" // Molekularer Erregernachweis -> Relevant diagnostic tests/laboratory data Narrative (https://loinc.org/30954-2/) ?
+  s:"OPBER" == t:"59775-7" // Operationsbericht -> Surgical operation note (fluids, postoperative diagnosis, surgical procedure, surgical complications [interpretation], implants) Narrative oder Procedure disposition Narrative (https://loinc.org/59775-7/) - enthält status und Zustand des Patienten nach Operation sowie das Vergeungsziel für weitere Maßnahmen
+  s:"OUTCOMEMEAS" == t:"??" // Outcome Measurement -> ??
+  s:"REHAZIELE" == t:"??" // Rehabilitationsziele -> ??
+}
+
+uses "http://hl7.org/fhir/cda/StructureDefinition/ED" alias ED as source
+uses "http://hl7.org/fhir/cda/StructureDefinition/II" alias II as source
+uses "http://hl7.org/fhir/cda/StructureDefinition/TS" alias TS as source
+uses "http://hl7.org/fhir/cda/StructureDefinition/CS" alias CS as source
+uses "http://hl7.org/fhir/cda/StructureDefinition/CE" alias CE as source
+uses "http://hl7.org/fhir/cda/StructureDefinition/CD" alias CD as source
+uses "http://hl7.org/fhir/cda/StructureDefinition/CV" alias CV as source
+uses "http://hl7.org/fhir/cda/StructureDefinition/ST" alias ST as source
+uses "http://hl7.org/fhir/cda/StructureDefinition/SC" alias SC as source
+uses "http://hl7.org/fhir/cda/StructureDefinition/EN" alias EN as source
+uses "http://hl7.org/fhir/cda/StructureDefinition/AD" alias AD as source
+uses "http://hl7.org/fhir/cda/StructureDefinition/TEL" alias TEL as source
+uses "http://hl7.org/fhir/cda/StructureDefinition/BL" alias BL as source
+uses "http://hl7.org/fhir/cda/StructureDefinition/INT" alias INT as source
+uses "http://hl7.org/fhir/cda/StructureDefinition/ON" alias ON as source
+uses "http://hl7.org/fhir/cda/StructureDefinition/PQ" alias PQ as source
+uses "http://hl7.org/fhir/cda/StructureDefinition/RTO" alias RTO as source
+uses "http://hl7.org/fhir/cda/StructureDefinition/RTO_PQ_PQ" alias RTO_PQ_PQ as source
+uses "http://hl7.org/fhir/cda/StructureDefinition/RTO_QTY_QTY" alias RTO_QTY_QTY as source
+uses "http://hl7.org/fhir/cda/StructureDefinition/IVL_TS" alias IVL_TS as source
+uses "http://hl7.org/fhir/cda/StructureDefinition/IVL_PQ" alias IVL_PQ as source
+uses "http://hl7.org/fhir/cda/StructureDefinition/IVL_INT" alias IVL_INT as source
+
+uses "http://hl7.org/fhir/StructureDefinition/instant" alias instant as target
+uses "http://hl7.org/fhir/StructureDefinition/code" alias code as target
+uses "http://hl7.org/fhir/StructureDefinition/date" alias date as target
+uses "http://hl7.org/fhir/StructureDefinition/dateTime" alias dateTime as target
+uses "http://hl7.org/fhir/StructureDefinition/integer" alias integer as target
+uses "http://hl7.org/fhir/StructureDefinition/boolean" alias boolean as target
+uses "http://hl7.org/fhir/StructureDefinition/string" alias string as target
+uses "http://hl7.org/fhir/StructureDefinition/Identifier" alias Identifier as target
+uses "http://hl7.org/fhir/StructureDefinition/CodeableConcept" alias CodeableConcept as target
+uses "http://hl7.org/fhir/StructureDefinition/HumanName" alias HumanName as target
+uses "http://hl7.org/fhir/StructureDefinition/Address" alias Address as target
+uses "http://hl7.org/fhir/StructureDefinition/ContactPoint" alias ContactPoint as target
+uses "http://hl7.org/fhir/StructureDefinition/Quantity" alias Quantity as target
+uses "http://hl7.org/fhir/StructureDefinition/Period" alias Period as target
+uses "http://hl7.org/fhir/StructureDefinition/Range" alias Range as target
+uses "http://hl7.org/fhir/StructureDefinition/Ratio" alias Ratio as target
+
+
+// NullFlavour
+group Any(source src, target tgt) {
+  src.nullFlavor as nullFlavor -> tgt.extension as ext then {
+    nullFlavor -> ext.url = 'http://hl7.org/fhir/StructureDefinition/iso21090-nullFlavor' "url";
+    nullFlavor -> ext.value = create('code') as valueCode then {
+      nullFlavor.value as v -> valueCode.value = v "value";
+    } "valueCode";
+  } "extension";
+}
+
+
+// ContactPoint
+// source: https://art-decor.org/mediawiki/index.php?title=DTr1_TEL.AT
+// source: ELGA URL_Scheme, ELGA_TelecomAddressUse
+// target: https://www.hl7.org/fhir/datatypes.html#2.24.0.15
+// target: http://hl7.org/fhir/valueset-contact-point-system
+// interessant: https://www.ibm.com/support/knowledgecenter/de/SSMKHH_10.0.0/com.ibm.healthcare.pattern.HL7.doc/pattern/overview.htm
+// modem is IP-Address
+// nfs is 'Notfallsanitäter-Nummer'
+// me is 'Arztnummer lt. österreichischer Ärztekammer'
+// telnet für Rechner-Remotezugriff verwendet
+group TELContactPoint(source src : TEL, target tgt : ContactPoint) extends Any <<types>> {
+  src.value as v where (src.value.startsWith('tel:')) ->  tgt.value = (v.substring(4)),  tgt.system = 'phone' "valuetel";
+  src.value as v where (src.value.startsWith('fax:')) ->  tgt.value = (v.substring(4)),  tgt.system = 'fax' "valuefax";
+  src.value as v where (src.value.startsWith('mailto:')) ->  tgt.value = (v.substring(7)),  tgt.system = 'email' "valuemail";
+  src.value as v where (src.value.startsWith('http:')) ->  tgt.value = (v.substring(7)),  tgt.system = 'url' "valuehttp";
+  src.value as v where (src.value.startsWith('file:')) -> tgt.value = (v.substring(5)), tgt.system = 'other' "valuefile";
+  src.value as v where (src.value.startsWith('ftp:')) -> tgt.value = (v.substring(4)), tgt.system = 'URL' "valueftp";
+  src.value as v where (src.value.startsWith('me:')) -> tgt.value = (v.substring(3)), tgt.system = 'other' "valueme";
+  src.value as v where (src.value.startsWith('mllp:')) -> tgt.value = (v.substring(5)), tgt.system = 'URL' "valuemllp";
+  src.value as v where (src.value.startsWith('modem:')) -> tgt.value = (v.substring(6)), tgt.system = 'other' "valuemodem";
+  src.value as v where (src.value.startsWith('nfs:')) -> tgt.value = (v.substring(4)), tgt.system = 'other' "valuenfs";
+  src.value as v where (src.value.startsWith('telnet:')) -> tgt.value = (v.substring(7)), tgt.system = 'URL' "valuetelnet";
+
+
+  src.use as u where (src.use.startsWith('H')) -> tgt.use = translate(u,'#ELGATelecomAddressUseFHIRContactPointUse','code') "usehome";
+  src.use as u where ((src.use = 'WP') or (src.use = 'DIR') or (src.use = 'PUB')) -> tgt.use = translate(u,'#ELGATelecomAddressUseFHIRContactPointUse','code') "usework";
+  src.use as u where ((src.use = 'TMP')) -> tgt.use = translate(u,'#ELGATelecomAddressUseFHIRContactPointUse','code') "usetmp";
+  src.use as u where ((src.use = 'PHYS')) -> tgt.use = translate(u,'#ELGATelecomAddressUseFHIRContactPointUse','code') "usephys";
+  src.use as u where ((src.use = 'PST')) -> tgt.use = translate(u,'#ELGATelecomAddressUseFHIRContactPointUse','code') "usepst";
+  // codes MC and BAD not used in ELGA 
+  
+  //src.use where (src.use.startsWith('H')) -> tgt.use = 'home' "usehome";
+  //src.use where (src.use.equals('WP') and (src.use.equals(src.use = 'WP')) or (src.use = 'DIR') or (src.use = 'PUB')) -> tgt.use = 'work' "usework";
+  //src.use where (src.use = 'BAD') -> tgt.use = 'old' "usebad";
+  //src.use where (src.use = 'TMP') -> tgt.use = 'temp' "usetmp";
+  //src.use where (src.use = 'MC') -> tgt.use = 'mobile' "usemobile";
+
+  // useablePeriod not used in ELGA
+  //src.useablePeriod -> tgt.period; 
+}
+
+
+
+// Identifier
+// source: https://art-decor.org/mediawiki/index.php?title=Instance_Identifier_(II)
+// source: Allgemeiner ELGA-CDA Implementierungsleitfaden, Abschnitt 5.1.1.2
+// target: https://www.hl7.org/fhir/datatypes.html#2.24.0.12
+group IIIdentifier(source src : II, target tgt : Identifier) extends Any <<types>> {
+  src.root as r where src.extension.exists() 
+     -> tgt.system = translate(r, 'http://hl7.org/fhir/ConceptMap/special-oid2uri', 'uri') "root1";
+  src.root as r where src.extension.empty() 
+        and src.root.matches('[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}') 
+     -> tgt.system = 'urn:ietf:rfc:3986', tgt.value = ('urn:uuid:' + r.lower()) "rootuuid";
+  src.root as r where src.extension.empty() and src.root.contains('.') 
+     ->  tgt.system = 'urn:ietf:rfc:3986',  tgt.value = append('urn:oid:', r) "rootoid";
+
+  src.extension as e -> tgt.value = e;
+  src.assigningAuthorityName as s ->  tgt.assigner as a,  a.display = s;
+
+  // displayable not used in ELGA
+  // src.displayable as displayable -> tgt.extension as ext then { // there's no equivalent for displayable in FHIR - and it probably will never matter, but if it does, it might map to Identifier.use.
+  //  displayable -> ext.url = 'http://hl7.org/fhir/cdaStructureDefinition/extension-displayable' "url";
+  //  displayable.value as v -> ext.value = v;
+  //} "extension";
+}
+
+// Integer
+// source: https://art-decor.org/mediawiki/index.php?title=DTr1_INT
+// target: https://www.hl7.org/fhir/datatypes.html#2.24.0.1
+group INT(source src : INT, target tgt : integer) extends Any <<types>> {
+  src.value as v -> tgt.value = v "integer";
+}
+
+// Interval Integer
+// source: https://art-decor.org/mediawiki/index.php?title=DTr1_IVL_INT
+// target: https://www.hl7.org/fhir/datatypes.html#Range
+group IVLINTRange(source src : IVL_INT, target tgt : Range) {
+  src.low as sourceLow -> tgt.low = create('Quantity') as lowQuant then {
+    sourceLow -> lowQuant.value = cast(sourceLow,'decimal') "lowQuantValue";
+  } "INTIntervalLow";
+  src.high as sourceHigh -> tgt.high = create('Quantity') as highQuant then {
+    sourceHigh -> highQuant.value = cast(sourceHigh,'decimal') "highQuantValue";
+  } "INTIntervalHigh";
+}
+
+// TemplateID
+// source: Allgemeiner ELGA-CDA Implementierungsleitfaden, Abschnitt 6.2.5
+// target: https://www.hl7.org/fhir/datatypes.html#2.24.0.12
+group TemplateID(source template : II, target tgt) extends Any <<types>> {
+  template -> tgt.extension as ext then {
+    template -> ext.url = 'http://hl7.org/fhir/cda/StructureDefinition/templateID' "templateIDurl";
+    template -> ext.value = create('Identifier') as value then II(template, value) "identifiervalue";
+  } "templateId";
+}
+
+// Boolean
+// source: https://art-decor.org/mediawiki/index.php?title=DTr1_BL
+// target: https://www.hl7.org/fhir/datatypes.html#boolean
+group Boolean(source boolean : BL, target tgt) {
+  boolean-> tgt.modifierExtension as ext then {
+    boolean -> ext.url = 'http://hl7.org/fhir/cda/StructureDefinition/BL' "templateIDurl";
+    boolean as bool ->  ext.value = create('boolean'),  ext.value = bool "boolvalue";
+  } "boolean";
+}
+
+// Point in Time Simple
+// source: Allgemeiner ELGA-CDA Implementierungsleitfaden, Abschnitt 5.3.2.
+// source: https://art-decor.org/mediawiki/index.php?title=DTr1_TS.AT.TZ
+// target: https://www.hl7.org/fhir/datatypes.html#instant
+group TSInstant(source src : TS, target tgt : instant) extends Any <<types>> {
+  src.value as v -> tgt.value = v;
+  //src.value as v where (v.matches("([0-9]([0-9]([0-9][1-9]|[1-9]0)|[1-9]00)|[1-9]000)(-(0[1-9]|1[0-2])(-(0[1-9]|[1-2][0-9]|3[0-1])(T([01][0-9]|2[0-3]):[0-5][0-9]:([0-5][0-9]|60)(\\.[0-9]+)?(Z|(\\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00)))?)?)?")) -> tgt.value = v "officialInstantValue";
+  //src.value as v where (v.matches("([0-9]([0-9]([0-9][1-9]|[1-9]0)|[1-9]00)|[1-9]000)(-(0[1-9]|1[0-2])(-(0[1-9]|[1-2][0-9]|3[0-1])(T([01][0-9]|2[0-3]):[0-5][0-9]:([0-5][0-9]|60)(\\.[0-9]+)?")) -> tgt.value = append(v,"Z") "modifiedInstantValue";
+}
+
+// derived from TSInstant
+group TSDateTime(source src : TS, target tgt : dateTime) extends TSInstant <<types>> {
+}
+
+// derived from TSInstant
+group TSDate(source src : TS, target tgt : date) extends TSInstant <<types>> {
+}
+
+// Time interval
+// source: Allgemeiner ELGA-CDA Implementierungsleitfaden, Abschnitt 5.3.3.2.
+// target: https://www.hl7.org/fhir/datatypes.html#2.24.0.10
+// !!! ATTENTION boundary differences -> in IVL_TS boundaries are exclusive, but in Period inclusive !!!
+group IVLTSPeriod(source src : IVL_TS, target tgt : Period) extends Any <<types>> {
+  src.low as l -> tgt.start = l.value;
+  src.high as h -> tgt.end = h.value;
+}
+
+// Time interval with date
+// source: Allgemeiner ELGA-CDA Implementierungsleitfaden, Abschnitt 5.3.3.2.
+// target: https://www.hl7.org/fhir/datatypes.html#2.24.0.10
+group IVLTSDateTime(source src : IVL_TS, target tgt : dateTime) extends Any <<types>> {
+  src.low as l then TSDateTime(l, tgt);
+  src.high as h then TSDateTime(h, tgt);
+}
+
+// String
+// source: https://art-decor.org/mediawiki/index.php?title=DTr1_ST
+// target: https://www.hl7.org/fhir/datatypes.html#string
+group STstring(source src : ST, target tgt : string) extends Any <<types>> {
+  src as v -> tgt.value = (v.dataString) "stringvalue";
+  //src as v -> tgt.value = cast(v, 'string') "stringvalue";
+}
+
+// derived from STstring
+group EDstring(source src : ED, target tgt : string) extends STstring <<types>> {
+}
+
+// derived from STstring
+group ONstring(source src : ON, target tgt : string) extends STstring <<types>> {
+}
+
+// CS CNE (Coded simple - coded no exception): defined vocabulary has to be used with no exceptions
+// source: Allgemeiner ELGA-CDA Implementierungsleitfaden, Abschnitt 5.2.2.
+// target: https://www.hl7.org/fhir/datatypes.html#code
+group CScode(source src : CS, target tgt : code) extends Any <<types>> {
+  src.code as c -> tgt.value = c;
+}
+
+// derived from CSCode
+group CEcode(source src : CE, target tgt : code) extends CScode <<types>> {
+}
+
+// derived from CSCode 
+group CDcode(source src : CD, target tgt : code) extends CScode <<types>> {
+}
+
+// CE CWE (Coded with equivalents - coded with exceptions): defined vocabulary should be used, but exceptions can be defined
+// source: Allgemeiner ELGA-CDA Implementierungsleitfaden, Abschnitt 6.2.1.2 (Spezifikation)
+// target: https://www.hl7.org/fhir/datatypes.html#code
+group CECodeableConcept(source src : CE, target tgt : CodeableConcept) extends Any <<types>> {
+  src.originalText -> tgt.text; // either original text or codeSystemName can be depicted
+  src -> tgt.coding as coding then {
+    src.code as code -> coding.code = code;
+    src.codeSystem as system -> coding.system = translate(system, 'http://hl7.org/fhir/ConceptMap/special-oid2uri', 'uri');
+    src.displayName as display -> coding.display = display "displayNameWhitespaces"; //.replace('[ ]{2,}','')
+    //src.codeSystemName as codeSystemName -> tgt.text = codeSystemName;
+    //src.codeSystemVersion as codeSystemVersion -> tgt.text = codeSystemVersion;
+  } "coding";
+
+  
+  src.translation as translation where src.translation.exists() -> tgt.coding as coding then {
+    translation.code as code -> coding.code = code;
+    translation.codeSystem as system -> coding.system = translate(system, 'http://hl7.org/fhir/ConceptMap/special-oid2uri', 'uri');
+    translation.displayName as display -> coding.display = display;
+  } "translation";
+}
+
+// derived from CECodeableConcept
+group CSCodeableConcept(source src : CS, target tgt : CodeableConcept) extends CECodeableConcept <<types>> {
+}
+
+// derived from CECodeableConcept
+group CVCodeableConcept(source src : CV, target tgt : CodeableConcept) extends CECodeableConcept <<types>> {
+}
+
+// derived from CECodeableConcept
+group CDCodeableConcept(source src : CD, target tgt : CodeableConcept) extends CECodeableConcept <<types>> {
+  //src.codeSystemName as codeName where src.codeSystemName.exists() -> tgt.text = codeName;
+}
+
+// derived from CECodeableConcept
+group SCCodeableConcept(source src : SC, target tgt : CodeableConcept) extends CECodeableConcept <<types>> {  // need to assess which FHIR type SC maps to
+  //src as v -> tgt.value = (v.dataString) "stringvalue";
+}
+
+// HumanName
+// source: Allgemeiner ELGA-CDA Implementierungsleitfaden, Abschnitt 5.5.1.2.2 (Granularitätsstufe 2)
+// target: https://www.hl7.org/fhir/datatypes.html#HumanName
+
+group ENHumanName(source src : EN, target tgt : HumanName) extends Any <<types>> {
+
+  src.use as u -> tgt.use = translate(u, '#ELGAEntityNameUseFHIRNameUse', 'code');
+
+  src.prefix as v -> tgt.prefix = (v.dataString);
+  //src.prefix as cdaPrefix where prefix.qualifier.exists() -> tgt.prefix as fhirPrefix then {
+  //  cdaPrefix -> fhirPrefix.extension as ext then {
+  //    cdaPrefix -> ext.url = 'https://www.hl7.org/fhir/extension-prefix-qualifier' "url";
+  //    cdaPrefix.qualifier as qualifier -> ext.value = (qualifier.dataString) "prefixqualifiervalue1";
+  //  } "prefixqualifiervalue2";
+  //} "prefixqualifier";
+
+  src.given as v -> tgt.given = (v.dataString);
+  //src.given as cdaGiven where given.qualifier.exists() -> tgt.given as fhirGiven then {
+  //  cdaGiven -> fhirGiven.extension as ext then {
+  //    cdaGiven -> ext.url = 'https://www.hl7.org/fhir/extension-given-qualifier' "url";
+  //    cdaGiven.qualifier as qualifier -> ext.value = (qualifier.dataString) "givenqualifiervalue1";
+  //  } "givenqualifiervalue2";
+  //} "givenqualifier";
+
+  src.family as family -> tgt.family = (family.dataString); //where (($this.qualifier.empty()) or ($this.qualifier != 'SP') and ($this.qualifier != 'BR'))
+  src.family as cdaFamily where (($this.qualifier = 'BR')) -> tgt.family as fhirFamily then {
+    cdaFamily -> fhirFamily.extension as ext then {
+      cdaFamily -> ext.url = 'http://hl7.org/fhir/StructureDefinition/humanname-own-name' "url";
+      cdaFamily -> ext.value = (cdaFamily.dataString) "ownnamevalue";
+    } "familyownnamevalue";
+  } "familyownname";  
+  src.family as cdaFamily where (($this.qualifier = 'SP')) -> tgt.family as fhirFamily then {
+    cdaFamily -> fhirFamily.extension as ext then {
+      cdaFamily -> ext.url = 'http://hl7.org/fhir/StructureDefinition/humanname-partner-name' "url";
+      cdaFamily -> ext.value = (cdaFamily.dataString) "partnernamevalue";
+    } "familypartnernamevalue";
+  } "familypartnername";
+  //src.family as cdaFamily where sec.family.qualifier.exists() -> tgt.family as fhirFamily then {
+  //  cdaFamily -> fhirFamily.extension as ext then {
+  //    cdaFamily -> ext.url = 'https://www.hl7.org/fhir/extension-family-qualifier' "url";
+  //    cdaFamily.qualifier as qualifier -> ext.value = (qualifier.dataString) "familyqualifiervalue1";
+  //  } "familyqualifiervalue2";
+  //} "familyqualifier";
+  
+  src.suffix as v -> tgt.suffix = (v.dataString);
+  //src.suffix as cdaSuffix where suffix.qualifier.exists() -> tgt.suffix as fhirSuffix then {
+  //  cdaSuffix -> fhirSuffix.extension as ext then {
+  //    cdaSuffix -> ext.url = 'https://www.hl7.org/fhir/extension-suffix-qualifier' "url";
+  //    cdaSuffix.qualifier as qualifier -> ext.value = (qualifier.dataString) "suffixqualifiervalue1";
+  //  } "suffixqualifiervalue2";
+  //} "suffixqualifier";
+  
+  // not used in ELGA
+  //src.validTime -> tgt.period;
+}
+
+// Address
+// source: Allgemeiner ELGA-CDA Implementierungsleitfaden, Abschnitt 5.6.3.2 (Granularitätsstufe 3)
+// target: https://www.hl7.org/fhir/datatypes.html#Address
+group ADAddress(source src : AD, target tgt : Address) extends Any <<types>> {
+  src.use as c -> tgt.use = translate(c, '#ELGA2FHIRAddressUse', 'code') "addressUse";
+  src.streetAddressLine as v where src.houseNumber.exists() -> tgt.line = ((v.dataString) + ' ' + (src.houseNumber.dataString)) "streetAddressLine";
+  //src.streetAddressLine as v -> tgt.line as line share line, line = (v.dataString);
+  //src.houseNumber as v -> tgt.line = append(line, v); // appending house number to address
+  src.streetAddressLine as v where src.houseNumber.empty() -> tgt.line = (v.dataString);
+  src.streetName as v where src.houseNumber.exists() -> tgt.line = ((v.dataString) + ' ' + (src.houseNumber.dataString));
+  src.streetName as v where src.streetName.empty() -> tgt.line = (v.dataString);
+  src.postalCode as v -> tgt.postalCode = (v.dataString);
+  src.city as v -> tgt.city = (v.dataString);
+  src.state as v -> tgt.state = (v.dataString);
+  src.country as v -> tgt.country = (v.dataString);
+
+  src.additionalLocator as additionalLocator -> tgt.extension as ext then {
+    additionalLocator -> ext.url = 'https://www.hl7.org/fhir/extension-iso21090-adxp-additionallocator' "additionalLocatorExtensionUrl";
+    additionalLocator -> ext.value = (additionalLocator.dataString) "additionalLocatorExtensionValue";
+  } "additionalLocatorExtension";
+}
+
+// AustrianAddress
+// source: Allgemeiner ELGA-CDA Implementierungsleitfaden, Abschnitt 5.6.3.2 (Granularitätsstufe 3)
+// target: https://hl7austria.github.io/r4-core-master/StructureDefinition-AustrianRepresentationOfAddress.html
+group ADAustrianAddress(source src : AD, target tgt : Address) {
+  //src -> tgt.profile = "http://hl7.at/fhir/HL7ATCoreProfiles/4.0.1/StructureDefinition/AustrianRepresentationOfAddress" "austrianAddressProfile"; Profile definition not allowed here
+
+  // unchanged elements
+  src.use as c -> tgt.use = translate(c, '#ELGA2FHIRAddressUse', 'code') "addressUse";
+  src.postalCode as v -> tgt.postalCode = (v.dataString);
+  src.city as v -> tgt.city = (v.dataString);
+  src.state as v -> tgt.state = (v.dataString);
+  src.country as v -> tgt.country = (v.dataString);
+
+  src where (src.streetName.exists() or src.houseNumber.exists() or src.additionalLocator.exists()) -> tgt.line as line then {
+
+    src.streetName as v where src.houseNumber.exists() -> line.value = ((v.dataString) + ' ' + (src.houseNumber.dataString)) "streetNameLineHouseNumber";
+    src.streetName as h where src.houseNumber.empty() -> line.value = ((v.dataString)) "streetNameHouseNumber";
+
+    // changed elements
+    src.streetName as streetName -> line.extension as lineExt then {
+      streetName -> lineExt.url = 'http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-streetName' "streetNameExtensionUrl";
+      streetName -> lineExt.value = (streetName.dataString) "streetNameExtensionValue";
+    } "streetNameExtension";
+
+    src.houseNumber as houseNumber -> line.extension as lineExt then {
+      houseNumber -> lineExt.url = 'http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-houseNumber' "houseNumberExtensionUrl";
+      houseNumber -> lineExt.value = (houseNumber.dataString) "houseNumberExtensionValue";
+    } "houseNumberExtension";
+
+    src.additionalLocator as additionalLocator -> line.extension as lineExt then { // floor and/or door number
+      additionalLocator -> lineExt.url = 'http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-additionalLocator' "additionalLocatorExtensionUrl";
+      additionalLocator -> lineExt.value = additionalLocator "additionalLocatorExtensionValue";
+    } "additionalLocatorExtension";
+
+  } "lineExtension";
+  
+  src.streetAddressLine as streetAddressLine -> tgt.line as line, line.extension as streetLineExt then {
+
+    // separate street and house number
+    src.streetAddressLine as v where src.houseNumber.exists() -> line.value = ((v.dataString) + ' ' + (src.houseNumber.dataString)) "streetAddressLineHouseNumber";
+    src.streetAddressLine as v where src.houseNumber.empty() -> line.value = (v.dataString) "streetAddressLine";
+
+    // house number present - Regexes do not work
+    streetAddressLine where (streetAddressLine.dataString.matches('\\d')) -> line.extension as houseLineExt then {
+      streetAddressLine -> streetLineExt.url = 'http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-streetName' "streetNameExtensionUrl";
+      streetAddressLine -> streetLineExt.value = (streetAddressLine.dataString.replaceMatches('\\s+\\d+','')) "streetNameExtensionValue"; // replace all whitespaces and digits at the end - remove house number
+
+      houseNumber -> houseLineExt.url = 'http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-houseNumber' "houseNumberExtensionUrl";
+      houseNumber -> houseLineExt.value = (houseNumber.dataString.replaceMatches('\\D+\\s+','')) "houseNumberExtensionValue";
+    } "streetAddressLineHouseNumber";
+    
+    // house number not present - Regexes do not work
+    streetAddressLine where (streetAddressLine.dataString.matches('\\d').not()) then {
+      streetAddressLine -> streetLineExt.url = 'http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-streetName' "streetNameExtensionUrl";
+      streetAddressLine -> streetLineExt.value = (streetLineExt.dataString) "streetNameExtensionValue";
+    } "streetAddressLineNoHouseNumber";
+    
+  } "streetAddressLine";
+
+}
+
+// Physical Quantity
+// source: https://art-decor.org/mediawiki/index.php?title=DTr1_PQ
+// target: https://www.hl7.org/fhir/datatypes.html#Quantity
+group PQQuantity(source src : PQ, target tgt : Quantity) extends Any <<types>> {
+  src.value as value -> tgt.value = value;
+  src.unit as unit -> tgt.unit = unit;
+  //src.unit as unit -> tgt.code = unit; // code is used for computer processable unit codes, e.g. UCUM, SNOMED or ISO 4179 for currency
+}
+
+// Interval Physical Quantity
+// source: https://art-decor.org/mediawiki/index.php?title=DTr1_IVL_PQ
+// target: https://www.hl7.org/fhir/datatypes.html#Range
+group IVLPQRange(source src : IVL_PQ, target tgt : Range) extends Any <<types>> {
+  src.low as sourceLow -> tgt.low as targetLow then PQQuantity(sourceLow, targetLow) "PQIntervalLow";
+  src.high as sourceHigh -> tgt.high as targetHigh then PQQuantity(sourceHigh, targetHigh) "PQIntervalHigh";
+  // Range does not support any other elements, no official extensions defined
+}
+
+// Ratio Physical Quantity
+// source: https://art-decor.org/mediawiki/index.php?title=DTr1_RTO_PQ_PQ
+// target: https://www.hl7.org/fhir/datatypes.html#Ratio
+group RTOPQPQRatio(source src : RTO_PQ_PQ, target tgt : Ratio) extends Any <<types>> {
+  src.numerator as numerator -> tgt.numerator as targetNumerator then PQQuantity(numerator, targetNumerator) "numerator";
+  src.denominator as denominator -> tgt.denominator as targetDenominator then PQQuantity(denominator, targetDenominator) "denominator"; 
+}
+
+// Ratio
+// source: https://art-decor.org/mediawiki/index.php?title=DTr1_RTO
+// target: https://www.hl7.org/fhir/datatypes.html#Ratio
+group RTORatio(source src : RTO, target tgt: Ratio) extends RTOPQPQRatio <<types>> {
+}
+
+// Ratio Quantity
+// source: https://art-decor.org/mediawiki/index.php?title=DTr1_RTO_QTY_QTY
+// target: https://www.hl7.org/fhir/datatypes.html#Ratio
+group RTOQTYQTYRatio(source src : RTO_QTY_QTY, target tgt: Ratio) extends RTOPQPQRatio <<types>> {
+}
+
+

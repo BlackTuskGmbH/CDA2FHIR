@@ -1,0 +1,1567 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bundle 
+  xmlns="http://hl7.org/fhir" 
+  xmlns:v3="urn:hl7-org:v3">
+  <id value="41fe74bc-1a7e-4706-a759-e495fc6756d1"/>
+  <type value="collection"/>
+  <timestamp value="2015-07-30T13:01:00+02:00"/>
+  <entry>
+    <fullUrl value="urn:uuid:175d0dc7-a900-4c9d-a19e-4ff08cdf5318"/>
+    <resource>
+      <DiagnosticReport>
+        <id value="175d0dc7-a900-4c9d-a19e-4ff08cdf5318"/>
+        <meta>
+          <profile value="http://hl7.org/fhir/MicrobiologyLaboratory/StructureDefinition/MicrobiologyLaboratoryDiagnosticReport"/>
+        </meta>
+        <extension url="http://hl7.org/fhir/MicrobiologyLaboratory/StructureDefinition/diagnosticReport-orderingProvider">
+          <valueReference>
+            <reference value="PractitionerRole/539fde0a-3a5b-4e7c-9731-e60ba67fcf74"/>
+            <type value="PractitionerRole"/>
+          </valueReference>
+        </extension>
+        <extension url="http://hl7.org/fhir/MicrobiologyLaboratory/StructureDefinition/diagnosticReport-precondition">
+          <valueReference>
+            <reference value="Condition/432984b3-85b7-4b3d-aeb1-53658ff5133a"/>
+            <type value="Condition"/>
+          </valueReference>
+        </extension>
+        <extension url="http://hl7.org/fhir/MicrobiologyLaboratory/StructureDefinition/diagnosticReport-precondition">
+          <valueReference>
+            <reference value="Condition/e490bae1-f820-42e1-883f-9c0be86ae265"/>
+            <type value="Condition"/>
+          </valueReference>
+        </extension>
+        <extension url="http://hl7.org/fhir/MicrobiologyLaboratory/StructureDefinition/diagnosticReport-precondition">
+          <valueReference>
+            <reference value="Condition/28f1fa27-462f-44ff-bee5-66281c84765b"/>
+            <type value="Condition"/>
+          </valueReference>
+        </extension>
+        <extension url="http://hl7.org/fhir/MicrobiologyLaboratory/StructureDefinition/diagnosticReport-precondition">
+          <valueReference>
+            <reference value="Condition/60997cc4-f716-4a06-8edd-6efd391bc16b"/>
+            <type value="Condition"/>
+          </valueReference>
+        </extension>
+        <extension url="http://hl7.org/fhir/MicrobiologyLaboratory/StructureDefinition/diagnosticReport-precondition">
+          <valueReference>
+            <reference value="Condition/b93057b2-92c3-4066-8813-4ca4b4e6156e"/>
+            <type value="Condition"/>
+          </valueReference>
+        </extension>
+        <extension url="http://hl7.org/fhir/MicrobiologyLaboratory/StructureDefinition/diagnosticReport-precondition">
+          <valueReference>
+            <reference value="Condition/531f01f8-adef-4049-8b74-65ce221e0706"/>
+            <type value="Condition"/>
+          </valueReference>
+        </extension>
+        <extension url="http://hl7.org/fhir/MicrobiologyLaboratory/StructureDefinition/diagnosticReport-precondition">
+          <valueReference>
+            <reference value="Condition/fdf770bb-756f-4d0a-bcc7-1d55057d1a43"/>
+            <type value="Condition"/>
+          </valueReference>
+        </extension>
+        <extension url="http://hl7.org/fhir/MicrobiologyLaboratory/StructureDefinition/diagnosticReport-precondition">
+          <valueReference>
+            <reference value="Condition/66d3128b-1630-4915-bfe1-92f3004a9362"/>
+            <type value="Condition"/>
+          </valueReference>
+        </extension>
+        <extension url="http://hl7.org/fhir/MicrobiologyLaboratory/StructureDefinition/diagnosticReport-precondition">
+          <valueReference>
+            <reference value="Condition/fed0f3b8-82f1-432f-be77-4beb7600c4b6"/>
+            <type value="Condition"/>
+          </valueReference>
+        </extension>
+        <extension url="http://hl7.org/fhir/MicrobiologyLaboratory/StructureDefinition/diagnosticReport-precondition">
+          <valueReference>
+            <reference value="Condition/cc7e8408-9364-45e4-ac30-71f39734777d"/>
+            <type value="Condition"/>
+          </valueReference>
+        </extension>
+        <identifier>
+          <system value="urn:oid:1.2.40.0.34.99.111.1.1"/>
+          <value value="134F02"/>
+          <assigner>
+            <display value="Amadeus Spital"/>
+          </assigner>
+        </identifier>
+        <identifier>
+          <system value="urn:oid:1.2.40.0.34.99.111.1.1"/>
+          <value value="134F002"/>
+          <assigner>
+            <display value="Amadeus Spital"/>
+          </assigner>
+        </identifier>
+        <status value="final"/>
+        <category>
+          <coding>
+            <system value="http://hl7.org/fhir/ValueSet/diagnostic-service-sections"/>
+            <version value="4.0.1"/>
+            <code value="MB"/>
+            <display value="Microbiology"/>
+          </coding>
+          <coding>
+            <system value="http://hl7.org/fhir/ValueSet/diagnostic-service-sections"/>
+            <version value="4.0.1"/>
+            <code value="LAB"/>
+            <display value="Laboratory"/>
+          </coding>
+        </category>
+        <code>
+          <coding>
+            <system value="http://loinc.org"/>
+            <code value="18725-2"/>
+            <display value="Microbiology studies"/>
+          </coding>
+        </code>
+        <subject>
+          <reference value="Patient/de1a201a-34dd-42d3-b421-3810da9b0be3"/>
+          <type value="Patient"/>
+        </subject>
+        <issued value="2012-12-01T12:15:00+01:00"/>
+        <performer>
+          <reference value="PractitionerRole/b62850a6-60ec-401f-843f-d40a79ff09f9"/>
+          <type value="PractitionerRole"/>
+        </performer>
+        <specimen>
+          <reference value="Specimen/7b9d3e92-c1e1-4cd9-b8e5-a91bc5320e6c"/>
+          <type value="Specimen"/>
+        </specimen>
+        <result>
+          <reference value="Observation/46c1826a-1bc3-4de6-bf50-609a43796c77"/>
+          <type value="Observation"/>
+        </result>
+        <result>
+          <reference value="Observation/88839599-cde1-4544-9e7d-7d937dd8225d"/>
+          <type value="Observation"/>
+        </result>
+        <result>
+          <reference value="Observation/bd54bdda-ae9d-40b9-8eff-b9807fd7a24b"/>
+          <type value="Observation"/>
+        </result>
+        <result>
+          <reference value="Observation/afb2b6b9-0bcf-4acc-a02d-862fa255bec7"/>
+          <type value="Observation"/>
+        </result>
+        <conclusionCode>
+          <coding>
+            <system value="http://loinc.org"/>
+            <code value="48767-8"/>
+            <display value="Annotation Comment"/>
+          </coding>
+        </conclusionCode>
+      </DiagnosticReport>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="urn:uuid:de1a201a-34dd-42d3-b421-3810da9b0be3"/>
+    <resource>
+      <Patient>
+        <id value="de1a201a-34dd-42d3-b421-3810da9b0be3"/>
+        <meta>
+          <profile value="http://hl7.at/fhir/HL7ATCoreProfiles/4.0.1/StructureDefinition/austrian-patient"/>
+        </meta>
+        <extension url="http://hl7.org/fhir/StructureDefinition/patient-birthTime">
+          <valueDateTime value="1961-12-24"/>
+        </extension>
+        <extension url="http://hl7.at/fhir/HL7ATCoreProfiles/4.0.1/StructureDefinition/patientReligion">
+          <extension url="code">
+            <valueCodeableConcept>
+              <coding>
+                <system value="urn:oid:2.16.840.1.113883.2.16.1.4.1"/>
+                <code value="101"/>
+                <display value="R&#xF6;misch-Katholisch"/>
+              </coding>
+            </valueCodeableConcept>
+          </extension>
+        </extension>
+        <extension url="http://hl7.org/fhir/StructureDefinition/patient-birthPlace">
+          <valueAddress>
+            <line value="Musterstra&#xDF;e 23b"/>
+            <city value="Graz"/>
+            <state value="Steiermark"/>
+            <postalCode value="8011"/>
+            <country value="AUT"/>
+          </valueAddress>
+        </extension>
+        <identifier>
+          <type>
+            <coding>
+              <system value="http://terminology.hl7.org/CodeSystem/v2-0203"/>
+              <code value="PI"/>
+              <display value="Patient internal identifier"/>
+            </coding>
+          </type>
+          <value value="4711"/>
+          <assigner>
+            <display value="Amadeus Spital"/>
+          </assigner>
+        </identifier>
+        <identifier>
+          <type>
+            <coding>
+              <system value="http://terminology.hl7.org/CodeSystem/v2-0203"/>
+              <code value="SS"/>
+              <display value="Social Security Number"/>
+            </coding>
+          </type>
+          <system value="urn:oid:1.2.40.0.10.1.4.3.1"/>
+          <value value="1111241261"/>
+          <assigner>
+            <display value="Dachverband der &#xF6;sterreichischen Sozialversicherungstr&#xE4;ger"/>
+          </assigner>
+        </identifier>
+        <name>
+          <family value="VorDerHeirat">
+            <extension url="http://hl7.org/fhir/StructureDefinition/humanname-own-name">
+              <valueString value="VorDerHeirat"/>
+            </extension>
+          </family>
+          <given value="Maria"/>
+          <given value="Johanna"/>
+          <prefix value="Dr."/>
+          <suffix value="BSc"/>
+        </name>
+        <telecom>
+          <system value="phone"/>
+          <value value="+43.2682.40400"/>
+          <use value="home"/>
+        </telecom>
+        <telecom>
+          <system value="phone"/>
+          <value value="+43.664.1234567"/>
+        </telecom>
+        <telecom>
+          <system value="email"/>
+          <value value="musterfrau@provider.at"/>
+        </telecom>
+        <gender value="female"/>
+        <address>
+          <use value="home"/>
+          <line value="Musterstra&#xDF;e 13a">
+            <extension url="http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-streetName">
+              <valueString value="Musterstra&#xDF;e"/>
+            </extension>
+            <extension url="http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-houseNumber">
+              <valueString value="13a"/>
+            </extension>
+          </line>
+          <city value="Eisenstadt"/>
+          <state value="Burgenland"/>
+          <postalCode value="7000"/>
+          <country value="AUT"/>
+        </address>
+        <maritalStatus>
+          <coding>
+            <system value="http://terminology.hl7.org/CodeSystem/v3-MaritalStatus"/>
+            <code value="M"/>
+            <display value="Married"/>
+          </coding>
+        </maritalStatus>
+      </Patient>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="urn:uuid:7b9d3e92-c1e1-4cd9-b8e5-a91bc5320e6c"/>
+    <resource>
+      <Specimen>
+        <id value="7b9d3e92-c1e1-4cd9-b8e5-a91bc5320e6c"/>
+        <meta>
+          <profile value="http://hl7.org/fhir/MicrobiologyLaboratory/StructureDefinition/MicrobiologyLaboratorySpecimen"/>
+        </meta>
+        <identifier>
+          <system value="urn:oid:2.16.840.1.113883.3.933.1.1"/>
+          <value value="UR-080212-02"/>
+        </identifier>
+        <type>
+          <coding>
+            <system value="http://terminology.hl7.org/CodeSystem/v3-SpecimenType"/>
+            <code value="URC"/>
+            <display value="Urine clean catch"/>
+          </coding>
+        </type>
+        <subject>
+          <reference value="Patient/de1a201a-34dd-42d3-b421-3810da9b0be3"/>
+          <type value="Patient"/>
+        </subject>
+        <receivedTime value="2012-12-01T08:15:00+01:00"/>
+        <collection>
+          <collector>
+            <reference value="PractitionerRole/2a1318a0-1c62-4b43-a729-d64324a219d3"/>
+            <type value="PractitionerRole"/>
+          </collector>
+          <collectedDateTime value="2012-12-01T06:34:00+01:00"/>
+          <bodySite>
+            <coding>
+              <system value="http://terminology.hl7.org/CodeSystem/v3-ActSite"/>
+              <code value="LACF"/>
+              <display value="left antecubital fossa"/>
+            </coding>
+          </bodySite>
+        </collection>
+      </Specimen>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="urn:uuid:b62850a6-60ec-401f-843f-d40a79ff09f9"/>
+    <resource>
+      <PractitionerRole>
+        <id value="b62850a6-60ec-401f-843f-d40a79ff09f9"/>
+        <meta>
+          <profile value="http://hl7.org/fhir/MicrobiologyLaboratory/StructureDefinition/MicrobiologyLaboratoryPractitionerRole"/>
+        </meta>
+        <active value="true"/>
+        <practitioner>
+          <reference value="Practitioner/17653231-fb30-4335-9217-24e834a99be5"/>
+          <type value="Practitioner"/>
+        </practitioner>
+        <organization>
+          <reference value="Organization/772383f5-d25a-4254-969c-ce3000197be6"/>
+          <type value="Organization"/>
+        </organization>
+        <code>
+          <coding>
+            <system value="urn:oid:1.2.40.0.34.99.111.1.1"/>
+            <code value="OA"/>
+            <display value="Diensthabender Oberarzt"/>
+          </coding>
+        </code>
+        <code>
+          <coding>
+            <system value="urn:oid:1.2.40.0.34.5.160"/>
+            <code value="126"/>
+            <display value="Fach&#xE4;rztin/Facharzt f&#xFC;r Mikrobiologisch-Serologische Labordiagnostik"/>
+          </coding>
+        </code>
+      </PractitionerRole>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="urn:uuid:17653231-fb30-4335-9217-24e834a99be5"/>
+    <resource>
+      <Practitioner>
+        <id value="17653231-fb30-4335-9217-24e834a99be5"/>
+        <meta>
+          <profile value="http://hl7.org/fhir/MicrobiologyLaboratory/StructureDefinition/MicrobiologyLaboratoryPractitioner"/>
+        </meta>
+        <identifier>
+          <system value="urn:oid:1.2.40.0.34.99.111.1.3"/>
+          <value value="1111"/>
+          <assigner>
+            <display value="Amadeus Spital"/>
+          </assigner>
+        </identifier>
+        <active value="true"/>
+        <name>
+          <family value="Isabella"/>
+          <given value="Stern"/>
+          <prefix value="Dr."/>
+        </name>
+        <telecom>
+          <system value="phone"/>
+          <value value="+43.1.3453446.1111"/>
+          <use value="work"/>
+        </telecom>
+      </Practitioner>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="urn:uuid:772383f5-d25a-4254-969c-ce3000197be6"/>
+    <resource>
+      <Organization>
+        <id value="772383f5-d25a-4254-969c-ce3000197be6"/>
+        <meta>
+          <profile value="http://hl7.org/fhir/MicrobiologyLaboratory/StructureDefinition/MicrobiologyLaboratoryOrganization"/>
+        </meta>
+        <identifier>
+          <system value="urn:ietf:rfc:3986"/>
+          <value value="urn:oid:1.2.40.0.34.99.3"/>
+          <assigner>
+            <display value="GDA Index"/>
+          </assigner>
+        </identifier>
+        <active value="true"/>
+        <name>Amadeus Spital - Labor</name>
+        <telecom>
+          <system value="phone"/>
+          <value value="+43.1.3453446.0"/>
+        </telecom>
+        <telecom>
+          <system value="fax"/>
+          <value value="+43.1.3453446.4674"/>
+        </telecom>
+        <telecom>
+          <system value="email"/>
+          <value value="info@amadeusspital.at"/>
+        </telecom>
+        <telecom>
+          <system value="url"/>
+          <value value="www.amadeusspital.at"/>
+        </telecom>
+        <address>
+          <line value="W&#xE4;hringer G&#xFC;rtel 18-20"/>
+          <city value="Wien"/>
+          <state value="Wien"/>
+          <postalCode value="1090"/>
+          <country value="AUT"/>
+        </address>
+      </Organization>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="urn:uuid:539fde0a-3a5b-4e7c-9731-e60ba67fcf74"/>
+    <resource>
+      <PractitionerRole>
+        <id value="539fde0a-3a5b-4e7c-9731-e60ba67fcf74"/>
+        <meta>
+          <profile value="http://hl7.org/fhir/MicrobiologyLaboratory/StructureDefinition/MicrobiologyLaboratoryPractitionerRole"/>
+        </meta>
+        <active value="true"/>
+        <practitioner>
+          <reference value="Practitioner/902175c5-c362-4209-a3ee-4c5cc14e7456"/>
+          <type value="Practitioner"/>
+        </practitioner>
+        <organization>
+          <reference value="Organization/99c501fa-c316-4d33-abef-edbbc7fb2217"/>
+          <type value="Organization"/>
+        </organization>
+      </PractitionerRole>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="urn:uuid:902175c5-c362-4209-a3ee-4c5cc14e7456"/>
+    <resource>
+      <Practitioner>
+        <id value="902175c5-c362-4209-a3ee-4c5cc14e7456"/>
+        <meta>
+          <profile value="http://hl7.org/fhir/MicrobiologyLaboratory/StructureDefinition/MicrobiologyLaboratoryPractitioner"/>
+        </meta>
+        <active value="true"/>
+        <name>
+          <family value="Frank"/>
+          <given value="Dieter"/>
+          <prefix value="Dr."/>
+        </name>
+        <telecom>
+          <system value="phone"/>
+          <value value="01.47110815.123"/>
+          <use value="work"/>
+        </telecom>
+        <address>
+          <line value="Taborstra&#xDF;e 16"/>
+          <city value="Wien"/>
+          <postalCode value="1020"/>
+          <country value="AUT"/>
+        </address>
+      </Practitioner>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="urn:uuid:99c501fa-c316-4d33-abef-edbbc7fb2217"/>
+    <resource>
+      <Organization>
+        <id value="99c501fa-c316-4d33-abef-edbbc7fb2217"/>
+        <meta>
+          <profile value="http://hl7.org/fhir/MicrobiologyLaboratory/StructureDefinition/MicrobiologyLaboratoryOrganization"/>
+        </meta>
+        <identifier>
+          <system value="urn:ietf:rfc:3986"/>
+          <value value="urn:oid:1.2.40.0.34.99.1"/>
+          <assigner>
+            <display value="GDA Index"/>
+          </assigner>
+        </identifier>
+        <active value="true"/>
+        <name>Musterklinikum Unterstadt</name>
+        <telecom>
+          <system value="phone"/>
+          <value value="01.47110815"/>
+          <use value="work"/>
+        </telecom>
+      </Organization>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="urn:uuid:432984b3-85b7-4b3d-aeb1-53658ff5133a"/>
+    <resource>
+      <Condition>
+        <id value="432984b3-85b7-4b3d-aeb1-53658ff5133a"/>
+        <meta>
+          <profile value="http://hl7.org/fhir/MicrobiologyLaboratory/StructureDefinition/MicrobiologyLaboratoryCondition"/>
+        </meta>
+        <verificationStatus>
+          <coding>
+            <system value="http://terminology.hl7.org/CodeSystem/condition-ver-status"/>
+            <version value="4.0.1"/>
+            <code value="confirmed"/>
+          </coding>
+        </verificationStatus>
+        <code>
+          <coding>
+            <system value="http://snomed.info/sct"/>
+            <code value="441547007"/>
+            <display value="History of chronic urinary tract infection (situation)"/>
+          </coding>
+        </code>
+        <subject>
+          <reference value="Patient/de1a201a-34dd-42d3-b421-3810da9b0be3"/>
+          <type value="Patient"/>
+        </subject>
+      </Condition>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="urn:uuid:e490bae1-f820-42e1-883f-9c0be86ae265"/>
+    <resource>
+      <Condition>
+        <id value="e490bae1-f820-42e1-883f-9c0be86ae265"/>
+        <meta>
+          <profile value="http://hl7.org/fhir/MicrobiologyLaboratory/StructureDefinition/MicrobiologyLaboratoryCondition"/>
+        </meta>
+        <verificationStatus>
+          <coding>
+            <system value="http://terminology.hl7.org/CodeSystem/condition-ver-status"/>
+            <version value="4.0.1"/>
+            <code value="refuted"/>
+          </coding>
+        </verificationStatus>
+        <code>
+          <coding>
+            <system value="http://snomed.info/sct"/>
+            <code value="161663000"/>
+            <display value="History of being a tissue or organ recipient (situation)"/>
+          </coding>
+        </code>
+        <subject>
+          <reference value="Patient/de1a201a-34dd-42d3-b421-3810da9b0be3"/>
+          <type value="Patient"/>
+        </subject>
+      </Condition>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="urn:uuid:28f1fa27-462f-44ff-bee5-66281c84765b"/>
+    <resource>
+      <Condition>
+        <id value="28f1fa27-462f-44ff-bee5-66281c84765b"/>
+        <meta>
+          <profile value="http://hl7.org/fhir/MicrobiologyLaboratory/StructureDefinition/MicrobiologyLaboratoryCondition"/>
+        </meta>
+        <verificationStatus>
+          <coding>
+            <system value="http://terminology.hl7.org/CodeSystem/condition-ver-status"/>
+            <version value="4.0.1"/>
+            <code value="confirmed"/>
+          </coding>
+        </verificationStatus>
+        <code>
+          <coding>
+            <system value="http://snomed.info/sct"/>
+            <code value="31822004"/>
+            <display value="Urethritis (disorder)"/>
+          </coding>
+        </code>
+        <subject>
+          <reference value="Patient/de1a201a-34dd-42d3-b421-3810da9b0be3"/>
+          <type value="Patient"/>
+        </subject>
+      </Condition>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="urn:uuid:60997cc4-f716-4a06-8edd-6efd391bc16b"/>
+    <resource>
+      <Condition>
+        <id value="60997cc4-f716-4a06-8edd-6efd391bc16b"/>
+        <meta>
+          <profile value="http://hl7.org/fhir/MicrobiologyLaboratory/StructureDefinition/MicrobiologyLaboratoryCondition"/>
+        </meta>
+        <verificationStatus>
+          <coding>
+            <system value="http://terminology.hl7.org/CodeSystem/condition-ver-status"/>
+            <version value="4.0.1"/>
+            <code value="confirmed"/>
+          </coding>
+        </verificationStatus>
+        <code>
+          <coding>
+            <system value="http://snomed.info/sct"/>
+            <code value="281789004"/>
+            <display value="Antibiotic therapy (procedure)"/>
+          </coding>
+        </code>
+        <subject>
+          <reference value="Patient/de1a201a-34dd-42d3-b421-3810da9b0be3"/>
+          <type value="Patient"/>
+        </subject>
+      </Condition>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="urn:uuid:b93057b2-92c3-4066-8813-4ca4b4e6156e"/>
+    <resource>
+      <Condition>
+        <id value="b93057b2-92c3-4066-8813-4ca4b4e6156e"/>
+        <meta>
+          <profile value="http://hl7.org/fhir/MicrobiologyLaboratory/StructureDefinition/MicrobiologyLaboratoryCondition"/>
+        </meta>
+        <verificationStatus>
+          <coding>
+            <system value="http://terminology.hl7.org/CodeSystem/condition-ver-status"/>
+            <version value="4.0.1"/>
+            <code value="confirmed"/>
+          </coding>
+        </verificationStatus>
+        <code>
+          <coding>
+            <system value="http://snomed.info/sct"/>
+            <code value="308540004"/>
+            <display value="Inpatient stay (finding)"/>
+          </coding>
+        </code>
+        <subject>
+          <reference value="Patient/de1a201a-34dd-42d3-b421-3810da9b0be3"/>
+          <type value="Patient"/>
+        </subject>
+      </Condition>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="urn:uuid:531f01f8-adef-4049-8b74-65ce221e0706"/>
+    <resource>
+      <Condition>
+        <id value="531f01f8-adef-4049-8b74-65ce221e0706"/>
+        <meta>
+          <profile value="http://hl7.org/fhir/MicrobiologyLaboratory/StructureDefinition/MicrobiologyLaboratoryCondition"/>
+        </meta>
+        <verificationStatus>
+          <coding>
+            <system value="http://terminology.hl7.org/CodeSystem/condition-ver-status"/>
+            <version value="4.0.1"/>
+            <code value="refuted"/>
+          </coding>
+        </verificationStatus>
+        <code>
+          <coding>
+            <system value="http://snomed.info/sct"/>
+            <code value="408678008"/>
+            <display value="Healthcare associated infectious disease (disorder)"/>
+          </coding>
+        </code>
+        <subject>
+          <reference value="Patient/de1a201a-34dd-42d3-b421-3810da9b0be3"/>
+          <type value="Patient"/>
+        </subject>
+      </Condition>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="urn:uuid:fdf770bb-756f-4d0a-bcc7-1d55057d1a43"/>
+    <resource>
+      <Condition>
+        <id value="fdf770bb-756f-4d0a-bcc7-1d55057d1a43"/>
+        <meta>
+          <profile value="http://hl7.org/fhir/MicrobiologyLaboratory/StructureDefinition/MicrobiologyLaboratoryCondition"/>
+        </meta>
+        <verificationStatus>
+          <coding>
+            <system value="http://terminology.hl7.org/CodeSystem/condition-ver-status"/>
+            <version value="4.0.1"/>
+            <code value="refuted"/>
+          </coding>
+        </verificationStatus>
+        <code>
+          <coding>
+            <system value="http://snomed.info/sct"/>
+            <code value="77386006"/>
+            <display value="Pregnant (finding)"/>
+          </coding>
+        </code>
+        <subject>
+          <reference value="Patient/de1a201a-34dd-42d3-b421-3810da9b0be3"/>
+          <type value="Patient"/>
+        </subject>
+      </Condition>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="urn:uuid:66d3128b-1630-4915-bfe1-92f3004a9362"/>
+    <resource>
+      <Condition>
+        <id value="66d3128b-1630-4915-bfe1-92f3004a9362"/>
+        <meta>
+          <profile value="http://hl7.org/fhir/MicrobiologyLaboratory/StructureDefinition/MicrobiologyLaboratoryCondition"/>
+        </meta>
+        <verificationStatus>
+          <coding>
+            <system value="http://terminology.hl7.org/CodeSystem/condition-ver-status"/>
+            <version value="4.0.1"/>
+            <code value="confirmed"/>
+          </coding>
+        </verificationStatus>
+        <code>
+          <coding>
+            <system value="http://snomed.info/sct"/>
+            <code value="370391006"/>
+            <display value="Patient immunosuppressed (finding)"/>
+          </coding>
+        </code>
+        <subject>
+          <reference value="Patient/de1a201a-34dd-42d3-b421-3810da9b0be3"/>
+          <type value="Patient"/>
+        </subject>
+      </Condition>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="urn:uuid:fed0f3b8-82f1-432f-be77-4beb7600c4b6"/>
+    <resource>
+      <Condition>
+        <id value="fed0f3b8-82f1-432f-be77-4beb7600c4b6"/>
+        <meta>
+          <profile value="http://hl7.org/fhir/MicrobiologyLaboratory/StructureDefinition/MicrobiologyLaboratoryCondition"/>
+        </meta>
+        <verificationStatus>
+          <coding>
+            <system value="http://terminology.hl7.org/CodeSystem/condition-ver-status"/>
+            <version value="4.0.1"/>
+            <code value="refuted"/>
+          </coding>
+        </verificationStatus>
+        <code>
+          <coding>
+            <system value="http://snomed.info/sct"/>
+            <code value="2631000119108"/>
+            <display value="History of bone marrow transplant (situation)"/>
+          </coding>
+        </code>
+        <subject>
+          <reference value="Patient/de1a201a-34dd-42d3-b421-3810da9b0be3"/>
+          <type value="Patient"/>
+        </subject>
+      </Condition>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="urn:uuid:cc7e8408-9364-45e4-ac30-71f39734777d"/>
+    <resource>
+      <Condition>
+        <id value="cc7e8408-9364-45e4-ac30-71f39734777d"/>
+        <meta>
+          <profile value="http://hl7.org/fhir/MicrobiologyLaboratory/StructureDefinition/MicrobiologyLaboratoryCondition"/>
+        </meta>
+        <verificationStatus>
+          <coding>
+            <system value="http://terminology.hl7.org/CodeSystem/condition-ver-status"/>
+            <version value="4.0.1"/>
+            <code value="confirmed"/>
+          </coding>
+        </verificationStatus>
+        <code>
+          <coding>
+            <system value="http://snomed.info/sct"/>
+            <code value="49191000119102"/>
+            <display value="History of neutropenia (situation)"/>
+          </coding>
+        </code>
+        <subject>
+          <reference value="Patient/de1a201a-34dd-42d3-b421-3810da9b0be3"/>
+          <type value="Patient"/>
+        </subject>
+      </Condition>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="urn:uuid:26a2a352-2c2b-4b13-9a1b-9e5de3f9ebf4"/>
+    <resource>
+      <Practitioner>
+        <id value="26a2a352-2c2b-4b13-9a1b-9e5de3f9ebf4"/>
+        <meta>
+          <profile value="http://hl7.org/fhir/MicrobiologyLaboratory/StructureDefinition/MicrobiologyLaboratoryPractitioner"/>
+        </meta>
+        <identifier>
+          <extension url="http://hl7.org/fhir/StructureDefinition/iso21090-nullFlavor">
+            <valueCode value="NA"/>
+          </extension>
+        </identifier>
+        <active value="true"/>
+        <name>
+          <family value="Humpel"/>
+          <given value="Florian"/>
+          <prefix value="Dr."/>
+        </name>
+        <telecom>
+          <system value="phone"/>
+          <value value="+43.1.12345-636"/>
+          <use value="work"/>
+        </telecom>
+        <address>
+          <line value="Laborplatz 1"/>
+          <city value="Wien"/>
+          <postalCode value="1210"/>
+          <country value="AUT"/>
+        </address>
+      </Practitioner>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="urn:uuid:2a1318a0-1c62-4b43-a729-d64324a219d3"/>
+    <resource>
+      <PractitionerRole>
+        <id value="2a1318a0-1c62-4b43-a729-d64324a219d3"/>
+        <meta>
+          <profile value="http://hl7.org/fhir/MicrobiologyLaboratory/StructureDefinition/MicrobiologyLaboratoryPractitionerRole"/>
+        </meta>
+        <active value="true"/>
+        <practitioner>
+          <reference value="Practitioner/26a2a352-2c2b-4b13-9a1b-9e5de3f9ebf4"/>
+          <type value="Practitioner"/>
+        </practitioner>
+        <organization>
+          <reference value="Organization/987895c8-684a-4ea6-804a-4487409848cd"/>
+          <type value="Organization"/>
+        </organization>
+      </PractitionerRole>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="urn:uuid:987895c8-684a-4ea6-804a-4487409848cd"/>
+    <resource>
+      <Organization>
+        <id value="987895c8-684a-4ea6-804a-4487409848cd"/>
+        <meta>
+          <profile value="http://hl7.org/fhir/MicrobiologyLaboratory/StructureDefinition/MicrobiologyLaboratoryOrganization"/>
+        </meta>
+        <identifier>
+          <system value="urn:ietf:rfc:3986"/>
+          <value value="urn:oid:1.2.40.0.34.99.111.0.1"/>
+          <assigner>
+            <display value="GDA Index"/>
+          </assigner>
+        </identifier>
+        <active value="true"/>
+        <name>Amadeus Spital</name>
+        <telecom>
+          <system value="phone"/>
+          <value value="+43.1.3453446.0"/>
+        </telecom>
+        <telecom>
+          <system value="fax"/>
+          <value value="+43.1.3453446.4674"/>
+        </telecom>
+        <telecom>
+          <system value="email"/>
+          <value value="info@amadeusspital.at"/>
+        </telecom>
+        <telecom>
+          <system value="url"/>
+          <value value="www.amadeusspital.at"/>
+        </telecom>
+        <address>
+          <city value="St.Wolfgang"/>
+          <state value="Salzburg"/>
+          <postalCode value="1234"/>
+          <country value="AUT"/>
+        </address>
+      </Organization>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="urn:uuid:46c1826a-1bc3-4de6-bf50-609a43796c77"/>
+    <resource>
+      <Observation>
+        <id value="46c1826a-1bc3-4de6-bf50-609a43796c77"/>
+        <meta>
+          <profile value="http://hl7.org/fhir/MicrobiologyLaboratory/StructureDefinition/MicrobiologyLaboratoryObservation"/>
+        </meta>
+        <status value="final"/>
+        <category>
+          <coding>
+            <system value="http://hl7.org/fhir/ValueSet/observation-category"/>
+            <version value="4.0.1"/>
+            <code value="laboratory"/>
+            <display value="Laboratory"/>
+          </coding>
+        </category>
+        <code>
+          <coding>
+            <system value="http://loinc.org"/>
+            <code value="20455-2"/>
+            <display value="Leukocytes [Presence] in Urine sediment by          Light microscopy"/>
+          </coding>
+        </code>
+        <subject>
+          <reference value="Patient/de1a201a-34dd-42d3-b421-3810da9b0be3"/>
+          <type value="Patient"/>
+        </subject>
+        <effectiveDateTime value="2013-12-01T07:34:06+01:00"/>
+        <valueCodeableConcept>
+          <coding>
+            <system value="http://loinc.org"/>
+            <code value="LA15679-6"/>
+            <display value="Rare"/>
+          </coding>
+        </valueCodeableConcept>
+        <specimen>
+          <reference value="Specimen/7b9d3e92-c1e1-4cd9-b8e5-a91bc5320e6c"/>
+          <type value="Specimen"/>
+        </specimen>
+      </Observation>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="urn:uuid:88839599-cde1-4544-9e7d-7d937dd8225d"/>
+    <resource>
+      <Observation>
+        <id value="88839599-cde1-4544-9e7d-7d937dd8225d"/>
+        <meta>
+          <profile value="http://hl7.org/fhir/MicrobiologyLaboratory/StructureDefinition/MicrobiologyLaboratoryObservation"/>
+        </meta>
+        <status value="final"/>
+        <category>
+          <coding>
+            <system value="http://hl7.org/fhir/ValueSet/observation-category"/>
+            <version value="4.0.1"/>
+            <code value="laboratory"/>
+            <display value="Laboratory"/>
+          </coding>
+        </category>
+        <code>
+          <coding>
+            <system value="http://snomed.info/sct"/>
+            <code value="3092008"/>
+            <display value="Staphylococcus aureus"/>
+          </coding>
+          <coding>
+            <system value="http://loinc.org"/>
+            <code value="6463-4"/>
+            <display value="Bacteria identified in Specimen by Culture"/>
+          </coding>
+          <coding>
+            <system value="http://snomed.info/sct"/>
+            <code value="365705006"/>
+            <display value="Finding of antimicrobial susceptibility (finding)"/>
+          </coding>
+        </code>
+        <subject>
+          <reference value="Patient/de1a201a-34dd-42d3-b421-3810da9b0be3"/>
+          <type value="Patient"/>
+        </subject>
+        <effectiveDateTime>
+          <extension url="http://hl7.org/fhir/StructureDefinition/iso21090-nullFlavor">
+            <valueCode value="UNK"/>
+          </extension>
+        </effectiveDateTime>
+        <valueRange>
+          <low>
+            <value value="10E4"/>
+            <unit value="[KBE/ml]"/>
+          </low>
+          <high>
+            <extension url="http://hl7.org/fhir/StructureDefinition/iso21090-nullFlavor">
+              <valueCode value="PINF"/>
+            </extension>
+          </high>
+        </valueRange>
+        <specimen>
+          <reference value="Specimen/7b9d3e92-c1e1-4cd9-b8e5-a91bc5320e6c"/>
+          <type value="Specimen"/>
+        </specimen>
+        <hasMember>
+          <reference value="Observation/cde5a7de-d108-48aa-9d33-d2850e603d83"/>
+          <type value="Observation"/>
+        </hasMember>
+        <hasMember>
+          <reference value="Observation/b8453554-6c18-49c8-a2ce-a4552a585834"/>
+          <type value="Observation"/>
+        </hasMember>
+        <hasMember>
+          <reference value="Observation/9bf83830-1a23-4499-bcbd-03aa5f1ca19b"/>
+          <type value="Observation"/>
+        </hasMember>
+      </Observation>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="urn:uuid:cde5a7de-d108-48aa-9d33-d2850e603d83"/>
+    <resource>
+      <Observation>
+        <id value="cde5a7de-d108-48aa-9d33-d2850e603d83"/>
+        <meta>
+          <profile value="http://hl7.org/fhir/MicrobiologyLaboratory/StructureDefinition/MicrobiologyLaboratoryObservation"/>
+        </meta>
+        <status value="final"/>
+        <category>
+          <coding>
+            <system value="http://hl7.org/fhir/ValueSet/observation-category"/>
+            <version value="4.0.1"/>
+            <code value="laboratory"/>
+            <display value="Laboratory"/>
+          </coding>
+        </category>
+        <code>
+          <coding>
+            <system value="http://loinc.org"/>
+            <code value="18861-5"/>
+            <display value="Amoxicillin [Susceptibility]"/>
+          </coding>
+        </code>
+        <subject>
+          <reference value="Patient/de1a201a-34dd-42d3-b421-3810da9b0be3"/>
+          <type value="Patient"/>
+        </subject>
+        <effectiveDateTime>
+          <extension url="http://hl7.org/fhir/StructureDefinition/iso21090-nullFlavor">
+            <valueCode value="UNK"/>
+          </extension>
+        </effectiveDateTime>
+        <interpretation>
+          <coding>
+            <system value="http://terminology.hl7.org/CodeSystem/v3-ObservationInterpretation"/>
+            <code value="R"/>
+            <display value="Resistant"/>
+          </coding>
+        </interpretation>
+        <specimen>
+          <reference value="Specimen/7b9d3e92-c1e1-4cd9-b8e5-a91bc5320e6c"/>
+          <type value="Specimen"/>
+        </specimen>
+      </Observation>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="urn:uuid:b8453554-6c18-49c8-a2ce-a4552a585834"/>
+    <resource>
+      <Observation>
+        <id value="b8453554-6c18-49c8-a2ce-a4552a585834"/>
+        <meta>
+          <profile value="http://hl7.org/fhir/MicrobiologyLaboratory/StructureDefinition/MicrobiologyLaboratoryObservation"/>
+        </meta>
+        <status value="final"/>
+        <category>
+          <coding>
+            <system value="http://hl7.org/fhir/ValueSet/observation-category"/>
+            <version value="4.0.1"/>
+            <code value="laboratory"/>
+            <display value="Laboratory"/>
+          </coding>
+        </category>
+        <code>
+          <coding>
+            <system value="http://loinc.org"/>
+            <code value="18928-2"/>
+            <display value="Gentamicin [Susceptibility]"/>
+          </coding>
+        </code>
+        <subject>
+          <reference value="Patient/de1a201a-34dd-42d3-b421-3810da9b0be3"/>
+          <type value="Patient"/>
+        </subject>
+        <effectiveDateTime>
+          <extension url="http://hl7.org/fhir/StructureDefinition/iso21090-nullFlavor">
+            <valueCode value="UNK"/>
+          </extension>
+        </effectiveDateTime>
+        <interpretation>
+          <coding>
+            <system value="http://terminology.hl7.org/CodeSystem/v3-ObservationInterpretation"/>
+            <code value="R"/>
+            <display value="Resistant"/>
+          </coding>
+        </interpretation>
+        <specimen>
+          <reference value="Specimen/7b9d3e92-c1e1-4cd9-b8e5-a91bc5320e6c"/>
+          <type value="Specimen"/>
+        </specimen>
+      </Observation>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="urn:uuid:9bf83830-1a23-4499-bcbd-03aa5f1ca19b"/>
+    <resource>
+      <Observation>
+        <id value="9bf83830-1a23-4499-bcbd-03aa5f1ca19b"/>
+        <meta>
+          <profile value="http://hl7.org/fhir/MicrobiologyLaboratory/StructureDefinition/MicrobiologyLaboratoryObservation"/>
+        </meta>
+        <status value="final"/>
+        <category>
+          <coding>
+            <system value="http://hl7.org/fhir/ValueSet/observation-category"/>
+            <version value="4.0.1"/>
+            <code value="laboratory"/>
+            <display value="Laboratory"/>
+          </coding>
+        </category>
+        <code>
+          <coding>
+            <system value="http://loinc.org"/>
+            <code value="42357-4"/>
+            <display value="Tigecycline [Susceptibility]"/>
+          </coding>
+        </code>
+        <subject>
+          <reference value="Patient/de1a201a-34dd-42d3-b421-3810da9b0be3"/>
+          <type value="Patient"/>
+        </subject>
+        <effectiveDateTime>
+          <extension url="http://hl7.org/fhir/StructureDefinition/iso21090-nullFlavor">
+            <valueCode value="UNK"/>
+          </extension>
+        </effectiveDateTime>
+        <valueQuantity>
+          <value value="0.25"/>
+          <unit value="mg/L"/>
+        </valueQuantity>
+        <interpretation>
+          <coding>
+            <system value="http://terminology.hl7.org/CodeSystem/v3-ObservationInterpretation"/>
+            <code value="S"/>
+            <display value="Susceptible"/>
+          </coding>
+        </interpretation>
+        <specimen>
+          <reference value="Specimen/7b9d3e92-c1e1-4cd9-b8e5-a91bc5320e6c"/>
+          <type value="Specimen"/>
+        </specimen>
+      </Observation>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="urn:uuid:bd54bdda-ae9d-40b9-8eff-b9807fd7a24b"/>
+    <resource>
+      <Observation>
+        <id value="bd54bdda-ae9d-40b9-8eff-b9807fd7a24b"/>
+        <meta>
+          <profile value="http://hl7.org/fhir/MicrobiologyLaboratory/StructureDefinition/MicrobiologyLaboratoryObservation"/>
+        </meta>
+        <status value="final"/>
+        <category>
+          <coding>
+            <system value="http://hl7.org/fhir/ValueSet/observation-category"/>
+            <version value="4.0.1"/>
+            <code value="laboratory"/>
+            <display value="Laboratory"/>
+          </coding>
+        </category>
+        <code>
+          <coding>
+            <system value="http://snomed.info/sct"/>
+            <code value="112283007"/>
+            <display value="Escherichia coli"/>
+          </coding>
+          <coding>
+            <system value="http://loinc.org"/>
+            <code value="6463-4"/>
+            <display value="Bacteria identified in Specimen by Culture"/>
+          </coding>
+          <coding>
+            <system value="http://snomed.info/sct"/>
+            <code value="365705006"/>
+            <display value="Finding of antimicrobial susceptibility (finding)"/>
+          </coding>
+        </code>
+        <subject>
+          <reference value="Patient/de1a201a-34dd-42d3-b421-3810da9b0be3"/>
+          <type value="Patient"/>
+        </subject>
+        <effectiveDateTime>
+          <extension url="http://hl7.org/fhir/StructureDefinition/iso21090-nullFlavor">
+            <valueCode value="UNK"/>
+          </extension>
+        </effectiveDateTime>
+        <valueRange>
+          <low>
+            <value value="20E4"/>
+            <unit value="[KBE/ml]"/>
+          </low>
+          <high>
+            <extension url="http://hl7.org/fhir/StructureDefinition/iso21090-nullFlavor">
+              <valueCode value="PINF"/>
+            </extension>
+          </high>
+        </valueRange>
+        <specimen>
+          <reference value="Specimen/7b9d3e92-c1e1-4cd9-b8e5-a91bc5320e6c"/>
+          <type value="Specimen"/>
+        </specimen>
+        <hasMember>
+          <reference value="Observation/47035e77-5481-4651-8d22-eb4a3588ea18"/>
+          <type value="Observation"/>
+        </hasMember>
+        <hasMember>
+          <reference value="Observation/671b1a2a-d91b-4163-8e1e-2437e53f9a6d"/>
+          <type value="Observation"/>
+        </hasMember>
+        <hasMember>
+          <reference value="Observation/0a1a94ca-4ceb-4b09-97a8-c5b2e960bd84"/>
+          <type value="Observation"/>
+        </hasMember>
+      </Observation>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="urn:uuid:47035e77-5481-4651-8d22-eb4a3588ea18"/>
+    <resource>
+      <Observation>
+        <id value="47035e77-5481-4651-8d22-eb4a3588ea18"/>
+        <meta>
+          <profile value="http://hl7.org/fhir/MicrobiologyLaboratory/StructureDefinition/MicrobiologyLaboratoryObservation"/>
+        </meta>
+        <status value="final"/>
+        <category>
+          <coding>
+            <system value="http://hl7.org/fhir/ValueSet/observation-category"/>
+            <version value="4.0.1"/>
+            <code value="laboratory"/>
+            <display value="Laboratory"/>
+          </coding>
+        </category>
+        <code>
+          <coding>
+            <system value="http://loinc.org"/>
+            <code value="18861-5"/>
+            <display value="Amoxicillin [Susceptibility]"/>
+          </coding>
+        </code>
+        <subject>
+          <reference value="Patient/de1a201a-34dd-42d3-b421-3810da9b0be3"/>
+          <type value="Patient"/>
+        </subject>
+        <effectiveDateTime>
+          <extension url="http://hl7.org/fhir/StructureDefinition/iso21090-nullFlavor">
+            <valueCode value="UNK"/>
+          </extension>
+        </effectiveDateTime>
+        <interpretation>
+          <coding>
+            <system value="http://terminology.hl7.org/CodeSystem/v3-ObservationInterpretation"/>
+            <code value="R"/>
+            <display value="Resistant"/>
+          </coding>
+        </interpretation>
+        <specimen>
+          <reference value="Specimen/7b9d3e92-c1e1-4cd9-b8e5-a91bc5320e6c"/>
+          <type value="Specimen"/>
+        </specimen>
+      </Observation>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="urn:uuid:671b1a2a-d91b-4163-8e1e-2437e53f9a6d"/>
+    <resource>
+      <Observation>
+        <id value="671b1a2a-d91b-4163-8e1e-2437e53f9a6d"/>
+        <meta>
+          <profile value="http://hl7.org/fhir/MicrobiologyLaboratory/StructureDefinition/MicrobiologyLaboratoryObservation"/>
+        </meta>
+        <status value="final"/>
+        <category>
+          <coding>
+            <system value="http://hl7.org/fhir/ValueSet/observation-category"/>
+            <version value="4.0.1"/>
+            <code value="laboratory"/>
+            <display value="Laboratory"/>
+          </coding>
+        </category>
+        <code>
+          <coding>
+            <system value="http://loinc.org"/>
+            <code value="18928-2"/>
+            <display value="Gentamicin [Susceptibility]"/>
+          </coding>
+        </code>
+        <subject>
+          <reference value="Patient/de1a201a-34dd-42d3-b421-3810da9b0be3"/>
+          <type value="Patient"/>
+        </subject>
+        <effectiveDateTime>
+          <extension url="http://hl7.org/fhir/StructureDefinition/iso21090-nullFlavor">
+            <valueCode value="UNK"/>
+          </extension>
+        </effectiveDateTime>
+        <interpretation>
+          <coding>
+            <system value="http://terminology.hl7.org/CodeSystem/v3-ObservationInterpretation"/>
+            <code value="R"/>
+            <display value="Resistant"/>
+          </coding>
+        </interpretation>
+        <specimen>
+          <reference value="Specimen/7b9d3e92-c1e1-4cd9-b8e5-a91bc5320e6c"/>
+          <type value="Specimen"/>
+        </specimen>
+      </Observation>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="urn:uuid:0a1a94ca-4ceb-4b09-97a8-c5b2e960bd84"/>
+    <resource>
+      <Observation>
+        <id value="0a1a94ca-4ceb-4b09-97a8-c5b2e960bd84"/>
+        <meta>
+          <profile value="http://hl7.org/fhir/MicrobiologyLaboratory/StructureDefinition/MicrobiologyLaboratoryObservation"/>
+        </meta>
+        <status value="final"/>
+        <category>
+          <coding>
+            <system value="http://hl7.org/fhir/ValueSet/observation-category"/>
+            <version value="4.0.1"/>
+            <code value="laboratory"/>
+            <display value="Laboratory"/>
+          </coding>
+        </category>
+        <code>
+          <coding>
+            <system value="http://loinc.org"/>
+            <code value="42357-4"/>
+            <display value="Tigecycline [Susceptibility]"/>
+          </coding>
+        </code>
+        <subject>
+          <reference value="Patient/de1a201a-34dd-42d3-b421-3810da9b0be3"/>
+          <type value="Patient"/>
+        </subject>
+        <effectiveDateTime>
+          <extension url="http://hl7.org/fhir/StructureDefinition/iso21090-nullFlavor">
+            <valueCode value="UNK"/>
+          </extension>
+        </effectiveDateTime>
+        <valueQuantity>
+          <value value="0.25"/>
+          <unit value="mg/L"/>
+        </valueQuantity>
+        <interpretation>
+          <coding>
+            <system value="http://terminology.hl7.org/CodeSystem/v3-ObservationInterpretation"/>
+            <code value="S"/>
+            <display value="Susceptible"/>
+          </coding>
+        </interpretation>
+        <specimen>
+          <reference value="Specimen/7b9d3e92-c1e1-4cd9-b8e5-a91bc5320e6c"/>
+          <type value="Specimen"/>
+        </specimen>
+      </Observation>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="urn:uuid:afb2b6b9-0bcf-4acc-a02d-862fa255bec7"/>
+    <resource>
+      <Observation>
+        <id value="afb2b6b9-0bcf-4acc-a02d-862fa255bec7"/>
+        <meta>
+          <profile value="http://hl7.org/fhir/MicrobiologyLaboratory/StructureDefinition/MicrobiologyLaboratoryObservation"/>
+        </meta>
+        <status value="final"/>
+        <category>
+          <coding>
+            <system value="http://hl7.org/fhir/ValueSet/observation-category"/>
+            <version value="4.0.1"/>
+            <code value="laboratory"/>
+            <display value="Laboratory"/>
+          </coding>
+        </category>
+        <code>
+          <coding>
+            <system value="http://snomed.info/sct"/>
+            <code value="51526001"/>
+            <display value="Francisella tularensis"/>
+          </coding>
+          <coding>
+            <system value="http://loinc.org"/>
+            <code value="6463-4"/>
+            <display value="Bacteria identified in Specimen by Culture"/>
+          </coding>
+          <coding>
+            <system value="http://snomed.info/sct"/>
+            <code value="365705006"/>
+            <display value="Finding of antimicrobial susceptibility (finding)"/>
+          </coding>
+        </code>
+        <subject>
+          <reference value="Patient/de1a201a-34dd-42d3-b421-3810da9b0be3"/>
+          <type value="Patient"/>
+        </subject>
+        <effectiveDateTime>
+          <extension url="http://hl7.org/fhir/StructureDefinition/iso21090-nullFlavor">
+            <valueCode value="UNK"/>
+          </extension>
+        </effectiveDateTime>
+        <valueRange>
+          <low>
+            <value value="60E4"/>
+            <unit value="[KBE/ml]"/>
+          </low>
+          <high>
+            <extension url="http://hl7.org/fhir/StructureDefinition/iso21090-nullFlavor">
+              <valueCode value="PINF"/>
+            </extension>
+          </high>
+        </valueRange>
+        <specimen>
+          <reference value="Specimen/7b9d3e92-c1e1-4cd9-b8e5-a91bc5320e6c"/>
+          <type value="Specimen"/>
+        </specimen>
+        <hasMember>
+          <reference value="Observation/da026059-b088-4724-ad92-5a554cca4fef"/>
+          <type value="Observation"/>
+        </hasMember>
+        <hasMember>
+          <reference value="Observation/918960ed-ba69-4dd9-8d9f-180e7fc2ffd3"/>
+          <type value="Observation"/>
+        </hasMember>
+        <hasMember>
+          <reference value="Observation/1864669a-5ac2-4d88-9e20-16b3f56fdf09"/>
+          <type value="Observation"/>
+        </hasMember>
+      </Observation>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="urn:uuid:da026059-b088-4724-ad92-5a554cca4fef"/>
+    <resource>
+      <Observation>
+        <id value="da026059-b088-4724-ad92-5a554cca4fef"/>
+        <meta>
+          <profile value="http://hl7.org/fhir/MicrobiologyLaboratory/StructureDefinition/MicrobiologyLaboratoryObservation"/>
+        </meta>
+        <status value="final"/>
+        <category>
+          <coding>
+            <system value="http://hl7.org/fhir/ValueSet/observation-category"/>
+            <version value="4.0.1"/>
+            <code value="laboratory"/>
+            <display value="Laboratory"/>
+          </coding>
+        </category>
+        <code>
+          <coding>
+            <system value="http://loinc.org"/>
+            <code value="18861-5"/>
+            <display value="Amoxicillin [Susceptibility]"/>
+          </coding>
+        </code>
+        <subject>
+          <reference value="Patient/de1a201a-34dd-42d3-b421-3810da9b0be3"/>
+          <type value="Patient"/>
+        </subject>
+        <effectiveDateTime>
+          <extension url="http://hl7.org/fhir/StructureDefinition/iso21090-nullFlavor">
+            <valueCode value="UNK"/>
+          </extension>
+        </effectiveDateTime>
+        <interpretation>
+          <coding>
+            <system value="http://terminology.hl7.org/CodeSystem/v3-ObservationInterpretation"/>
+            <code value="R"/>
+            <display value="Resistant"/>
+          </coding>
+        </interpretation>
+        <specimen>
+          <reference value="Specimen/7b9d3e92-c1e1-4cd9-b8e5-a91bc5320e6c"/>
+          <type value="Specimen"/>
+        </specimen>
+      </Observation>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="urn:uuid:918960ed-ba69-4dd9-8d9f-180e7fc2ffd3"/>
+    <resource>
+      <Observation>
+        <id value="918960ed-ba69-4dd9-8d9f-180e7fc2ffd3"/>
+        <meta>
+          <profile value="http://hl7.org/fhir/MicrobiologyLaboratory/StructureDefinition/MicrobiologyLaboratoryObservation"/>
+        </meta>
+        <status value="final"/>
+        <category>
+          <coding>
+            <system value="http://hl7.org/fhir/ValueSet/observation-category"/>
+            <version value="4.0.1"/>
+            <code value="laboratory"/>
+            <display value="Laboratory"/>
+          </coding>
+        </category>
+        <code>
+          <coding>
+            <system value="http://loinc.org"/>
+            <code value="18928-2"/>
+            <display value="Gentamicin [Susceptibility]"/>
+          </coding>
+        </code>
+        <subject>
+          <reference value="Patient/de1a201a-34dd-42d3-b421-3810da9b0be3"/>
+          <type value="Patient"/>
+        </subject>
+        <effectiveDateTime>
+          <extension url="http://hl7.org/fhir/StructureDefinition/iso21090-nullFlavor">
+            <valueCode value="UNK"/>
+          </extension>
+        </effectiveDateTime>
+        <interpretation>
+          <coding>
+            <system value="http://terminology.hl7.org/CodeSystem/v3-ObservationInterpretation"/>
+            <code value="R"/>
+            <display value="Resistant"/>
+          </coding>
+        </interpretation>
+        <specimen>
+          <reference value="Specimen/7b9d3e92-c1e1-4cd9-b8e5-a91bc5320e6c"/>
+          <type value="Specimen"/>
+        </specimen>
+      </Observation>
+    </resource>
+  </entry>
+  <entry>
+    <fullUrl value="urn:uuid:1864669a-5ac2-4d88-9e20-16b3f56fdf09"/>
+    <resource>
+      <Observation>
+        <id value="1864669a-5ac2-4d88-9e20-16b3f56fdf09"/>
+        <meta>
+          <profile value="http://hl7.org/fhir/MicrobiologyLaboratory/StructureDefinition/MicrobiologyLaboratoryObservation"/>
+        </meta>
+        <status value="final"/>
+        <category>
+          <coding>
+            <system value="http://hl7.org/fhir/ValueSet/observation-category"/>
+            <version value="4.0.1"/>
+            <code value="laboratory"/>
+            <display value="Laboratory"/>
+          </coding>
+        </category>
+        <code>
+          <coding>
+            <system value="http://loinc.org"/>
+            <code value="42357-4"/>
+            <display value="Tigecycline [Susceptibility]"/>
+          </coding>
+        </code>
+        <subject>
+          <reference value="Patient/de1a201a-34dd-42d3-b421-3810da9b0be3"/>
+          <type value="Patient"/>
+        </subject>
+        <effectiveDateTime>
+          <extension url="http://hl7.org/fhir/StructureDefinition/iso21090-nullFlavor">
+            <valueCode value="UNK"/>
+          </extension>
+        </effectiveDateTime>
+        <valueQuantity>
+          <value value="0.25"/>
+          <unit value="mg/L"/>
+        </valueQuantity>
+        <interpretation>
+          <coding>
+            <system value="http://terminology.hl7.org/CodeSystem/v3-ObservationInterpretation"/>
+            <code value="S"/>
+            <display value="Susceptible"/>
+          </coding>
+        </interpretation>
+        <specimen>
+          <reference value="Specimen/7b9d3e92-c1e1-4cd9-b8e5-a91bc5320e6c"/>
+          <type value="Specimen"/>
+        </specimen>
+      </Observation>
+    </resource>
+  </entry>
+</Bundle>

@@ -1,0 +1,69 @@
+// version = 0.1
+// title = "CDA-FHIR Mapping : CDA2FHIRTypes"
+// status = draft
+
+map "http://hl7.org/fhir/cda2fhir/StructureMap/CDA2FHIRTypes" = "TransformationCDA2FHIRTypes"
+
+// Adapted from:
+// https://github.com/HL7/ccda-to-fhir/tree/master/mappings
+// https://github.com/hl7ch/cda-fhir-maps/tree/master/input/maps
+
+// CDA: https://art-decor.org/art-decor/decor-templates--at-lab-
+// FHIR: http://hl7.org/fhir/R4/
+
+
+uses "http://hl7.org/fhir/cda/StructureDefinition/ED" alias ED as source
+uses "http://hl7.org/fhir/cda/StructureDefinition/II" alias II as source
+uses "http://hl7.org/fhir/cda/StructureDefinition/TS" alias TS as source
+uses "http://hl7.org/fhir/cda/StructureDefinition/CS" alias CS as source
+uses "http://hl7.org/fhir/cda/StructureDefinition/CE" alias CE as source
+uses "http://hl7.org/fhir/cda/StructureDefinition/CD" alias CD as source
+uses "http://hl7.org/fhir/cda/StructureDefinition/CV" alias CV as source
+uses "http://hl7.org/fhir/cda/StructureDefinition/ST" alias ST as source
+uses "http://hl7.org/fhir/cda/StructureDefinition/SC" alias SC as source
+uses "http://hl7.org/fhir/cda/StructureDefinition/EN" alias EN as source
+uses "http://hl7.org/fhir/cda/StructureDefinition/AD" alias AD as source
+uses "http://hl7.org/fhir/cda/StructureDefinition/TEL" alias TEL as source
+uses "http://hl7.org/fhir/cda/StructureDefinition/BL" alias BL as source
+uses "http://hl7.org/fhir/cda/StructureDefinition/INT" alias INT as source
+uses "http://hl7.org/fhir/cda/StructureDefinition/ON" alias ON as source
+uses "http://hl7.org/fhir/cda/StructureDefinition/PQ" alias PQ as source
+uses "http://hl7.org/fhir/cda/StructureDefinition/RTO" alias RTO as source
+uses "http://hl7.org/fhir/cda/StructureDefinition/RTO_PQ_PQ" alias RTO_PQ_PQ as source
+uses "http://hl7.org/fhir/cda/StructureDefinition/RTO_QTY_QTY" alias RTO_QTY_QTY as source
+uses "http://hl7.org/fhir/cda/StructureDefinition/IVL_TS" alias IVL_TS as source
+uses "http://hl7.org/fhir/cda/StructureDefinition/IVL_PQ" alias IVL_PQ as source
+uses "http://hl7.org/fhir/cda/StructureDefinition/IVL_INT" alias IVL_INT as source
+
+uses "http://hl7.org/fhir/StructureDefinition/instant" alias instant as target
+uses "http://hl7.org/fhir/StructureDefinition/code" alias code as target
+uses "http://hl7.org/fhir/StructureDefinition/date" alias date as target
+uses "http://hl7.org/fhir/StructureDefinition/dateTime" alias dateTime as target
+uses "http://hl7.org/fhir/StructureDefinition/integer" alias integer as target
+uses "http://hl7.org/fhir/StructureDefinition/boolean" alias boolean as target
+uses "http://hl7.org/fhir/StructureDefinition/string" alias string as target
+uses "http://hl7.org/fhir/StructureDefinition/Identifier" alias Identifier as target
+uses "http://hl7.org/fhir/StructureDefinition/CodeableConcept" alias CodeableConcept as target
+uses "http://hl7.org/fhir/StructureDefinition/HumanName" alias HumanName as target
+uses "http://hl7.org/fhir/StructureDefinition/Address" alias Address as target
+uses "http://hl7.org/fhir/StructureDefinition/ContactPoint" alias ContactPoint as target
+uses "http://hl7.org/fhir/StructureDefinition/Quantity" alias Quantity as target
+uses "http://hl7.org/fhir/StructureDefinition/Period" alias Period as target
+uses "http://hl7.org/fhir/StructureDefinition/Range" alias Range as target
+uses "http://hl7.org/fhir/StructureDefinition/Ratio" alias Ratio as target
+
+// Identifier
+// source: https://art-decor.org/mediawiki/index.php?title=Instance_Identifier_(II)
+// source: Allgemeiner ELGA-CDA Implementierungsleitfaden, Abschnitt 5.1.1.2
+// target: https://www.hl7.org/fhir/datatypes.html#2.24.0.12
+group IIIdentifier(source src : II, target tgt : Identifier) {
+  src.root as r where "extension.exists()" 
+     -> tgt.system = translate(r, 'http://hl7.org/fhir/ConceptMap/special-oid2uri', 'uri') "root1";
+  src.root as r where "extension.empty() and src.root.matches('[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}')" 
+     -> tgt.system = 'urn:ietf:rfc:3986', tgt.value = evaluate(r,'\'urn:uuid:\' + $this.lower()') "rootuuid";
+  src.root as r where "extension.empty() and root.contains('.')"
+     ->  tgt.system = 'urn:ietf:rfc:3986', tgt.value = evaluate(r,'\'urn:oid:\' + $this') "rootoid";
+
+  src.extension as e -> tgt.value = e;
+  src.assigningAuthorityName as s ->  tgt.assigner as a, a.display = s;
+}

@@ -1,0 +1,978 @@
+map "http://hl7.org/fhir/cda2fhir/StructureMap/CDA2FHIRDiagnosticReport" = "CDA2FHIRDiagnosticReport"
+
+// Adapted from:
+// https://github.com/HL7/ccda-to-fhir/tree/master/mappings
+// https://github.com/hl7ch/cda-fhir-maps/tree/master/input/maps
+
+// CDA: https://elga.art-decor.org/elga-html-20200429T211548/project.html
+// FHIR: http://hl7.org/fhir/R4/
+
+conceptmap "ELGAFachaerzteFHIRPerformerRole" { 
+  prefix s = "https://www.hl7.org/fhir/cda/ELGA_Fachaerzte"
+  prefix t = "https://www.hl7.org/fhir/valueset-performer-role"
+  
+  s:"102" == t:"88189002" // Fachärztin/Facharzt für Anästhesiologie und Intensivmedizin -> Anesthesiologist (doctor, not nurse - auch Intensivmedizin?)
+  s:"103" == t:"83273008" // Fachärztin/Facharzt für Anatomie -> Anatomic pathologist
+  s:"104" == t:"682131381000087105" // Fachärztin/Facharzt für Arbeitsmedizin -> Occupational medicine specialist
+  s:"105" == t:"28229004" // Fachärztin/Facharzt für Augenheilkunde und Optometrie -> Optometrist (FRAGE: auch Augenheilkúnde?)
+  s:"106" == t:"309341008" // Fachärztin/Facharzt für Blutgruppenserologie und Transfusionsmedizin -> Blood transfusion doctor
+  s:"107" == t:"78703002" // Fachärztin/Facharzt für Chirurgie -> General surgeon
+  s:"108" == t:"309367003" // Fachärztin/Facharzt für Frauenheilkunde und Geburtshilfe -> Obstetrician and gynecologist
+  s:"109" == t:"310193003 " // Fachärztin/Facharzt für Gerichtsmedizin -> Coroner
+  s:"110" == t:"61345009" // Fachärztin/Facharzt für Hals-, Nasen- und Ohrenkrankheiten -> Otorhinolaryngologist
+  s:"111" == t:"18803008" // Fachärztin/Facharzt für Haut- und Geschlechtskrankheiten -> Dermatologist (FRAGE: auch für Geschlechtskrankheiten zuständig??)
+  s:"112" == t:"309371000" // Fachärztin/Facharzt für Herzchirurgie -> Cardiac surgeon (alternatively: cardiothoracic surgeon)
+  s:"113" == t:"309342001" // Fachärztin/Facharzt für Histologie und Embryologie -> Histopathologist (FRAGE: auch für Embryologie zuständig??)
+  s:"114" == t:"14698002" // Fachärztin/Facharzt für Hygiene und Mikrobiologie -> Medical microbiologist (FRAGE: Auch für Hygiene zuständig?? Ansonsten nur Zahnhygiene gefunden...)
+  s:"115" == t:"63098009" // Fachärztin/Facharzt für Immunologie -> Clinical immunologist (alternatively: Immunopathologist 310171008)
+  s:"116" == t:"39677007" // Fachärztin/Facharzt für Innere Medizin -> Internal medicine specialist
+  s:"117" == t:"309383003" // Fachärztin/Facharzt für Kinder- und Jugendchirurgie -> Pediatric surgeon (FRAGE: auch für Jugendchirurgie?)
+  s:"118" == t:"82296001" // Fachärztin/Facharzt für Kinder- und Jugendheilkunde -> Pediatrician (FRAGE: auch für Jugendheilkunde?)
+  s:"119" == t:"309361002" // Fachärztin/Facharzt für Kinder- und Jugendpsychiatrie -> Child and adolescent psychiatrist
+  s:"120" == t:"41672002" // Fachärztin/Facharzt für Lungenkrankheiten -> Respiratory physician
+  s:"121" == t:"14698002" // Fachärztin/Facharzt für Medizinische Biologie -> Medical microbiologist
+  s:"122" == t:"24430003" // Fachärztin/Facharzt für Medizinische Biophysik -> Physical medicine specialist (ANM: Biophysik nicht vorhanden)
+  s:"123" == t:"159141008" // Fachärztin/Facharzt für Medizinische Genetik -> Geneticist (alternatively: clinical geneticist, 309355000)
+  s:"124" == t:"61246008" // Fachärztin/Facharzt für Medizinische und Chemische Labordiagnostik -> Laboratory medicine specialist (FRAGE: auch chemische Labordiagnostik inkludiert?)
+  s:"125" == t:"309348002" // Fachärztin/Facharzt für Medizinische Leistungsphysiologie -> Clinical physiologist (FRAGE: auch Leistungsphysiologie?)
+  s:"126" == t:"18850004" // Fachärztin/Facharzt für Mikrobiologisch-Serologische Labordiagnostik -> Laboratory hematologist (FRAGE: korrekte Übersetzung?)
+  s:"127" == t:"49993003" // Fachärztin/Facharzt für Mund-, Kiefer- und Gesichtschirurgie -> Maxillofacial surgeon
+  s:"128" == t:"doctor" // Fachärztin/Facharzt für Neurobiologie -> ?? (nicht vorhanden)
+  s:"129" == t:"45544007" // Fachärztin/Facharzt für Neurochirurgie -> Neurosurgeon
+  s:"130" == t:"56397003 " // Fachärztin/Facharzt für Neurologie -> Neurologist 
+  s:"131" == t:"21450003" // Fachärztin/Facharzt für Neurologie und Psychiatrie -> Neuropsychiatrist (FRAGE: auch Neurologie?)
+  s:"132" == t:"11661002" // Fachärztin/Facharzt für Neuropathologie -> Neuropathologist
+  s:"133" == t:"80933006" // Fachärztin/Facharzt für Nuklearmedizin -> Nuclear medicine physician
+  s:"134" == t:"22731001" // Fachärztin/Facharzt für Orthopädie und Orthopädische Chirurgie -> Orthopedic surgeon (FRAGE: auch Orthopädie?)
+  s:"135" == t:"61207006" // Fachärztin/Facharzt für Pathologie -> Medical pathologist
+  s:"136" == t:"doctor" // Fachärztin/Facharzt für Pathophysiologie -> ?? (ANMERKUNG: keine Pathophysiologie vorhanden)
+  s:"137" == t:"310173006" // Fachärztin/Facharzt für Pharmakologie und Toxikologie -> Clinical pharmacologist (FRAGE: auch Toxikologie?)
+  s:"138" == t:"309360001" // Fachärztin/Facharzt für Physikalische Medizin und Allgemeine Rehabilitation -> Rehabilitation physician (alternatively: Physical medicine specialist, 24430003)
+  s:"139" == t:"309349005" // Fachärztin/Facharzt für Physiologie -> Clinical physiologist
+  s:"140" == t:"8724009" // Fachärztin/Facharzt für Plastische, Ästhetische und Rekonstruktive Chirurgie -> Plastic surgeon (ANM: auch ästhetische und rekonstruktive Chirurgie?)
+  s:"141" == t:"80584001" // Fachärztin/Facharzt für Psychiatrie -> Psychiatrist (alternatively: forensic psychiatrist, liaison psychiatrist, psychiatrist for mental handicap, rehabilitation psychiatrist)
+  s:"142" == t:"21450003" // Fachärztin/Facharzt für Psychiatrie und Neurologie -> Neuropsychiatrist
+  s:"143" == t:"224588003" // Fachärztin/Facharzt für Psychiatrie und Psychotherapeutische Medizin -> Psychotherapist (FRAGE: auch Psychiatrie?)
+  s:"144" == t:"66862007" // Fachärztin/Facharzt für Radiologie -> Radiologist (alternatively: disgnostic/interventional/pediatric radiologist, neuroradiologist)
+  s:"145" == t:"doctor" // Fachärztin/Facharzt für Sozialmedizin -> ??
+  s:"146" == t:"766788081000087100" // Fachärztin/Facharzt für Spezifische Prophylaxe und Tropenmedizin -> Travel medicine specialist (FRAGE: auch spezifische Prophylaxe?)
+  s:"147" == t:"3430008" // Fachärztin/Facharzt für Strahlentherapie-Radioonkologie -> Radiation therapist (FRAGE: auch Radioonkologie?)
+  s:"148" == t:"doctor" // Fachärztin/Facharzt für Theoretische Sonderfächer -> ?? (nicht vorhanden)
+  s:"149" == t:"22983004" // Fachärztin/Facharzt für Thoraxchirurgie -> Thoracic surgeon
+  s:"150" == t:"doctor" // Fachärztin/Facharzt für Tumorbiologie -> Oncologist ??
+  s:"151" == t:"309386006" // Fachärztin/Facharzt für Unfallchirurgie -> Trauma surgeon
+  s:"152" == t:"24590004" // Fachärztin/Facharzt für Urologie -> Urologist
+  s:"153" == t:"76899008" // Fachärztin/Facharzt für Virologie -> Infectious disease specialist ??
+  s:"154" == t:"66476003" // Fachärztin/Facharzt für Zahn-, Mund- und Kieferheilkunde -> Oral pathologist, Specialized dentist (21365001), Orthodontist (37504001)
+}
+
+conceptmap "ELGA2FHIRGender" { 
+  prefix s = "https://www.hl7.org/fhir/cda/ELGA_AdministrativeGender"
+  prefix t = "https://www.hl7.org/fhir/valueset-gender-identity"
+  
+  s:"M" == t:"male" // gender M -> male
+  s:"F" == t: "female" // gender F -> female
+  s:"UN" == t: "non-binary" // gender UN (undifferentiated) -> non-binary (patient identifies with neither/both female and male); NullFlavour handled differently
+}
+
+conceptmap "ELGAFHIRObservationCode" {
+	prefix s = "https://www.hl7.org/fhir/cda/ELGA_StatusCode"
+	prefix t = "http://hl7.org/fhir/ValueSet/observation-status"
+
+	s:"completed" == t:"final" // The observation is complete and there are no further actions needed. 
+	s:"aborted" == t:"cancelled" // The observation is unavailable because the measurement was not started or not completed (also sometimes called "aborted").
+	s:"active" == t:"registered" // The existence of the observation is registered, but there is no result yet available.
+}
+
+
+conceptmap "ELGAReligiousAffilationFHIRReligiousAffilation" {
+	// Religious Affilation Mapping no longer needed
+	prefix s = "https://www.hl7.org/fhir/cda/ELGA_ReligiousAffilation"
+	prefix t = "https://www.hl7.org/fhir/v3/ReligiousAffiliation/vs"
+  
+  s:"100" == t:"??" // Katholische Kirchen -> keine Abbildung möglich (ausschließlich Christlich (nicht-katholisch) und nicht römisch-katholisch vorhanden)
+  s:"101" == t:"1041" // Römisch-Katholische Kirche -> Roman Catholic Church
+  s:"102" == t:"1034" // Griechisch-Katholische Kirche -> non-Roman Catholic
+  s:"103" == t:"1034" // Armenisch-Katholische Kirche -> non-Roman Catholic
+  s:"104" == t:"1034" // Bulgarisch-Katholische Kirche -> non-Roman Catholic
+  s:"105" == t:"1034" // Rumänische Griechisch-Katholische Kirche -> non-Roman Catholic
+  s:"106" == t:"1034" // Russisch-Katholische Kirche -> non-Roman Catholic
+  s:"107" == t:"1034" // Syrisch-Katholische Kirche -> non-Roman Catholic
+  s:"108" == t:"1034" // Ukrainische Griechisch-Katholische Kirche -> non-Roman Catholic
+  s:"109" == t:"1034" // Katholische Ostkirche (ohne nähere Angaben) -> non-Roman Catholic
+
+  s:"110" == t:"1068" // Griechisch-Orientalische Kirchen -> Eastern Orthodox
+  s:"111" == t:"1036" // Orthodoxe Kirchen (ohne nähere Angabe) -> Orthodox
+  s:"112" == t:"1068" // Griechisch-Orthodoxe Kirche (Hl. Dreifaltigkeit) -> Eastern Orthodox
+  s:"113" == t:"1068" // Griechisch-Orthodoxe Kirche (Hl. Georg) -> Eastern Orthodox
+  s:"114" == t:"1068" // Bulgarisch-Orthodoxe Kirche -> Eastern Orthodox
+  s:"115" == t:"1068" // Rumänisch-griechisch-orientalische Kirche -> Eastern Orthodox
+  s:"116" == t:"1068" // Russisch-Orthodoxe Kirche -> Eastern Orthodox
+  s:"117" == t:"1068" // Serbisch-griechisch-Orthodoxe Kirche -> Eastern Orthodox
+  s:"118" == t:"1068" // Ukrainisch-Orthodoxe Kirche -> Eastern Orthodox
+  
+  s:"119" == t:"1036" // Orientalisch-Orthodoxe Kirchen -> Orthodox
+  s:"120" == t:"1036" // Armenisch-apostolische Kirche -> Orthodox
+  s:"121" == t:"1036" // Syrisch-orthodoxe Kirche -> Orthodox
+  s:"122" == t:"1036" // Syrisch-orthodoxe Kirche -> Orthodox
+  s:"123" == t:"1036" // Koptisch-orthodoxe Kirche -> Orthodox
+  s:"124" == t:"1036" // Armenisch-apostolische Kirche -> Orthodox
+  s:"125" == t:"1036" // Äthiopisch-Orthodoxe Kirche -> Orthodox
+  
+  s:"126" == t:"1077" // Evangelische Kirchen Österreich -> Protestant
+  s:"127" == t:"1078" // Evangelische Kirche (ohne nähere Angabe) -> Protestant, No Denomintion
+  s:"128" == t:"1028" // Evangelische Kirche A. B. -> Lutheran
+  s:"129" == t:"1079" // Evangelische Kirche H. B. -> Reformed
+  
+  s:"130" == t:"1013" // Andere Christliche Kirchen -> Christian (non-Catholic, non-specific)
+  s:"131" == t:"1034" // Altkatholische Kirche Österreichs -> non-Roman Catholic
+  s:"132" == t:"1005" // Anglikanische Kirche -> Anglican
+  s:"133" == t:"1073" // Evangelisch-methodistische Kirche (EmK) -> Methodist
+
+  s:"134" == t:"1013" // Sonstige Christliche Gemeinschaften -> Christian (non-Catholic, non-specific)
+  s:"135" == t:"1009" // Baptisten -> Baptist
+  s:"136" == t:"1078" // Bund evangelikaler Gemeinden in Österreich -> Protestant, No Denomination
+  s:"137" == t:"1034" // Freie Christengemeinde/Pfingstgemeinde -> non-Roman Catholic
+  s:"138" == t:"1077" // Menoritische Freikirche -> Protestant
+  s:"139" == t:"1077" // Kirche der Siebenten-Tags-Adventisten -> Protestant
+  s:"140" == t:"1034" // Christengemeinschaft -> non-Roman Catholic
+  s:"141" == t:"1025" // Jehovas Zeugen -> Jehovah's Witnesses
+  s:"142" == t:"1034" // Neuapostolische Kirche -> non-Roman Catholic
+  s:"143" == t:"1034" // Mormonen -> non-Roman Catholic
+  s:"144" == t:"1013" // Sonstige Christliche Gemeinschaften (ohne nähere Angabe) -> Christian (non-Catholic, non-specific)
+  s:"145" == t:"1034" // ELAIA Christengemeinden -> non-Roman Catholic
+  s:"146" == t:"1038" // Pfingstkirche Gemeinde Gottes -> Pentecostal
+ 
+  s:"148" == t:"??" // Nicht-christliche Gemeinschaften -> nicht abbildbar, da zu grob definiert
+  s:"149" == t:"1026" // Israelitische Religionsgesellschaft -> Judaism
+  s:"150" == t:"1023" // Islamische Glaubensgemeinschaft -> Islam
+  s:"151" == t:"1023" // Alevitische Religionsgemeinschaft -> Islam
+  s:"152" == t:"1059" // Buddhistische Religionsgemeinschaft -> Zen Buddhism
+  s:"153" == t:"1008" // Baha`i -> Babi & Baha'I faiths
+  s:"154" == t:"1020" // Hinduistische Religionsgemeinschaft -> Hinduism
+  s:"155" == t:"1047" // Sikh -> Sikism
+  s:"156" == t:"1046" // Shintoismus -> Shinto
+  s:"157" == t:"1022" // Vereinigungskirche -> Independent
+  s:"162" == t:"1022" // Pastafarianismus -> Independent
+}
+
+uses "http://hl7.org/fhir/cda/StructureDefinition/ClinicalDocument" alias ClinicalDocument as source
+uses "http://hl7.org/fhir/cda/StructureDefinition/AssignedAuthor" alias AssignedAuthor as queried
+uses "http://hl7.org/fhir/cda/StructureDefinition/AssignedEntity" alias AssignedEntity as queried
+uses "http://hl7.org/fhir/cda/StructureDefinition/Organization" alias CDAOrganization as queried
+uses "http://hl7.org/fhir/cda/StructureDefinition/Section" alias Section as queried
+uses "http://hl7.org/fhir/cda/StructureDefinition/Act" alias Act as queried
+uses "http://hl7.org/fhir/cda/StructureDefinition/PatientRole" alias PatientRole as queried
+uses "http://hl7.org/fhir/cda/StructureDefinition/ParticipantRole" alias ParticipantRole as queried
+uses "http://hl7.org/fhir/cda/StructureDefinition/Person" alias Person as queried
+uses "http://hl7.org/fhir/cda/StructureDefinition/Observation" alias CDAObservation as queried
+
+uses "http://hl7.org/fhir/StructureDefinition/Bundle" alias Bundle as target
+uses "http://hl7.org/fhir/StructureDefinition/DiagnosticReport" alias DiagnosticReport as produced
+uses "http://hl7.org/fhir/StructureDefinition/Patient" alias Patient as produced
+uses "http://hl7.org/fhir/StructureDefinition/Practitioner" alias Practitioner as produced
+uses "http://hl7.org/fhir/StructureDefinition/PractitionerRole" alias PractitionerRole as produced
+uses "http://hl7.org/fhir/StructureDefinition/Organization" alias FHIROrganization as produced
+uses "http://hl7.org/fhir/StructureDefinition/Specimen" alias Specimen as produced
+uses "http://hl7.org/fhir/StructureDefinition/Reference" alias Reference as produced
+uses "http://hl7.org/fhir/StructureDefinition/Observation" alias FHIRObservation as produced
+uses "http://hl7.org/fhir/StructureDefinition/Condition" alias Condition as produced
+
+imports "http://hl7.org/fhir/cda2fhir/StructureMap/CDA2FHIRTypes"
+
+group CDA2Bundle(source cda:ClinicalDocument, target bundle:Bundle){
+	cda -> bundle.entry as entry, entry.resource = create('DiagnosticReport') as diagRep, diagRep.id = uuid() as uuid, entry.fullUrl = append('urn:uuid:',uuid) then {
+        cda -> diagRep.meta as diagRepMeta then {
+            cda -> diagRepMeta.profile = 'http://hl7.org/fhir/MicrobiologyLaboratory/StructureDefinition/MicrobiologyLaboratoryDiagnosticReport' "microbiologyLaboratoryDiagnosticReportProfile";
+        } "diagnosticReportProfile";
+		cda then ClinicalDocument2Bundle(cda,diagRep,bundle) "clinicalDoc2Bundle";
+	} "CDA2Bundle";
+}
+
+group ClinicalDocument2Bundle(source cda:ClinicalDocument, target diagnosticReport:DiagnosticReport, target bundle:Bundle){
+	cda -> bundle.id = uuid() "bundleId";
+	cda.effectiveTime -> bundle.timestamp "cdaEffTimeTimestamp";
+	cda -> bundle.type = 'collection' "bundleType";
+	cda -> bundle.entry as entry2, entry2.resource = create('Patient') as patient,
+	patient.id = uuid() as patuuid, entry2.fullUrl = append('urn:uuid:', patuuid),
+	bundle.entry as entry3, entry3.resource = create('Specimen') as specimen, 
+	specimen.id = uuid() as specuuid, entry3.fullUrl = append('urn:uuid:',specuuid),
+	specimen.subject = create('Reference') as reference, reference.reference = reference(patient), reference.type = 'Patient'
+	then ClinicalDocument2DiagnosticReport(cda,diagnosticReport,patient,specimen,bundle) "CD2DR";
+}
+
+group ClinicalDocument2DiagnosticReport(source cda:ClinicalDocument, target diagnosticReport:DiagnosticReport, target patientResource:Patient, target specimen:Specimen, target bundle:Bundle){
+    
+	// CDA Header
+
+    cda -> diagnosticReport.status = 'final' "reportStatus";
+	cda -> diagnosticReport.category = create('CodeableConcept') as obsType then {
+		cda -> obsType.coding as obsTypeCoding then {
+			cda -> obsTypeCoding.system = 'http://hl7.org/fhir/ValueSet/diagnostic-service-sections' "diagnosticReportTypeCodeSystem1";
+			cda -> obsTypeCoding.version = '4.0.1' "diagnosticReportTypeCodeSystemVersion1";
+			cda -> obsTypeCoding.code = 'MB' "diagnosticReportTypeCode1"; // microbiology
+			cda -> obsTypeCoding.display = 'Microbiology' "diagnosticReportTypeCodeDisplay1";
+		} "diagnosticReportTypeCoding1";
+		cda -> obsType.coding as obsTypeCoding then {
+			cda -> obsTypeCoding.system = 'http://hl7.org/fhir/ValueSet/diagnostic-service-sections' "diagnosticReportTypeCodeSystem2";
+			cda -> obsTypeCoding.version = '4.0.1' "diagnosticReportTypeCodeSystemVersion2";
+			cda -> obsTypeCoding.code = 'LAB' "diagnosticReportTypeCode2"; // laboratory
+			cda -> obsTypeCoding.display = 'Laboratory' "diagnosticReportTypeCodeDisplay2";
+		} "diagnosticReportTypeCoding2";
+	} "diagnosticReportType";
+    cda.id as identCDA -> diagnosticReport.identifier = create('Identifier') as value then IIIdentifier(identCDA,value) "identValue"; // internal identifier
+    
+	cda.code as codeCDA -> diagnosticReport.code = create('CodeableConcept') as value then CECodeableConcept(codeCDA,value) "codeValue"; // LOINC-Code microbiology studies
+	//cda.title as titleCDA -> diagnosticReport.code = create('string') as value then STstring(titleCDA,value) "titleValue"; not transformable - even required?
+    cda.setId as setIdCDA -> diagnosticReport.identifier = create('Identifier') as value then IIIdentifier(setIdCDA,value) "setIdValue";
+
+    // RecordTarget/Patient
+	cda.recordTarget as recTarget then {
+		recTarget.patientRole as patient -> diagnosticReport.subject = create('Reference') as reference, reference.reference = reference(patientResource), reference.type = 'Patient' then PatientRolePatient(patient, patientResource) "recordTargetValue";
+    } "recordTarget";
+    
+    // Author/Practitioner
+    cda.author as authorCDA -> bundle.entry as entry1, entry1.resource = create('PractitionerRole') as practitionerRole, practitionerRole.id = uuid() as uuid0, entry1.fullUrl = append('urn:uuid:',uuid0), diagnosticReport.performer = create('Reference') as reference, reference.reference = reference(practitionerRole), reference.type = 'PractitionerRole' then {
+		authorCDA.functionCode as funcCDA -> practitionerRole.code = create('CodeableConcept') as value then CECodeableConcept(funcCDA,value) "funcCode"; // internal function code; alternatively practitioner.qualification can be used (transformation to http://terminology.hl7.org/CodeSystem/v2-0360|2.7 required; code system only contains a few and very generic academical diplomas)
+		authorCDA.time as timeCDA -> diagnosticReport.issued = create('instant') as value then TSInstant(timeCDA,value) "dateTimeCreation"; 
+		
+		// at least one natural person has to be specified -> assignedAuthor is assumed to be a practitioner
+		authorCDA.assignedAuthor as assCDA then {
+			assCDA as author -> bundle.entry as entry2, entry2.resource = create('Practitioner') as practitioner,
+			practitioner.id = uuid() as uuid1, entry2.fullUrl = append('urn:uuid:',uuid1), practitionerRole.practitioner = create('Reference') as reference1,
+			reference1.reference = reference(practitioner), reference1.type = 'Practitioner' then AssignedAuthorPractitioner(author,practitioner,practitionerRole,bundle) "assignedAuthorPractitioner";
+		} "assignedAuthor";
+	} "author";
+
+	// Auftraggeber/Einsender
+	cda.participant as partCDA then {
+		partCDA as refCDA where (partCDA.typeCode = 'REF') -> diagnosticReport.extension as provExt then {
+			refCDA -> provExt.url = 'http://hl7.org/fhir/MicrobiologyLaboratory/StructureDefinition/diagnosticReport-orderingProvider' "orderingProviderUrl"; // custom-made extension!
+			refCDA.associatedEntity as assocEntity then {
+				assocEntity -> provExt.value = create('Reference') as reference then AssociatedEntityFHIR(assocEntity,reference,bundle) "orderingProviderAssocEntity";
+			} "orderingProviderValue";
+		} "participantOrderingProviderExtension";
+	} "participantOrderingProvider";
+
+	// Nicht benötigte Elemente:
+    //cda.dataEnterer
+	//cda.custodian
+	//cda.informationRecipient
+	//cda.legalAuthenticator
+	//cda.authenticator
+	//cda.participant
+	//cda.inFulfillmentOf
+	//cda.documentationOf
+
+
+    // CDA Body
+
+    cda.component as cdaComp then {
+        cdaComp.structuredBody as strucBody then {
+            strucBody.component as strucBodComp then {
+                strucBodComp.section as sec then {
+                    //sec.templateId
+
+                    sec.code as secCode then {
+
+                        // Brieftext
+                        //secCode.code where (secCode.code = 'BRIEFT') -> bundle.entry as entry5, entry5.resource = create('ServiceRequest') as serviceRequest, serviceRequest.id = uuid() as uuid4, serviceRequest.fullUrl = append('urn:uuid:',uuid4) then {
+                            //sec.text as secText -> serviceRequest.
+                            //diagnosticReport.basedOn = create('Reference') as reference, reference.reference = reference(serivceRequest) "basedOn";
+                        //} "brieftext";
+
+                        // Überweisungsgrund
+                        //secCode where (secCode.code = '46239-0') then SectionReasonVisit(sec,patientResource,diagnosticReport,bundle) "visitReason";
+
+						// Anamnese
+						secCode where (secCode.code = "10164-2") then SectionAnamnesis(sec,patientResource,diagnosticReport, bundle) "anamnesis";
+
+                        // either use serviceRequest from section Brieftext
+                        // Angeforderte Untersuchungen
+                        // secCode.code where (secCode.code = 'ANGEFUNTERS')
+                        // serviceRequest
+
+                        // Probeninformation
+                        secCode.code where (secCode.code = '10') -> diagnosticReport.specimen = create('Reference') as reference, reference.reference = reference(specimen), reference.type = 'Specimen' then SectionSpecimen(sec,specimen,bundle) "specimen";
+
+						// Mikroskopie
+						secCode.code where (secCode.code = '395538009') -> bundle.entry as entry10, entry10.resource = create('Observation') as microscopyObservation, 
+						microscopyObservation.id = uuid() as uuid10, entry10.fullUrl = append('urn:uuid:',uuid10), 
+						microscopyObservation.subject = create('Reference') as reference, reference.reference = reference(patientResource), reference.type = 'Patient',
+						microscopyObservation.specimen = create('Reference') as reference2, reference2.reference = reference(specimen), reference2.type = 'Specimen',
+						diagnosticReport.result = create('Reference') as reference3, reference3.reference = reference(microscopyObservation), reference3.type = 'Observation'
+						then SectionMicroscopy(sec,microscopyObservation,bundle) "microscopyObservation";
+
+						// Kultureller Erregernachweis - Speciality Section
+						secCode.code where (secCode.code = '446394004') then SectionMicrobialCultureFinding(sec,diagnosticReport,patientResource,specimen,bundle) "microbialCultureFinding";
+
+						// Befundbewertung - structure of text-Element exclusive to sample report as no official structure is provided
+						secCode.code where (secCode.code = '20') then {
+							sec.text as secText then { // CDA xhtml - so möglich?
+								secText.table as secTextTable then {
+									secTextTable.tbody as secTextTableTbody then {
+										secTextTableTbody.tr as secTextTableTbodyTr then {
+											secTextTableTbodyTr.td as secTextTableTbodyTrTd then {
+												secTextTableTbodyTrTd.paragraph as secTextTableTbodyTrTdPara then {
+													secTextTableTbodyTrTdPara.content as reportEvaluation -> diagnosticReport.conclusion = cast(reportEvaluation,'string') "reportConclusionDataString";
+												} "reportConclusionTextTableTbodyTrTdPara";
+											} "reportConclusionTextTableTbodyTrTd";
+										} "reportConclusionTextTableTbodyTr";
+									} "reportConclusionTextTableTbody";
+								} "reportConclusionTextTable";
+							} "reportConclusionText";
+
+							sec.entry as secEntry then {
+								secEntry.act as secEntryAct then {
+									secEntryAct.code as secEntryActCode -> diagnosticReport.conclusionCode = create('CodeableConcept') as value then CECodeableConcept(secEntryActCode,value) "reportConclusionCode"; // LOINC
+								} "secEntryAct";
+							} "secEntry";
+						} "reportConclusion";
+
+						// Originales CDA-Dokument als Attachment
+						//cda where (diagnosticReport.presentedForm.empty()) -> diagnosticReport.presentedForm = create('Attachment') as attachment then { // called only one time
+						//	cda -> attachment.contentType = 'application/xml' "attachmentType"; // XML Document
+						//	cda -> attachment.language = 'de-AT' "attachmentLanguage";
+						//	cda -> attachment.data = cast(cda, 'base64binary') "attachmentData"; // attaching raw CDA document, cast to base64binary not yet supported
+						//	cda -> attachment.title = 'Mikrobiologischer ELGA-CDA Laborbefund' "attachmentName";
+						//	cda -> attachment.creation = create('dateTime') as now, now = (now()) "attachmentCreation";
+						//} "cdaAttachment";
+                    } "sectionCode";
+                } "section";
+            } "componentStructuredBody";
+        } "structuredBody";
+    } "component";
+}
+
+group SectionAnamnesis(source sec:Section, target patientResource:Patient, target diagnosticReport:DiagnosticReport, target bundle:Bundle){
+
+	//sec.title as secTitle ->
+
+	//sec.text as secText ->
+
+	sec.entry as secEntry then {
+
+		secEntry.act as secEntryAct then {
+
+			secEntryAct.entryRelationship as secEntryActEntrRel -> bundle.entry as entry1, entry1.resource = create('Condition') as medicalCondition, medicalCondition.id = uuid() as uuid1, entry1.fullUrl = append('urn:uuid:',uuid1), 
+			medicalCondition.subject = create('Reference') as reference, reference.reference = reference(patientResource), reference.type = 'Patient', diagnosticReport.extension as precondExt then {
+				// Patientenparameter
+				secEntryActEntrRel.observation as obs then {
+
+					obs -> precondExt.url = 'http://hl7.org/fhir/MicrobiologyLaboratory/StructureDefinition/diagnosticReport-precondition' "preconditionExtUrl"; // custom-made extension!
+					obs -> precondExt.value = create('Reference') as reference, reference.reference = reference(medicalCondition), reference.type = 'Condition' then CDAObservationFHIRCondition(obs,medicalCondition) "preconditionExtValue";
+
+				} "diagnosticReportPreconditionExtension"; 
+			} "secEntryActEntrRel";
+		} "secEntryAct";
+	} "secEntry";
+
+	//sec.entry as secEntry then {
+	//	secEntry.act as secEntrAct then {
+
+			//secEntrAct.code as secEntrActCode -> ?? ELGA_LaborparameterErgänzung, Patientenparameter ?
+
+			//secEntrAct.statusCode as secEntrActStatus -> ??
+
+	//		secEntrAct.entryRelationship as secEntrActEntrRel then {
+	//			secEntrActEntrRel.organizer as entrRelOrg then {
+					
+					// status completed - benötigt?
+					//entrRelOrg.statusCode
+
+					// Fertigstellungszeitpunkt - benötigt?
+					//entrRelOrg.effectiveTime
+
+	//				entrRelOrg.component as comp then {
+
+	//					comp.observation as compObs -> bundle.entry as entry1, entry1.resource = create('Condition') as medicalCondition, medicalCondition.id = uuid() as uuid1, entry1.fullUrl = evaluate('urn:uuid:',uuid1), 
+	//					medicalCondition.subject = create('Reference') as reference, reference.reference = reference(patientResource), diagnosticReport.extension as precondExt then {
+
+	//						compObs -> precondExt.url = 'http://hl7.org/fhir/StructureDefinition/precondition-diagnosticReport' "preconditionExtUrl"; // custom-made extension!
+	//						compObs -> precondExt.value = create('Reference') as reference, reference.reference = reference(medicalCondition) then CDAObservationFHIRCondition(compObs,medicalCondition) "preconditionExtValue";
+
+	//						} "medicalConditionObservationParticipantOrderingProviderExtension";
+						
+	//				} "patientParaEntrRelOrgComp";
+	//			} "patientParaEntrRelOrg";
+	//		} "patientParaEntrRel";
+	//	} "patientParaEntrAct";
+	//} "patientParaEntr";
+}
+
+group AssociatedEntityFHIR(source associatedEntity:AssociatedEntity, target reference:Reference, target bundle:Bundle){
+
+	associatedEntity.associatedPerson as assocPerson where (associatedEntity.associatedPerson.exists() and associatedEntity.scopingOrganization.exists()) ->
+	bundle.entry as entry3, entry3.resource = create('PractitionerRole') as practitionerRole2, practitionerRole2.id = uuid() as uuid1, entry3.fullUrl = append('urn:uuid:',uuid1), 
+	reference.reference = reference(practitionerRole2), reference.type = 'PractitionerRole',
+	bundle.entry as entry4, entry4.resource = create('Practitioner') as practitioner2, practitioner2.id = uuid() as uuid2, entry4.fullUrl = append('urn:uuid:',uuid2), 
+	practitionerRole2.practitioner = create('Reference') as reference2, reference2.reference = reference(practitioner2), reference2.type = 'Practitioner',
+	bundle.entry as entry5, entry5.resource = create('Organization') as organization2, organization2.id = uuid() as uuid3, entry5.fullUrl = append('urn:uuid:',uuid3), 
+	practitionerRole2.organization = create('Reference') as reference3, reference3.reference = reference(organization2), reference3.type = 'Organization' then {
+        
+        associatedEntity -> practitionerRole2.meta as practitionerRole2Meta then {
+            associatedEntity -> practitionerRole2Meta.profile = 'http://hl7.org/fhir/MicrobiologyLaboratory/StructureDefinition/MicrobiologyLaboratoryPractitionerRole' "microbiologyLaboratoryPractitionerRoleProfile";
+        } "practitionerRoleProfile";
+		associatedEntity -> practitionerRole2.active = true "practitionerRoleActive";
+
+        associatedEntity -> practitioner2.meta as practitioner2Meta then {
+            associatedEntity -> practitioner2Meta.profile = 'http://hl7.org/fhir/MicrobiologyLaboratory/StructureDefinition/MicrobiologyLaboratoryPractitioner' "microbiologyLaboratoryPractitionerProfile";
+        } "practitionerProfile";
+		associatedEntity -> practitioner2.active = true "practitionerActive";
+		
+        assocPerson.name as assocPersonName -> practitioner2.name = create('HumanName') as value then ENHumanName(assocPersonName,value) "assocPersonName";
+
+		// aus allgemeinem Teil
+		associatedEntity.addr as assocPersonAddr -> practitioner2.address = create('Address') as value then ADAddress(assocPersonAddr,value) "assocPersonAddrValue";
+		associatedEntity.telecom as assocPersonTele -> practitioner2.telecom = create('ContactPoint') as value then TELContactPoint(assocPersonTele,value) "assocPersonTeleValue";
+
+		associatedEntity.scopingOrganization as assocEntScopOrg then CDAOrganizationFHIROrganization(assocEntScopOrg,organization2) "scopOrgValue"; // no difference between scopingOrganization and representedOrganization
+	} "assocEntityFull";
+
+	associatedEntity.associatedPerson as assocPerson where (associatedEntity.associatedPerson.exists() and associatedEntity.scopingOrganization.empty()) -> 
+	bundle.entry as entry3, entry3.resource = create('Practitioner') as practitioner2, practitioner2.id = uuid() as uuid2, entry3.fullUrl = append('urn:uuid:',uuid2), 
+	reference.reference = reference(practitioner2), reference.type = 'Practitioner' then {
+
+        associatedEntity -> practitioner2.meta as practitioner2Meta then {
+            associatedEntity -> practitioner2Meta.profile = 'http://hl7.org/fhir/MicrobiologyLaboratory/StructureDefinition/MicrobiologyLaboratoryPractitioner' "microbiologyLaboratoryPractitionerProfile";
+        } "practitionerProfile";
+		associatedEntity -> practitioner2.active = true "practitionerActive";
+
+		assocPerson.name as assocPersonName -> practitioner2.name = create('HumanName') as value then ENHumanName(assocPersonName,value) "assocPersonName";
+
+		// aus allgemeinem Teil
+		associatedEntity.addr as assocPersonAddr -> practitioner2.address = create('Address') as value then ADAddress(assocPersonAddr,value) "assocPersonAddrValue";
+		associatedEntity.telecom as assocPersonTele -> practitioner2.telecom = create('ContactPoint') as value then TELContactPoint(assocPersonTele,value) "assocPersonTeleValue";
+	} "assocEntityAssocPersonSingle";
+
+	associatedEntity.scopingOrganization as scopOrg where (associatedEntity.scopingOrganization.exists() and associatedEntity.associatedPerson.empty()) ->
+	bundle.entry as entry5, entry5.resource = create('Organization') as organization2, organization2.id = uuid() as uuid3, entry5.fullUrl = append('urn:uuid:',uuid3),
+	reference.reference = reference(organization2), reference.type = 'Organization' then {
+		scopOrg then CDAOrganizationFHIROrganization(scopOrg,organization2) "assocEntityScopOrgSingle";
+
+		// aus allgemeinem Teil
+		associatedEntity.addr as assocPersonAddr -> organization2.address = create('Address') as value then ADAddress(assocPersonAddr,value) "scopOrgAddrValue";
+		associatedEntity.telecom as assocPersonTele -> organization2.telecom = create('ContactPoint') as value then TELContactPoint(assocPersonTele,value) "scopOrgTeleValue";
+	} "assocEntityScopOrgSingle";
+}
+
+group PatientRolePatient(source patientRole:PatientRole, target patient:Patient){
+    patientRole -> patient.meta as patientMeta then {
+        patientRole -> patientMeta.profile = 'http://hl7.at/fhir/HL7ATCoreProfiles/4.0.1/StructureDefinition/austrian-patient' "austrianPatientProfile";
+    } "patientProfile";
+
+	// original way, non profile-conformant
+	//patientRole.id as identCDA -> patient.identifier = create('Identifier') as value then IIIdentifier(identCDA,value) "identValue";
+
+	// profile conformant way
+	patientRole.id as identCDA -> patient.identifier = create('Identifier') as identFHIR then {
+
+		identCDA.extension as ext -> identFHIR.value = ext "identifierValue";
+
+		// required by profile
+		identCDA -> identFHIR.type as identFHIRType then {
+			
+			// identifier:localPatientId
+			identCDA where (identCDA.root = "1.2.40.0.34.99.111.1.2") -> identFHIRType.coding as identFHIRCoding then {
+				identCDA.extension as identCDAext -> identFHIR.value = identCDAext "patientInternalIdentifierValue";
+				identCDA.assigningAuthorityName as identCDAAssAuthName -> identFHIR.assigner as ass, ass.display = identCDAAssAuthName "patientInternalIdentifierAssAuthName";
+				
+				identCDA -> identFHIRCoding.system = 'http://terminology.hl7.org/CodeSystem/v2-0203' "patientInternalIdentifierCodeSystem";
+				identCDA -> identFHIRCoding.code = 'PI' "patientInternalIdentifierCode";
+				identCDA -> identFHIRCoding.display = 'Patient internal identifier' "patientInternalIdentifierDisplay";
+			} "localPatientId";
+
+			// identifier:socialSecurityNumber
+			identCDA where (identCDA.root = "1.2.40.0.10.1.4.3.1") -> identFHIRType.coding as identFHIRCoding then {
+				identCDA -> identFHIR.system = 'urn:oid:1.2.40.0.10.1.4.3.1' "patientSocialSecurityNumberOID";
+				identCDA -> identFHIR.assigner as identFHIRAss, identFHIRAss.display = 'Dachverband der österreichischen Sozialversicherungsträger' "patientSocialSecurityNumberDisplay";
+
+				identCDA -> identFHIRCoding.system = 'http://terminology.hl7.org/CodeSystem/v2-0203' "patientSocialSecurityNumberCodeSystem";
+				identCDA -> identFHIRCoding.code = 'SS' "patientSocialSecurityNumberCode";
+				identCDA -> identFHIRCoding.display = 'Social Security Number' "patientSocialSecurityNumberDisplay";
+			} "socialSecurityNumber";
+
+		} "identifierType";
+	} "patientIdentifier";
+
+	patientRole.addr as addrCDA -> patient.address = create('Address') as value then ADAustrianAddress(addrCDA,value) "addrValue"; // use Austrian Address
+	patientRole.telecom as teleCDA -> patient.telecom = create('ContactPoint') as value then TELContactPoint(teleCDA,value) "teleValue";
+	patientRole.patient as patientRolePatient then {
+
+		// Patient name
+		patientRolePatient.name as patName -> patient.name = create('HumanName') as value then ENHumanName(patName,value) "nameValue";
+		
+		// Patient gender
+		patientRolePatient.administrativeGenderCode as gender then {
+			gender.code as patGender -> patient.gender = translate(patGender, '#ELGA2FHIRGender', 'code') "gender";
+		} "genderCode";
+
+		// Patient birth time
+		patientRolePatient.birthTime as birthTime -> patient.extension as ext then {
+			birthTime -> ext.url = 'http://hl7.org/fhir/StructureDefinition/patient-birthTime' "birthTimeExtensionUrl";
+			birthTime -> ext.value = create('dateTime') as v then TSDateTime(birthTime,v) "birthTimeExtensionValue";
+		} "birthTimeExtension";
+
+		// Patient marital status
+		patientRolePatient.maritalStatusCode as marrPat-> patient.maritalStatus = create('CodeableConcept') as value then CECodeableConcept(marrPat,value) "maritalStatus"; // in beiden Fällen http://terminology.hl7.org/CodeSystem/v3-MaritalStatus, erweitert um NullFalvour verwendet -> keine Transformation notwendig
+		
+		// Patient religious affilation
+		patientRolePatient.religiousAffiliationCode as relAff -> patient.extension as ext then {
+			relAff -> ext.url = 'http://hl7.at/fhir/HL7ATCoreProfiles/4.0.1/StructureDefinition/patientReligion' "religiousAffiliationUrl";
+			relAff -> ext.extension as ext2 then {
+				relAff -> ext2.url = 'code' "religiousAffiliationUrl2";
+				relAff -> ext2.value = create('CodeableConcept') as v then CECodeableConcept(relAff,v) "religiousAffiliationExtensionValue"; // no translation required, current FHIR Profile uses ELGA ReligiousAffilation Value Set
+			} "religiousAffilationExtension2";
+		} "religiousAffilationExtension";
+
+		patientRolePatient.birthplace as patBirthPlace -> patient.extension as ext then {
+			patBirthPlace.place as patBirthAddress then {
+				patBirthAddress -> ext.url = 'http://hl7.org/fhir/StructureDefinition/patient-birthPlace' "birthPlaceExtensionUrl";
+				patBirthAddress.addr as birthAddr -> ext.value = create('Address') as v then ADAddress(birthAddr,v) "birthPlaceExtensionValue";
+			} "birthPlaceAddress";
+		} "birthPlaceExtension";
+	} "patient";
+}
+
+group AssignedAuthorPractitioner(source assCDA:AssignedAuthor, target practitioner:Practitioner, target practitionerRole:PractitionerRole, target bundle:Bundle){
+
+    assCDA -> practitioner.meta as practitionerMeta then {
+        assCDA -> practitionerMeta.profile = 'http://hl7.org/fhir/MicrobiologyLaboratory/StructureDefinition/MicrobiologyLaboratoryPractitioner' "microbiologyLaboratoryPractitionerProfile";
+    } "practitionerProfile";
+	assCDA.id as assId -> practitioner.identifier = create('Identifier') as value then IIIdentifier(assId,value) "assignedAuthorId"; // internal identifier
+	assCDA -> practitioner.active = true "PractitionerActive";
+
+    assCDA -> practitionerRole.meta as practitionerRoleMeta then {
+            assCDA -> practitionerRoleMeta.profile = 'http://hl7.org/fhir/MicrobiologyLaboratory/StructureDefinition/MicrobiologyLaboratoryPractitionerRole' "microbiologyLaboratoryPractitionerRoleProfile";
+        } "practitionerRoleProfile";
+	assCDA.code as assCode -> practitionerRole.code = create('CodeableConcept') as codeConc then CECodeableConcept(assCode,codeConc) "assignedAuthorCode"; // function Code, maps to ELGA_Fachaerzte (mapping incomplete); practitionerRole.speciality only contains clinicl speciality, not practitioner's title
+	assCDA -> practitionerRole.active = true "PractitionerRoleActive";
+	//assCDA.code as assCode -> practitionerRole.code = translate(assCode,'#ELGAFachaerzteFHIRPerformerRole','CodeableConcept') "performer function code"; // Unable to translate source http://hl7.org/fhir/cda/StructureDefinition/CE (CodeableConcept instead of code)
+	// alternatively, but still not working:
+	//assCDA.code as assCode2 -> practitionerRole.code as pracRoleCode then {
+	//	assCode2 -> pracRoleCode.coding as codeConc2Coding then {
+	//		assCode2 log assCode2 -> codeConc2Coding.code = translate(assCode2,'#ELGAFachaerzteFHIRPerformerRole','code') "performer function code"; Unable to translate source
+	//		assCode2 -> codeConc2Coding.version = '4.0.1' "performer code system version";
+	//		assCode2 -> codeConc2Coding.system = 'https://www.hl7.org/fhir/valueset-performer-role' "performer code system"; 
+	//		assCode2 -> codeConc2Coding.display = 'Performer role function code' "performer role code display";
+	//	} "practitionerRoleCoding";
+	//} "practitionerRoleCodeableConcept";
+
+	assCDA.telecom as teleCDA -> practitioner.telecom = create('ContactPoint') as value then TELContactPoint(teleCDA,value) "teleValue";
+
+	assCDA.address as addrCDA -> practitioner.address = create('Address') as value then ADAddress(addrCDA,value) "addrValue";
+
+	// If Assigned Author is a natural person:
+	assCDA.assignedPerson as assPer then {
+		assPer.name as assPerName -> practitioner.name = create('HumanName') as pracName then ENHumanName(assPerName,pracName) "assPerNameValue";
+	} "assignedPersonAuthor";
+
+	// If Assigned Author is a device - not known, if and how a device-created Observation-Ressource is depicted in FHIR
+	//assCDA.assignedAuthoringDevice as assDev -> bundle.entry as entry3, entry3.resource = create('Device') as authoringDevice, authoringDevice.id = uuid() as uuid2, entry3.fullUrl = append('urn:uuid:',uuid2), diagnosticReport.subject = create('Reference') as reference2, reference2.reference = reference(authoringDevice) then {
+	//	assDev.manufacturerModelName as model -> authoringDevice.deviceName as devName then {
+	//		model -> devName.type = 'model-name' "modelNameType";
+	//		model as m -> devName.name = create('string') as value then STstring(m,value) "modelName"; // model name, SC Type
+	//		model.softwareName as softName -> authoringDevice.version as version then {
+	//			softName -> version.value = cast(softName,'string') "versionValue"; // software name AND version, SC Type
+	//		} "softwareName";
+	//	} "manufacturerModelName";
+	//} "assignedDeviceAuthor";
+
+	assCDA.representedOrganization as repOrg -> bundle.entry as entry4, entry4.resource = create('Organization') as representedOrganization,
+	representedOrganization.id = uuid() as uuid3, entry4.fullUrl = append('urn:uuid:',uuid3), practitionerRole.organization = create('Reference') as reference3,
+	reference3.reference = reference(representedOrganization), reference3.type = 'Organization' then CDAOrganizationFHIROrganization(repOrg,representedOrganization) "representedOrganizationAuthor";
+}
+
+group SectionSpecimen(source sec:Section, target specimen:Specimen, target bundle:Bundle){
+
+    sec -> specimen.meta as specimenMeta then {
+        sec -> specimenMeta.profile = 'http://hl7.org/fhir/MicrobiologyLaboratory/StructureDefinition/MicrobiologyLaboratorySpecimen' "microbiologyLaboratorySpecimenProfile";
+    } "specimenProfile";
+
+	sec.entry as secEntry then {
+        secEntry.act as secEntryAct then {
+            secEntryAct.entryRelationship as entrRel then {
+                entrRel.procedure as entrRelProc then {
+                    entrRelProc.effectiveTime as effTime -> specimen.collection as specColl then {
+
+						// Collection Time
+                        effTime -> specColl.collected = create('dateTime') as value then TSDateTime(effTime,value) "specimenCollTime";
+						
+						entrRelProc.targetSiteCode as targetSite -> specColl.bodySite = create('CodeableConcept') as value then CDCodeableConcept(targetSite,value) "specimenTargetSite"; // https://www.hl7.org/fhir/valueset-body-site.html
+
+						// Specimen performer
+						entrRelProc.performer as specPerf then {
+							specPerf.assignedEntity as assEnt -> bundle.entry as entry6, entry6.resource = create('Practitioner') as practitioner,
+							practitioner.id = uuid() as uuid5, entry6.fullUrl = append('urn:uuid:',uuid5), bundle.entry as entry7, entry7.resource = create('PractitionerRole') as pracRole,
+							pracRole.id = uuid() as uuid6, entry7.fullUrl = append('urn:uuid:',uuid6), pracRole.practitioner = create('Reference') as reference, reference.reference = reference(practitioner), reference.type = 'Practitioner',
+							specColl.collector = create('Reference') as reference2, reference2.reference = reference(pracRole), reference2.type = 'PractitionerRole' then AssignedEntityPractitioner(assEnt,pracRole,practitioner,bundle) "specimenPerformerAssignedEntity";
+						} "specimenProducer";
+
+						// Specimen as participant
+						entrRelProc.participant as specPart then {
+							specPart.participantRole as specPartRole then ParticipantRoleSpecimen(specPartRole,specimen) "participantRoleSpecimen";
+						} "specimenParticipant";
+
+						// Specimen received
+						entrRelProc.entryRelationship as specRec then {
+							specRec.act as specRecAct then {
+
+								// Eingangszeitpunkt der Probe im Labor
+								specRecAct.effectiveTime as specRecActEffTime -> specimen.receivedTime = create('dateTime') as value then TSDateTime(specRecActEffTime,value) "specimenReceivedTime";
+								
+								// Befundtext - necessary?
+								//specRecAct.entryRelationship as specRecActEntryRel then ...
+
+								// Makroskopische Probeninformationen - cast from CDA xhtml to FHIR string needed
+								//specRecAct.entryRelationship as specRecActEntryRel then Macroscopy(specRecActEntryRel,bundle)...
+
+							} "specimenRecievedAct";
+						} "specimenRecievedEntryRel";
+
+                    } "entrRelProcEffTime";
+                } "entrRelProc";
+            } "sentrRel";
+        } "secEntryAct";
+    } "secEntry";               
+}
+
+//group Macroscopy(source sec:Section,target observation:FHIRObservation,target bundle:Bundle){
+//
+	// Create new observation....
+
+//    sec -> observation.meta as observationMeta then {
+//        sec -> observationMeta.profile = 'http://hl7.org/fhir/MicrobiologyLaboratory/StructureDefinition/MicrobiologyLaboratoryObservation' "microbiologyLaboratoryObservationProfile";
+//    } "observationProfile";
+
+//	sec -> observation.category = create('CodeableConcept') as obsType then {
+//		sec -> obsType.coding as obsTypeCoding then {
+//			sec -> obsTypeCoding.system = 'http://hl7.org/fhir/ValueSet/observation-category' "macroscopyObservationTypeCodeSystem";
+//			sec -> obsTypeCoding.version = '4.0.1' "macroscopyObservationTypeCodeSystemVersion";
+//			sec -> obsTypeCoding.code = 'laboratory' "macroscopyObservationTypeCode";
+//			sec -> obsTypeCoding.display = 'Laboratory' "macroscopyObservationTypeCodeDisplay";
+//		} "macroscopyObservationTypeCoding";
+//	} "macroscopyObservationType";
+
+//	sec -> observation.status = 'final' "macroscopyObservationStatus";
+
+//	sec.code as secCode -> observation.code = create('CodeableConcept') as value then CECodeableConcept(secCode, value) "macroscopyCode"; //  SNOMED-CT code for macroscopic observation
+
+//	sec.text as secText -> observation.value = create('string') as value then STstring(secText,value) "macroscopyText"; // CDA xhtml -> FHIR String - möglich?
+//}
+
+group SectionMicroscopy(source sec:Section, target observation:FHIRObservation, target bundle:Bundle){
+
+	sec -> observation.category = create('CodeableConcept') as obsType then {
+		sec -> obsType.coding as obsTypeCoding then {
+			sec -> obsTypeCoding.system = 'http://hl7.org/fhir/ValueSet/observation-category' "microscopyObservationTypeCodeSystem";
+			sec -> obsTypeCoding.version = '4.0.1' "microscopyObservationTypeCodeSystemVersion";
+			sec -> obsTypeCoding.code = 'laboratory' "microscopyObservationTypeCode";
+			sec -> obsTypeCoding.display = 'Laboratory' "microscopyObservationTypeCodeDisplay";
+		} "microscopyObservationTypeCoding";
+	} "microscopyObservationType";
+
+	//sec.code as secCode -> observation.code = create('CodeableConcept') as value then CECodeableConcept(secCode, value) "microscopyCode"; //  SNOMED-CT code for microscopic observation
+	// not depictable, as observation.code can only contain one single CodeableConcept, which in this case is already reserved for result
+
+	sec.entry as secEntry then {
+		secEntry.observation as secEntrObs then CDAObservationFHIRObservation(secEntrObs,observation,bundle) "secEntrObs";
+	} "sectionEntry";
+}
+
+group SectionMicrobialCultureFinding(source sec:Section, target diagnosticReport:DiagnosticReport, target patientResource:Patient, target specimen:Specimen, target bundle:Bundle){
+
+	// Kultureller Erregernachweis
+	//sec.code as secCode -> observation.code = create('CodeableConcept') as value then CECodeableConcept(secCode, value) "microbialCultureFindingCode"; // LOINC code for microbial culture finding
+	// not depictable, as observation.code can only contain one single CodeableConcept, which is reserved for CDA observation code value
+
+	sec.entry as secEntry then {
+		secEntry.act as secEntrAct then {
+
+			//secEntrAct.code as secEntrActCode -> ?? ELGA_LaborparameterErgänzung, Hämostaseologie
+
+			// Kultureller Keimnachweis
+			secEntrAct.entryRelationship as secEntrActEntrRel then {
+
+				// "Laboratory Isolate Organizer" - pro Keim eigene FHIR Observation-Ressource
+				secEntrActEntrRel.organizer as entrRelOrg -> bundle.entry as entry11, entry11.resource = create('Observation') as cultGermObservation, 
+				cultGermObservation.id = uuid() as uuid11, entry11.fullUrl = append('urn:uuid:',uuid11),
+				cultGermObservation.subject = create('Reference') as reference, reference.reference = reference(patientResource), reference.type = 'Patient',
+				cultGermObservation.specimen = create('Reference') as reference2, reference2.reference = reference(specimen), reference2.type = 'Specimen',
+				diagnosticReport.result = create('Reference') as reference3, reference3.reference = reference(cultGermObservation), reference3.type = 'Observation' then {
+
+					entrRelOrg -> cultGermObservation.category = create('CodeableConcept') as obsType then {
+						entrRelOrg -> obsType.coding as obsTypeCoding then {
+							entrRelOrg -> obsTypeCoding.system = 'http://hl7.org/fhir/ValueSet/observation-category' "microbialCultureFindingTypeCodeSystem";
+							entrRelOrg -> obsTypeCoding.version = '4.0.1' "microbialCultureFindingCodeSystemVersion";
+							entrRelOrg -> obsTypeCoding.code = 'laboratory' "microbialCultureFindingTypeCode";
+							entrRelOrg -> obsTypeCoding.display = 'Laboratory' "microbialCultureFindingTypeCodeDisplay";
+						} "microbialCultureFindingTypeCoding";
+					} "microbialCultureFindingType";
+
+					//entrRelOrg.statusCode as statCode -> observation.status = translate(statCode, '#ELGAFHIRObservationCode','code') "microbialCultureFindingStatusCode";
+
+					// Specimen collection time not depictable and important, as no extra Specimen-Ressource is used
+					//entrRelOrg.effectiveTime as effTime -> specimen.collection as specColl then {
+						// Collection Time of specimen
+                    //    effTime -> specColl.collected = create('dateTime') as value then TSDateTime(effTime,value) "microbCultSpecimenCollTimeValue";
+					//} "microbCultSpecimenCollTime";
+
+					// Microbial culture as result of observation
+					entrRelOrg.specimen as spec then {
+						spec.specimenRole as specRole then {
+							specRole.specimenPlayingEntity as specPlayEnt then {
+								specPlayEnt.code as specPlayEntCode where (entrRelOrg.component.observation.value.empty()) -> cultGermObservation.value = create('CodeableConcept') as value then CDCodeableConcept(specPlayEntCode,value) "microbCultResultCode";
+								specPlayEnt.code as specPlayEntCode where (entrRelOrg.component.observation.value.exists()) -> cultGermObservation.code = create('CodeableConcept') as value then CDCodeableConcept(specPlayEntCode,value) "microbCultResultCode2";
+							} "entrRelOrgSpecRolePlayingEntity";
+						} "entrRelOrgSpecRole";
+					} "entrRelOrgSpec";
+
+					entrRelOrg.component as comp then {
+
+						// Microbial culture finding as code of observation - Methode und Keimzahl
+						comp.observation as compObs then CDAObservationFHIRObservation(compObs,cultGermObservation,bundle) "entrRelOrgCompObs";
+						
+						// Antibiogram of microbial culture Specialty Section - Antibiogramm und MHK, optional
+						comp.organizer as compOrg then AntibiogramOrganizer(compOrg, cultGermObservation, patientResource, specimen, bundle) "antibiogramMinimalInhibitorConcentration";
+
+					} "entrRelOrgComp";
+				} "microbCultEntrRelOrg";
+			} "microbCultEntrRel";
+		} "microbCultEntrRelAct";
+	} "microbCultEntrSecEntr";
+}
+
+group AntibiogramOrganizer(source org:Organizer, target observation:FHIRObservation, target patientResource:Patient, target specimen:Specimen,  target bundle:Bundle){
+
+	// Antibiogramm
+	//org.code as orgCode -> observation.code = create('CodeableConcept') as value then CECodeableConcept(secCode, value) "antibiogramCode"; // LOINC code for Microbial susceptibility tests Set
+	//not depictable, as observation.code can only contain one single CodeableConcept, which is reserved for CDA observation code value
+
+
+	//entrRelOrg.statusCode as statCode -> observation.status = translate(statCode, '#ELGAFHIRObservationCode','code') "antibiogramStatusCode";
+
+	// Specimen collection time not depictable and important, as no extra Specimen-Ressource is used
+	//entrRelOrg.effectiveTime as effTime -> specimen.collection as specColl then {
+	// Zeitpunkt des Ergebisses
+    //    effTime -> specColl.collected = create('dateTime') as value then TSDateTime(effTime,value) "antibiogramTimeValue";
+	//} "antibiogramSpecimenCollTime";
+
+	// Antibiogramm
+	org.code as compOrgCode -> observation.code = create('CodeableConcept') as value then CECodeableConcept(compOrgCode,value) "antibiogramCodeValue";
+
+	// Fertigstellungszeitpunkt der erhaltenen Tests - überhaupt benötigt? Welcher Unterschied besteht zu Zeitpunkt des Ergebnisses (siehe oben)?
+	//org.effectiveTime
+							
+	// status completed - benötigt?
+	//org.statusCode
+
+	org.component as comp -> bundle.entry as entry12, entry12.resource = create('Observation') as antibioObservation,
+	antibioObservation.id = uuid() as uuid12, entry12.fullUrl = append('urn:uuid:',uuid12),
+	antibioObservation.subject = create('Reference') as reference, reference.reference = reference(patientResource), reference.type = 'Patient',
+	antibioObservation.specimen = create('Reference') as reference2, reference2.reference = reference(specimen), reference2.type = 'Specimen',
+	observation.hasMember = create('Reference') as reference3, reference3.reference = reference(antibioObservation), reference3.type = 'Observation' then {
+	
+		comp -> antibioObservation.category = create('CodeableConcept') as obsType then {
+			comp -> obsType.coding as obsTypeCoding then {
+				comp -> obsTypeCoding.system = 'http://hl7.org/fhir/ValueSet/observation-category' "antibiogramTypeCodeSystem";
+				comp -> obsTypeCoding.version = '4.0.1' "antibiogramTypeCodeSystemVersion";
+				comp -> obsTypeCoding.code = 'laboratory' "antibiogramTypeCode";
+				comp -> obsTypeCoding.display = 'Laboratory' "antibiogramTypeCodeDisplay";
+			} "microbialCultureFindingTypeCoding";
+		} "microbialCultureFindingType";
+	
+		comp -> antibioObservation.status = 'final' "observationStatus";
+
+		// Antibiotika als observation-Elemente
+		comp.observation as compObs then CDAObservationFHIRObservation(compObs,antibioObservation,bundle) "antibioticObservation";
+
+	} "antibioOrgComp";
+}
+
+group PatientParametersEntry(source act:Act, target patientResource:Patient, target diagnosticReport:DiagnosticReport, target bundle:Bundle){
+
+	//secEntrAct.code as secEntrActCode -> ?? ELGA_LaborparameterErgänzung, Patientenparameter ?
+
+	//secEntrAct.statusCode as secEntrActStatus -> ??
+
+	act -> diagnosticReport.conclusion = 'test' "effective"; // does not work for unknown reason
+
+	act.entryRelationship as secEntrActEntrRel then {
+		secEntrActEntrRel.organizer as entrRelOrg then {
+				
+			// status completed - benötigt?
+			//entrRelOrg.statusCode
+
+			// Fertigstellungszeitpunkt - benötigt?
+			//entrRelOrg.effectiveTime
+
+			entrRelOrg.component as comp then {
+
+					comp.observation as compObs -> bundle.entry as entry1, entry1.resource = create('Condition') as medicalCondition, medicalCondition.id = uuid() as uuid1, entry1.fullUrl = append('urn:uuid:',uuid1), 
+						medicalCondition.subject = create('Reference') as reference, reference.reference = reference(patientResource), reference.type = 'Patient', diagnosticReport.extension as precondExt then {
+
+							compObs -> precondExt.url = 'http://hl7.org/fhir/MicrobiologyLaboratory/StructureDefinition/diagnosticReport-precondition' "preconditionExtUrl"; // custom-made extension!
+							compObs -> precondExt.value = create('Reference') as reference, reference.reference = reference(medicalCondition), reference.type = 'Condition' then CDAObservationFHIRCondition(compObs,medicalCondition) "preconditionExtValue";
+
+					} "diagnosticReportPreconditionExtension";
+								
+			} "patientParaEntrRelOrgComp";
+		} "patientParaEntrRelOrg";
+	} "patientParaEntrRel";
+}
+
+group CDAObservationFHIRCondition(source observation:CDAObservation, target condition:Condition){
+
+    observation -> condition.meta as conditionMeta then {
+        observation -> conditionMeta.profile = 'http://hl7.org/fhir/MicrobiologyLaboratory/StructureDefinition/MicrobiologyLaboratoryCondition' "microbiologyLaboratoryConditionProfile";
+    } "conditionProfile";
+	observation.code as obsCode -> condition.code = create('CodeableConcept') as value then CECodeableConcept(obsCode,value) "conditionCodeValue";
+
+	//observation.statusCode as statCode -> condition.clinicalStatus, verificationStatus or category ?? (exact CDA specification for element not yet available)
+
+	// onset is not recognized
+	//observation.effectiveTime as effTime -> condition.onset as onset then TSDateTime(effTime,onset) "conditionDateTime"; //-> condition.onsetDateTime, abatementDateTime or recordedDate ?? (exact CDA specification for element not yet available)
+
+	// Check if CDA observation is 'true' or 'false' and set verificationStatus-Element of FHIR Condition-Ressource accordingly
+	observation.value: BL as obsValue then {
+		obsValue.value as obsValueContent  -> condition.verificationStatus = create('CodeableConcept') as codeConc then {
+			obsValueContent -> codeConc.coding as codeConcCoding then {
+				obsValueContent -> codeConcCoding.system = 'http://terminology.hl7.org/CodeSystem/condition-ver-status' "conditionVerificationStatusCodeSystem"; // urn:oid:2.16.840.1.113883.4.642.3.166
+				obsValueContent -> codeConcCoding.version = '4.0.1' "conditionVerificationStatusCodeSystemVersion";
+				obsValueContent where (obsValueContent.value = 'true') -> codeConcCoding.code = "confirmed" "conditionVerificationStatusCodeConfirmed";
+				obsValueContent where (obsValueContent.value = 'false') -> codeConcCoding.code = "refuted" "conditionVerificationStatusCodeRefuted";
+			} "obsValueContentCoding";
+		} "obsValueContent";
+	} "obsValue";
+}
+
+group ParticipantRolePractitioner(source participantRole:ParticipantRole, target practitioner:Practitioner){
+	participantRole.id as partId -> practitioner.identifier = create('Identifier') as value then IIIdentifier(partId,value) "partIdValue";
+	participantRole.addr as partAddr -> practitioner.address = create('Address') as value then ADAddress(partAddr,value) "partAddrValue";
+	participantRole.telecom as partTele -> practitioner.telecom = create('ContactPoint') as value then TELContactPoint(partTele,value) "partTeleValue";
+	participantRole.playingEntity as playEnt then {
+		playEnt.name as partName -> practitioner.name = create('HumanName') as value then ENHumanName(partName,value) "partNameValue";
+	} "participantRolePlayingEntity";
+}
+
+group AssignedEntityPractitioner(source assignedEntity:AssignedEntity, target practitionerRole:PractitionerRole, target practitioner:Practitioner, target bundle:Bundle){
+
+    assignedEntity -> practitionerRole.meta as practitionerRoleMeta then {
+        assignedEntity -> practitionerRoleMeta.profile = 'http://hl7.org/fhir/MicrobiologyLaboratory/StructureDefinition/MicrobiologyLaboratoryPractitionerRole' "microbiologyLaboratoryPractitionerRoleProfile";
+    } "practitionerRoleProfile";
+	assignedEntity -> practitionerRole.active = true "practitionerRoleActive";
+
+    assignedEntity -> practitioner.meta as practitionerMeta then {
+        assignedEntity -> practitionerMeta.profile = 'http://hl7.org/fhir/MicrobiologyLaboratory/StructureDefinition/MicrobiologyLaboratoryPractitioner' "microbiologyLaboratoryPractitionerProfile";
+    } "practitionerProfile";
+	assignedEntity -> practitioner.active = true "practitionerActive";
+
+	assignedEntity.id as assEntId -> practitioner.identifier = create('Identifier') as value then IIIdentifier(assEntId,value) "assignedEntityId"; // internal identifier
+	assignedEntity.addr as assEntAddr -> practitioner.address = create('Address') as value then ADAddress(assEntAddr,value) "assEntAddrValue";
+	assignedEntity.telecom as assEntTele -> practitioner.telecom = create('ContactPoint') as value then TELContactPoint(assEntTele,value) "assEntTeleValue";
+	assignedEntity.assignedPerson as assPerEnt then {
+		assPerEnt.name as assPerEntName -> practitioner.name = create('HumanName') as pracEntName then ENHumanName(assPerEntName,pracEntName) "assPerEntNameValue";
+	} "assignedPersonDataEnterer";
+	assignedEntity.representedOrganization as repOrg2 -> bundle.entry as entry7, entry7.resource = create('Organization') as representedOrganization, 
+	representedOrganization.id = uuid() as uuid6, entry7.fullUrl = append('urn:uuid:',uuid6), practitionerRole.organization = create('Reference') as reference, reference.reference = reference(representedOrganization), reference.type = 'Organization' then CDAOrganizationFHIROrganization(repOrg2,representedOrganization) "assignedEntityRepresentedOrganization";
+}
+
+group CDAOrganizationFHIROrganization(source cdaOrg:CDAOrganization, target fhirOrg:FHIROrganization){
+    cdaOrg -> fhirOrg.meta as fhirOrgMeta then {
+        cdaOrg -> fhirOrgMeta.profile = 'http://hl7.org/fhir/MicrobiologyLaboratory/StructureDefinition/MicrobiologyLaboratoryOrganization' "microbiologyLaboratoryOrganizationProfile";
+    } "organizationProfile";
+	cdaOrg -> fhirOrg.active = true "OrgActive";
+	cdaOrg.id as cdaOrgId -> fhirOrg.identifier = create('Identifier') as value then IIIdentifier(cdaOrgId,value) "OrgIdValue"; // internal identifier
+	cdaOrg.name as cdaOrgName -> fhirOrg.name = cdaOrgName "OrgNameValue";
+	cdaOrg.telecom as cdaOrgTele -> fhirOrg.telecom = create('ContactPoint') as value then TELContactPoint(cdaOrgTele,value) "OrgTeleValue";
+	cdaOrg.addr as cdaOrgAddr -> fhirOrg.address = create('Address') as value then ADAddress(cdaOrgAddr,value) "OrgAddrValue";
+}
+
+group ParticipantRoleSpecimen(source participantRole:ParticipantRole, target specimen:Specimen){
+	participantRole.id as partRoleId -> specimen.identifier = create('Identifier') as value then IIIdentifier(partRoleId,value) "participantRoleId";
+	participantRole.playingEntity as partRolePlayEnt then {
+		partRolePlayEnt.code as specTypeCode -> specimen.type = create('CodeableConcept') as value then CECodeableConcept(specTypeCode,value) "participantRoleSpecimenTypeCode"; // https://www.hl7.org/fhir/v2/0487/index.html
+	} "participantRoleSpecimenType";
+}
+
+group CDAObservationFHIRObservation(source cdaObs:CDAObservation, target observation:FHIRObservation, target bundle:Bundle) {
+
+    cdaObs -> observation.meta as observationMeta then {
+        cdaObs -> observationMeta.profile = 'http://hl7.org/fhir/MicrobiologyLaboratory/StructureDefinition/MicrobiologyLaboratoryObservation' "microbiologyLaboratoryObservationProfile";
+    } "observationProfile";
+
+	cdaObs.code as obsCode -> observation.code = create('CodeableConcept') as value then CECodeableConcept(obsCode,value) "observationResultCode"; // ELGA_Laborparameter Value Set (LOINC)
+
+	// Unable to translate source
+	//cdaObs.statusCode as statCode -> observation.status = translate(statCode, '#ELGAFHIRObservationCode','code') "observationStatusCode";
+	cdaObs -> observation.status = 'final' "observationStatusCode";
+
+	cdaObs.effectiveTime as obsTime -> observation.effective = create('dateTime') as value then TSDateTime(obsTime,value) "observationEffTime";
+
+	// Concept Descriptor
+	cdaObs.value: CD as obsValueCDA -> observation.value = create('CodeableConcept') as value then CDCodeableConcept(obsValueCDA,value) "observationValueCD";
+	// in the case of microbial culture finding with sample report, observation.value element contains result interpretation -> error or correct? is it allowed to use an interpretationCode Element without a value-Element itself?
+	
+	// Interval of Physical Quantities
+	cdaObs.value: IVL_PQ as obsValueCDA -> observation.value = create('Range') as value then IVLPQRange(obsValueCDA, value) "observationValueIVLPQ";
+
+	// Physical Quantity - not standard conformant, but required for example report
+	cdaObs.value: PQ as obsValueCDA -> observation.value = create('Quantity') as value then PQQuantity(obsValueCDA,value) "observationValuePQ";
+
+	// Integer
+	cdaObs.value: INT as obsValueCDA -> observation.value = create('integer') as value then INT(obsValueCDA,value) "observationValueINT";
+
+	// Interval of Integers
+	cdaObs.value: IVL_INT as obsValueCDA -> observation.value = create('Range') as value then IVLINTRange(obsValueCDA,value) "observationValueIVLINT";
+
+	// Boolean
+	cdaObs.value: BL as obsValueCDA -> observation.value = create('boolean') as value then Boolean(obsValueCDA,value) "observationValueBool";
+
+	// String
+	cdaObs.value: ST as obsValueCDA -> observation.value = create('string') as value then STstring(obsValueCDA,value) "observationValueString";
+
+	// Coded Value
+	cdaObs.value: CV as obsValueCDA -> observation.value = create('CodeableConcept') as value then CVCodeableConcept(obsValueCDA,value) "observationValueCV";
+
+	// Time Stamp
+	cdaObs.value: TS as obsValueCDA -> observation.value = create('dateTime') as value then TSDateTime(obsValueCDA,value) "observationValueTS";
+			
+	// Ratio
+	cdaObs.value: RTO as obsValueCDA -> observation.value = create('Ratio') as value then RTORatio(obsValueCDA,value) "observationValueRTO";
+
+	// Ratio of quantities
+	cdaObs.value: RTO_QTY_QTY as obsValueCDA -> observation.value = create('Ratio') as value then RTOQTYQTYRatio(obsValueCDA,value) "observationValueRTOQTYQTY";
+
+	// Ratio of physical quantities
+	cdaObs.value: RTO_PQ_PQ as obsValueCDA -> observation.value = create('Ratio') as value then RTOPQPQRatio(obsValueCDA,value) "observationValueRTOPQPQ";
+
+	cdaObs.interpretationCode as obsInterpretCode -> observation.interpretation = create('CodeableConcept') as value then CECodeableConcept(obsInterpretCode,value) "obsInterpretationCode"; // Value Set; can either be specified here or inside referenceRange-Element
+
+	// Befundtext - necessary?
+	//cdaObs.entryRelationship ->
+
+	// Participant/validierende Person - necessary?
+	//cdaObs.participant as partObs then {
+		//partObs.time -> not transformable
+		//partObs.participantRole as partRole -> bundle.entry as entry11, entry11.resource = create('Practitioner') as prac, 
+		//pracRole.id = uuid() as uuid11, entry11.fullUrl = append('urn:uuid:',uuid11), observation.performer = create('Reference') as reference1, 
+		//reference1.reference = reference(prac), reference1.type = 'Practitioner' then ParticipantRolePractitioner(partRole, prac) "PartRolePractitioner";
+	//} "observationParticipant";
+
+	// Referenzbereich - necessary?
+	cdaObs.referenceRange as refRangeObs then {
+		refRangeObs.observationRange as refRangeObsRange -> observation.referenceRange as observationRefRange then {
+			refRangeObsRange.text as obsRangeText -> observationRefRange.text = create('string') as value then EDstring(obsRangeText,value) "referenceRangeObservationRangeTextValue"; // contains ED-Datatype with reference to narrative text (Level 2)
+			refRangeObsRange.value as obsRangeValue -> observationRefRange.value = create('Range') as value then IVLPQRange(obsRangeValue,value) "referenceRangeObservationRangeValue";
+			refRangeObsRange.interpretationCode as obsRangeInterpretCode -> observation.interpretation = create('CodeableConcept') as value then CECodeableConcept(obsRangeInterpretCode,value) "obsInterpretationCode"; // ELGA_ObservationInterpretation Value Set; can either be specified here or in top-level interpretationCode-Element
+		} "observationReferenceRangeObservationRange";
+	} "observationReferenceRange";
+
+	// Performer/externes Labor - necessary?
+	cdaObs.performer as perfObs then {
+		perfObs.assignedEntity as assEnt -> bundle.entry as entry12, entry12.resource = create('Practitioner') as practitioner,
+		practitioner.id = uuid() as uuid12, entry12.fullUrl = append('urn:uuid:',uuid12), bundle.entry as entry13, entry13.resource = create('PractitionerRole') as pracRole,
+		pracRole.id = uuid() as uuid13, entry13.fullUrl = append('urn:uuid:',uuid13), pracRole.practitioner = create('Reference') as reference, reference.reference = reference(practitioner), reference.type = 'Practitioner',
+		observation.performer = create('Reference') as reference2, reference2.reference = reference(pracRole), reference2.type = 'PractitionerRole' then AssignedEntityPractitioner(assEnt,pracRole,practitioner,bundle) "observationPerformerAssignedEntity";
+	} "observationPerformer";
+}

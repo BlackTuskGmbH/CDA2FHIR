@@ -1,0 +1,331 @@
+map "http://hl7.org/fhir/cda2fhir/StrutureMap/CDA2FHIRCodesValueSets" = "TransformationCDA2FHIRCodesValueSets"
+
+// Adapted from:
+// https://github.com/HL7/ccda-to-fhir/tree/master/mappings
+// https://github.com/hl7ch/cda-fhir-maps/tree/master/input/maps
+
+// CDA: https://elga.art-decor.org/elga-html-20200429T211548/project.html
+//      https://termpub.gesundheit.gv.at
+// FHIR: http://hl7.org/fhir/R4/
+
+// Not used for Transformation -> StructureMap-Resources cannot contain ConceptMap Resources on its own.
+
+// ELGA_TelecomAddressUse
+// source: https://termpub.gesundheit.gv.at/TermBrowser/gui/main/main.zul?loadType=CodeSystem&loadName=ELGA_GDA_Aggregatrollen (ELGA_TelecomAddressUse)
+// target: https://www.hl7.org/fhir/valueset-contact-point-system.html
+conceptmap "ELGATelecomAddressUseFHIRContactPoint" {
+  prefix s = "https://www.hl7.org/fhir/cda/ELGA_TelecomAddressUse"
+  prefix t = "https://www.hl7.org/fhir/valueset-contact-point-system.html"
+
+  s:"H" == t:"phone" // telephone home -> phone (information loss)
+  s:"HP" == t: "phone" // telephone primary home -> phone (information loss)
+  s:"HV" == t: "phone" // telephone vacation home -> phone (information loss)
+
+  s:"WP" == t:"phone" // telephone work -> phone
+  s:"AS" == t:"phone" // answering service -> phone (information loss)
+  s:"EC" == t:"phone" // emergency contact -> phone (information loss)
+  s:"MC" == t:"sms" // mobile contact -> sms (contact which can recieve text messages)
+  s:"PG" == t:"pager" // pager -> pager
+  s:"TMP" == t:"temp" // temporary address
+}
+
+// ELGA_AddressUse
+// source: https://termpub.gesundheit.gv.at/TermBrowser/gui/main/main.zul?loadType=CodeSystem&loadName=ELGA_GDA_Aggregatrollen (ELGA_AddressUse)
+// target: http://hl7.org/fhir/valueset-address-use.html
+conceptmap "ELGAAddressUseFHIRAddressUse" { 
+  prefix s = "https://www.hl7.org/fhir/cda/ELGA_AddressUse" 
+  prefix t = "http://hl7.org/fhir/valueset-address-use.html"
+  
+  s:"H" == t:"home" // home address -> home
+  s:"HP" == t: "home" // primary home -> home
+  s:"HV" == t: "home" // vacation home	 -> home
+
+  s:"WP" == t:"work" // work place -> work
+  s:"DIR" == t:"work" // direct -> work
+  s:"PUB" == t:"work" // public -> work
+
+  s:"TMP" == t:"temp" // temporary address -> Temporary
+  
+  s:"PHYS" == t:"temp" // physical visit address -> Temporary
+  s:"PST" == t:"billing" // billing address -> billing address
+}
+
+// ELGA_EntityNameUse - AT specific
+// source: https://termpub.gesundheit.gv.at/TermBrowser/gui/main/main.zul?loadType=CodeSystem&loadName=ELGA_GDA_Aggregatrollen (ELGA_EntityNameUse)
+// target: https://www.hl7.org/fhir/valueset-name-use.html
+conceptmap "ELGAEntityNameUseFHIRNameUse"{
+  prefix s = "https://www.hl7.org/fhir/cda/ELGA_EntityNameUse"
+  prefix t = "https://www.hl7.org/fhir/valueset-name-use.html"
+
+  s:"ASGN" == t:"usual" // assigned -> usual (Name normally used)
+  s:"C" == t:"usual" // License -> usual (Potential information loss?)
+  s:"I" == t:"anonymous" // Indigenious/Tribal -> anonymous (nickname would not be part of their formal/usual name)
+  s:"L" == t:"official" // Legal -> official (official name, no common use implied)
+  s:"OR" == t:"official" // official registry -> official (legal)
+  s:"P" == t:"anonymous" // pseudonym -> anonymous
+  s:"A" == t:"anonymous" // Artist/Stage -> anonymous (pseudonym)
+  s:"R" == t:"anonymous" // Religious -> anonymous (nickname would not be part of their formal/usual name)
+  s:"SRCH" == t:"??" // SearchUse -> ??
+  s:"PHON" == t:"nickname" // phonetic -> nickname (SearchUse)
+  s:"SNDX" == t:"nickname" // soundex ->  nickname (SearchUse)
+  s:"ABC" == t:"nickname" // alphabetic -> nickname (NameRepresentationUse)
+  s:"IDE" == t:"nickname" // ideographic -> nickname (NameRepresentationUse)
+  s:"SYL" == t:"nickname" // syllabic -> nickname (NameRepresentationUse)
+}
+
+// ELGA_EntityNamePartQualifier
+// source: https://termpub.gesundheit.gv.at/TermBrowser/gui/main/main.zul (ELGA_NamePartQualifier)
+// target: https://www.hl7.org/fhir/valueset-name-part-qualifier.html
+// both value sets contain the same information, no need of transformation
+
+// ELGA_AdministrativeGender - AT specific
+// source: https://termpub.gesundheit.gv.at/TermBrowser/gui/main/main.zul?loadType=CodeSystem&loadName=ELGA_GDA_Aggregatrollen (ELGA_AdministrativeGender)
+// target: https://www.hl7.org/fhir/valueset-gender-identity.html
+conceptmap "ELGAAdministrativeGenderFHIRGenderIdentity" { 
+  prefix s = "https://www.hl7.org/fhir/cda/ELGA_AdministrativeGender"
+  prefix t = "https://www.hl7.org/fhir/valueset-gender-identity.html"
+  
+  s:"M" == t:"male" // gender M -> male
+  s:"F" == t: "female" // gender F -> female
+  s:"UN" == t: "non-binary" // gender UN (undifferentiated) -> non-binary (patient identifies with neither/both female and male)
+  s:"UNK" == t:"??" // NullFlavour cannot be depicted
+}
+
+// HL7 Marital Status
+// source: https://termpub.gesundheit.gv.at/TermBrowser/gui/main/main.zul?loadType=CodeSystem&loadName=ELGA_GDA_Aggregatrollen (HL7 Marital Status)
+// target: https://www.hl7.org/fhir/valueset-marital-status.html
+// ELGA uses marital status from HL7 -> no transformation required. Hiwever, ELGA does not use the marital status codes "unmarried" and "unknown".
+
+// ELGA_ReligiousAffilation
+// source: https://termpub.gesundheit.gv.at/TermBrowser/gui/main/main.zul?loadType=CodeSystem&loadName=ELGA_GDA_Aggregatrollen (ELGA_ReligiousAffilation)
+// target: https://www.hl7.org/fhir/v3/ReligiousAffiliation/vs.html
+conceptmap "ELGAReligiousAffilationFHIRReligiousAffilation" { 
+  prefix s = "https://www.hl7.org/fhir/cda/ELGA_ReligiousAffilation"
+  prefix t = "https://www.hl7.org/fhir/v3/ReligiousAffiliation/vs.html"
+  
+  s:"100" == t:"??" // Katholische Kirchen -> keine Abbildung möglich (ausschließlich Christlich (nicht-katholisch) und nicht römisch-katholisch vorhanden)
+  s:"101" == t:"1041" // Römisch-Katholische Kirche -> Roman Catholic Church
+  s:"102" == t:"1034" // Griechisch-Katholische Kirche -> non-Roman Catholic
+  s:"103" == t:"1034" // Armenisch-Katholische Kirche -> non-Roman Catholic
+  s:"104" == t:"1034" // Bulgarisch-Katholische Kirche -> non-Roman Catholic
+  s:"105" == t:"1034" // Rumänische Griechisch-Katholische Kirche -> non-Roman Catholic
+  s:"106" == t:"1034" // Russisch-Katholische Kirche -> non-Roman Catholic
+  s:"107" == t:"1034" // Syrisch-Katholische Kirche -> non-Roman Catholic
+  s:"108" == t:"1034" // Ukrainische Griechisch-Katholische Kirche -> non-Roman Catholic
+  s:"109" == t:"1034" // Katholische Ostkirche (ohne nähere Angaben) -> non-Roman Catholic
+
+  s:"110" == t:"1068" // Griechisch-Orientalische Kirchen -> Eastern Orthodox
+  s:"111" == t:"1036" // Orthodoxe Kirchen (ohne nähere Angabe) -> Orthodox
+  s:"112" == t:"1068" // Griechisch-Orthodoxe Kirche (Hl. Dreifaltigkeit) -> Eastern Orthodox
+  s:"113" == t:"1068" // Griechisch-Orthodoxe Kirche (Hl. Georg) -> Eastern Orthodox
+  s:"114" == t:"1068" // Bulgarisch-Orthodoxe Kirche -> Eastern Orthodox
+  s:"115" == t:"1068" // Rumänisch-griechisch-orientalische Kirche -> Eastern Orthodox
+  s:"116" == t:"1068" // Russisch-Orthodoxe Kirche -> Eastern Orthodox
+  s:"117" == t:"1068" // Serbisch-griechisch-Orthodoxe Kirche -> Eastern Orthodox
+  s:"118" == t:"1068" // Ukrainisch-Orthodoxe Kirche -> Eastern Orthodox
+  
+  s:"119" == t:"1036" // Orientalisch-Orthodoxe Kirchen -> Orthodox
+  s:"120" == t:"1036" // Armenisch-apostolische Kirche -> Orthodox
+  s:"121" == t:"1036" // Syrisch-orthodoxe Kirche -> Orthodox
+  s:"122" == t:"1036" // Syrisch-orthodoxe Kirche -> Orthodox
+  s:"123" == t:"1036" // Koptisch-orthodoxe Kirche -> Orthodox
+  s:"124" == t:"1036" // Armenisch-apostolische Kirche -> Orthodox
+  s:"125" == t:"1036" // Äthiopisch-Orthodoxe Kirche -> Orthodox
+  
+  s:"126" == t:"1077" // Evangelische Kirchen Österreich -> Protestant
+  s:"127" == t:"1078" // Evangelische Kirche (ohne nähere Angabe) -> Protestant, No Denomintion
+  s:"128" == t:"1028" // Evangelische Kirche A. B. -> Lutheran
+  s:"129" == t:"1079" // Evangelische Kirche H. B. -> Reformed
+  
+  s:"130" == t:"1013" // Andere Christliche Kirchen -> Christian (non-Catholic, non-specific)
+  s:"131" == t:"1034" // Altkatholische Kirche Österreichs -> non-Roman Catholic
+  s:"132" == t:"1005" // Anglikanische Kirche -> Anglican
+  s:"133" == t:"1073" // Evangelisch-methodistische Kirche (EmK) -> Methodist
+
+  s:"134" == t:"1013" // Sonstige Christliche Gemeinschaften -> Christian (non-Catholic, non-specific)
+  s:"135" == t:"1009" // Baptisten -> Baptist
+  s:"136" == t:"1078" // Bund evangelikaler Gemeinden in Österreich -> Protestant, No Denomination
+  s:"137" == t:"1013" // Freie Christengemeinde/Pfingstgemeinde -> Christian (non-Catholic, non-specific)
+  s:"138" == t:"1077" // Mennoritische Freikirche -> Protestant
+  s:"139" == t:"1077" // Kirche der Siebenten-Tags-Adventisten -> Protestant
+  s:"140" == t:"1077" // Christengemeinschaft -> Christian (non-Catholic, non-specific)
+  s:"141" == t:"1025" // Jehovas Zeugen -> Jehovah's Witnesses
+  s:"142" == t:"1013" // Neuapostolische Kirche -> Christian (non-Catholic, non-specific)
+  s:"143" == t:"1013" // Mormonen -> Christian (non-Catholic, non-specific)
+  s:"144" == t:"1013" // Sonstige Christliche Gemeinschaften (ohne nähere Angabe) -> Christian (non-Catholic, non-specific)
+  s:"145" == t:"1013" // ELAIA Christengemeinden -> Christian (non-Catholic, non-specific)
+  s:"146" == t:"1038" // Pfingstkirche Gemeinde Gottes -> Pentecostal
+ 
+  s:"148" == t:"" // Nicht-christliche Gemeinschaften -> nicht abbildbar, da zu grob definiert
+  s:"149" == t:"1026" // Israelitische Religionsgesellschaft -> Judaism
+  s:"150" == t:"1023" // Islamische Glaubensgemeinschaft -> Islam
+  s:"151" == t:"1023" // Alevitische Religionsgemeinschaft -> Islam
+  s:"152" == t:"1059" // Buddhistische Religionsgemeinschaft -> Zen Buddhism
+  s:"153" == t:"1008" // Baha`i -> Babi & Baha'I faiths
+  s:"154" == t:"1020" // Hinduistische Religionsgemeinschaft -> Hinduism
+  s:"155" == t:"1047" // Sikh -> Sikism
+  s:"156" == t:"1046" // Shintoismus -> Shinto
+  s:"157" == t:"1022" // Vereinigungskirche -> Independent
+  s:"162" == t:"1022" // Pastafarianismus -> Independent
+  
+  // Nicht verwendete Codes
+  s:"158" == t:"" // nicht verwendet
+  s:"159" == t:"" // nicht verwendet
+  s:"160" == t:"" // nicht verwendet
+  s:"161" == t:"" // nicht verwendet
+  s:"147" == t:"" // nicht verwendet
+
+  // Ohne Codes
+  // Andere religiöse Bekenntnisgemeinschaften
+  // Konfessionslos; ohne Angabe
+  // Konfessionslos
+  // Ohne Angabe
+}
+
+
+// ELGA_Confidentiality - AT specific
+// source: https://termpub.gesundheit.gv.at/TermBrowser/gui/main/main.zul?loadType=CodeSystem&loadName=ELGA_GDA_Aggregatrollen (ELGA_Confidentiality)
+// target: http://hl7.org/fhir/v3/ConfidentialityClassification/vs.html
+// ELGA uses value set based on HL7 v3 code system - no transformation required.
+
+// languageCode - AT specific
+// source: https://wiki.hl7.at/index.php?title=elga-cdaalf-2.06.2:Sprachcode_des_Dokuments_(%E2%80%9ElanguageCode%E2%80%9C)
+// target: https://www.hl7.org/fhir/valueset-all-languages.html
+// only "de-AT" allowed, both value sets BCP-47 conformant
+
+// functionCode
+// value taken from CDA "displayName"-Attribute
+
+// HL7 Participation Function
+// source: https://termpub.gesundheit.gv.at/TermBrowser/gui/main/main.zul?loadType=CodeSystem&loadName=ELGA_GDA_Aggregatrollen (HL7 Participation Function)
+// target: https://www.hl7.org/fhir/v3/ParticipationFunction/cs.html
+// ELGA uses Value set based on HL7 v3 code system - no transformation required ("moderate" and "unrestricted" levels not used in ELGA)
+
+// ELGA_Fachärzte - AT specific
+// source: https://termpub.gesundheit.gv.at/TermBrowser/gui/main/main.zul?loadType=CodeSystem&loadName=ELGA_GDA_Aggregatrollen (ELGA_Fachaerzte)
+// target: https://www.hl7.org/fhir/valueset-performer-role.html (SNOMED-CT)
+conceptmap "ELGAFachaerzteFHIRPerformerRole" { 
+  prefix s = "https://www.hl7.org/fhir/cda/ELGA_Fachaerzte"
+  prefix t = "https://www.hl7.org/fhir/valueset-performer-role"
+  
+  s:"102" == t:"88189002" // Fachärztin/Facharzt für Anästhesiologie und Intensivmedizin -> Anesthesiologist (doctor, not nurse - auch Intensivmedizin?)
+  s:"103" == t:"83273008" // Fachärztin/Facharzt für Anatomie -> Anatomic pathologist
+  s:"104" == t:"682131381000087105" // Fachärztin/Facharzt für Arbeitsmedizin -> Occupational medicine specialist
+  s:"105" == t:"28229004" // Fachärztin/Facharzt für Augenheilkunde und Optometrie -> Optometrist (FRAGE: auch Augenheilkúnde?)
+  s:"106" == t:"309341008" // Fachärztin/Facharzt für Blutgruppenserologie und Transfusionsmedizin -> Blood transfusion doctor
+  s:"107" == t:"78703002" // Fachärztin/Facharzt für Chirurgie -> General surgeon
+  s:"108" == t:"309367003" // Fachärztin/Facharzt für Frauenheilkunde und Geburtshilfe -> Obstetrician and gynecologist
+  s:"109" == t:"310193003 " // Fachärztin/Facharzt für Gerichtsmedizin -> Coroner
+  s:"110" == t:"61345009" // Fachärztin/Facharzt für Hals-, Nasen- und Ohrenkrankheiten -> Otorhinolaryngologist
+  s:"111" == t:"18803008" // Fachärztin/Facharzt für Haut- und Geschlechtskrankheiten -> Dermatologist (FRAGE: auch für Geschlechtskrankheiten zuständig??)
+  s:"112" == t:"309371000" // Fachärztin/Facharzt für Herzchirurgie -> Cardiac surgeon (alternatively: cardiothoracic surgeon)
+  s:"113" == t:"309342001" // Fachärztin/Facharzt für Histologie und Embryologie -> Histopathologist (FRAGE: auch für Embryologie zuständig??)
+  s:"114" == t:"14698002" // Fachärztin/Facharzt für Hygiene und Mikrobiologie -> Medical microbiologist (FRAGE: Auch für Hygiene zuständig?? Ansonsten nur Zahnhygiene gefunden...)
+  s:"115" == t:"63098009" // Fachärztin/Facharzt für Immunologie -> Clinical immunologist (alternatively: Immunopathologist 310171008)
+  s:"116" == t:"39677007" // Fachärztin/Facharzt für Innere Medizin -> Internal medicine specialist
+  s:"117" == t:"309383003" // Fachärztin/Facharzt für Kinder- und Jugendchirurgie -> Pediatric surgeon (FRAGE: auch für Jugendchirurgie?)
+  s:"118" == t:"82296001" // Fachärztin/Facharzt für Kinder- und Jugendheilkunde -> Pediatrician (FRAGE: auch für Jugendheilkunde?)
+  s:"119" == t:"309361002" // Fachärztin/Facharzt für Kinder- und Jugendpsychiatrie -> Child and adolescent psychiatrist
+  s:"120" == t:"41672002" // Fachärztin/Facharzt für Lungenkrankheiten -> Respiratory physician
+  s:"121" == t:"14698002" // Fachärztin/Facharzt für Medizinische Biologie -> Medical microbiologist
+  s:"122" == t:"24430003" // Fachärztin/Facharzt für Medizinische Biophysik -> Physical medicine specialist (ANM: Biophysik nicht vorhanden)
+  s:"123" == t:"159141008" // Fachärztin/Facharzt für Medizinische Genetik -> Geneticist (alternatively: clinical geneticist, 309355000)
+  s:"124" == t:"61246008" // Fachärztin/Facharzt für Medizinische und Chemische Labordiagnostik -> Laboratory medicine specialist (FRAGE: auch chemische Labordiagnostik inkludiert?)
+  s:"125" == t:"309348002" // Fachärztin/Facharzt für Medizinische Leistungsphysiologie -> Clinical physiologist (FRAGE: auch Leistungsphysiologie?)
+  s:"126" == t:"18850004" // Fachärztin/Facharzt für Mikrobiologisch-Serologische Labordiagnostik -> Laboratory hematologist (FRAGE: korrekte Übersetzung?)
+  s:"127" == t:"49993003" // Fachärztin/Facharzt für Mund-, Kiefer- und Gesichtschirurgie -> Maxillofacial surgeon
+  s:"128" == t:"doctor" // Fachärztin/Facharzt für Neurobiologie -> ?? (nicht vorhanden)
+  s:"129" == t:"45544007" // Fachärztin/Facharzt für Neurochirurgie -> Neurosurgeon
+  s:"130" == t:"56397003 " // Fachärztin/Facharzt für Neurologie -> Neurologist 
+  s:"131" == t:"21450003" // Fachärztin/Facharzt für Neurologie und Psychiatrie -> Neuropsychiatrist (FRAGE: auch Neurologie?)
+  s:"132" == t:"11661002" // Fachärztin/Facharzt für Neuropathologie -> Neuropathologist
+  s:"133" == t:"80933006" // Fachärztin/Facharzt für Nuklearmedizin -> Nuclear medicine physician
+  s:"134" == t:"22731001" // Fachärztin/Facharzt für Orthopädie und Orthopädische Chirurgie -> Orthopedic surgeon (FRAGE: auch Orthopädie?)
+  s:"135" == t:"61207006" // Fachärztin/Facharzt für Pathologie -> Medical pathologist
+  s:"136" == t:"doctor" // Fachärztin/Facharzt für Pathophysiologie -> ?? (ANMERKUNG: keine Pathophysiologie vorhanden)
+  s:"137" == t:"310173006" // Fachärztin/Facharzt für Pharmakologie und Toxikologie -> Clinical pharmacologist (FRAGE: auch Toxikologie?)
+  s:"138" == t:"309360001" // Fachärztin/Facharzt für Physikalische Medizin und Allgemeine Rehabilitation -> Rehabilitation physician (alternatively: Physical medicine specialist, 24430003)
+  s:"139" == t:"309349005" // Fachärztin/Facharzt für Physiologie -> Clinical physiologist
+  s:"140" == t:"8724009" // Fachärztin/Facharzt für Plastische, Ästhetische und Rekonstruktive Chirurgie -> Plastic surgeon (ANM: auch ästhetische und rekonstruktive Chirurgie?)
+  s:"141" == t:"80584001" // Fachärztin/Facharzt für Psychiatrie -> Psychiatrist (alternatively: forensic psychiatrist, liaison psychiatrist, psychiatrist for mental handicap, rehabilitation psychiatrist)
+  s:"142" == t:"21450003" // Fachärztin/Facharzt für Psychiatrie und Neurologie -> Neuropsychiatrist
+  s:"143" == t:"224588003" // Fachärztin/Facharzt für Psychiatrie und Psychotherapeutische Medizin -> Psychotherapist (FRAGE: auch Psychiatrie?)
+  s:"144" == t:"66862007" // Fachärztin/Facharzt für Radiologie -> Radiologist (alternatively: disgnostic/interventional/pediatric radiologist, neuroradiologist)
+  s:"145" == t:"doctor" // Fachärztin/Facharzt für Sozialmedizin -> ??
+  s:"146" == t:"766788081000087100" // Fachärztin/Facharzt für Spezifische Prophylaxe und Tropenmedizin -> Travel medicine specialist (FRAGE: auch spezifische Prophylaxe?)
+  s:"147" == t:"3430008" // Fachärztin/Facharzt für Strahlentherapie-Radioonkologie -> Radiation therapist (FRAGE: auch Radioonkologie?)
+  s:"148" == t:"doctor" // Fachärztin/Facharzt für Theoretische Sonderfächer -> ?? (nicht vorhanden)
+  s:"149" == t:"22983004" // Fachärztin/Facharzt für Thoraxchirurgie -> Thoracic surgeon
+  s:"150" == t:"doctor" // Fachärztin/Facharzt für Tumorbiologie -> Oncologist ??
+  s:"151" == t:"309386006" // Fachärztin/Facharzt für Unfallchirurgie -> Trauma surgeon
+  s:"152" == t:"24590004" // Fachärztin/Facharzt für Urologie -> Urologist
+  s:"153" == t:"76899008" // Fachärztin/Facharzt für Virologie -> Infectious disease specialist ??
+  s:"154" == t:"66476003" // Fachärztin/Facharzt für Zahn-, Mund- und Kieferheilkunde -> Oral pathologist, Specialized dentist (21365001), Orthodontist (37504001)
+}
+
+// ELGA_InsuredAssocEntity (based on HL7 Role Code) - AT specific
+// source: https://termpub.gesundheit.gv.at/TermBrowser/gui/main/main.zul?loadType=CodeSystem&loadName=ELGA_GDA_Aggregatrollen (ELGA_InsuredAssocEntity)
+// target: https://www.hl7.org/fhir/valueset-subscriber-relationship.html
+// addressUse
+conceptmap "ELGAInsuredAssocEntityFHIRSubscriberRelationship" { 
+  prefix s = "https://www.hl7.org/fhir/cda/ELGA_InsuredAssocEntity"
+  prefix t = "https://www.hl7.org/fhir/valueset-subscriber-relationship.html"
+  
+  s:"FAMDEP" == t:"child" // family dependent insured (mitversichert) -> unklar, da FHIR hier eine deutlich höhere Granularität aufweist (Kind, Elternteil, Frau, Schwiegermutter, andere); Child ausgewählt, da mutmaßlich am häufigsten der Fall
+  s:"SELF" == t: "self" // self insured -> Beneficiary is the Subscriber
+}
+
+// ELGA_Sections - is it even required?? - AT specific
+// source: https://termpub.gesundheit.gv.at/TermBrowser/gui/main/main.zul?loadType=CodeSystem&loadName=ELGA_GDA_Aggregatrollen (ELGA_Sections)
+// target: https://www.hl7.org/fhir/valueset-doc-section-codes.html ? (zwar für C-CDA, Ähnlichkeiten sind vorhanden, beschriebener Inhalt pro Code in FHIR viel umfangreicher, dadurch Informationsverlust -> gröbere Unterteilung der Elemente)
+conceptmap "ELGASectionsFHIRDocSectionCodes" { 
+  prefix s = "https://www.hl7.org/fhir/cda/ELGA_Sections"
+  prefix t = "https://www.hl7.org/fhir/valueset-doc-section-codes.html"
+  
+  s:"BRIEFT" == t:"??" // Brieftext -> ?? (nur Anrede und Logo beinhaltet, überhaupt benötigt?)
+  s:"ABBEM" == t: "51848-0" // abschließende Bemerkungen -> Evaluation note (https://loinc.org/51848-0/)
+  s:"TERMIN" == t:"59772-4" // Termine, Kontrollen, Wiederbestellung -> Planned procedure narrative (https://loinc.org/59772-4/) oder Plan of care notes (https://loinc.org/18776-5/) oder Instructions (https://loinc.org/69730-0/)
+  s:"BEFAUS" == t: "self" // Aussstehende Befunde -> Plan of care notes (https://loinc.org/18776-5/) -> inkludiert offene Untersuchungen, Eingriffe, Termine und Vorgangsweisen (Prozeduren)
+  s:"BEFERH" == t:"30654-2" // Auszüge aus erhobenen Befunden -> Relevant diagnostic tests/laboratory data narrative (https://loinc.org/30954-2/) 
+  s:"BEFBEI" == t: "30954-2" // Beigelegte erhobene Befunde -> Relevant diagnostic tests/laboratory data narrative (https://loinc.org/30954-2/)
+  s:"BEIL" == t:"42348-3" // Beilagen -> Advance directives (https://loinc.org/42348-3/) -> enthält Informationen zur Behandlungsrichtung des Patienten und Referenzen für weitere diesbezügliche Informationen
+  s:"ANM" == t: "??" // Anmerkungen -> ??
+  s:"RES" == t:"46264-8" // Hilfsmittel und Ressourcen -> History of medical device use (https://loinc.org/46264-8/)
+  s:"PFDIAG" == t: "11329-0" // Pflegediagnosen -> History geeneral Narrative - Reported (https://loinc.org/11329-0/) - kann auch Pflegediagnosen beinhalten, alternativ Review of systems Narrative (https://loinc.org/10187-3/) -> Symptome und Funktionen eines Patienten, allerdings von Ärzten erhoben
+  s:"PFMOB" == t:"10210-3" // Mobilität -> physical findings of General status Narrative (https://loinc.org/10210-3/)
+  s:"PFKLEI" == t: "10210-3" // Körperpflege und Kleiden -> physical findings of General status Narrative (https://loinc.org/10210-3/)
+  s:"PFERN" == t:"10210-3" // Ernährung -> physical findings of General status Narrative (https://loinc.org/10210-3/) oder Discharge diet (https://loinc.org/42344-2/)
+  s:"PFAUS" == t: "10210-3" // Ausscheidung -> physical findings of General status Narrative (https://loinc.org/10210-3/)
+  s:"PFHAUT" == t:"10210-3" // Hautzustand -> physical findings of General status Narrative (https://loinc.org/10210-3/)
+  s:"PFATM" == t: "8716-3" // Atmung -> Vital signs (https://loinc.org/8716-3/)
+  s:"PFSCHL" == t:"8716-3" // Schlaf -> Vital signs (https://loinc.org/8716-3/)
+  s:"PFORIE" == t: "47420-5" // Orientierung und Bewusstseinslage -> Funtional status assessment role (https://loinc.org/47420-5/)
+  s:"PFSOZV" == t:"29762-2" // Soziales Verhalten -> Social history Narrative (https://loinc.org/29762-2/)
+  s:"PFKOMM" == t: "47420-5" // Kommunikation -> Functional status assessment role (https://loinc.org/47420-5/)
+  s:"PFROLL" == t:"47420-5" //  Rollenwahrnehmung und Sinnfindung -> Functional status assessment role (https://loinc.org/47420-5/)
+  s:"PFMED" == t: "29549-3" // Medikamentenverabreichung -> Medication administered Narrative (https://loinc.org/29549-3/)
+  s:"PFMEDBEH" == t:"18776-5" // Pflegerelevante Informationen zur medizinischen Behandlung -> Plan of care note (https://loinc.org/18776-5/)
+  s:"PUBUMF" == t: "18776-5" // Pflege- und Betreuungsumfang -> Plan of care note (https://loinc.org/18776-5/)
+
+  s:"ANGEFUNTERS" == t:"42349-1" // Angeforderte Untersuchungen -> Reason for referral ? (https://loinc.org/42349-1/) - Als Überweisungsgrund könnten Untersuchungen angeführt werden
+  s:"INFEKTSER" == t:"30954-2" // Infektionsserologie -> Relevant diagnostic tests/laboratory data Narrative (https://loinc.org/30954-2/) ?
+  s:"LISTGDA" == t:"46240-8" // Liste der behandelnden GDA -> History of Hospitalizations+Outpatient visits Narrative (https://loinc.org/46240-8/)
+  s:"MELDEPERR" == t:"30954-2" // Meldepflichtige Erreger -> Relevant diagnostic tests/laboratory data Narrative (https://loinc.org/30954-2/) ?
+  s:"MOLEKERN" == t:"30954-2" // Molekularer Erregernachweis -> Relevant diagnostic tests/laboratory data Narrative (https://loinc.org/30954-2/) ?
+  s:"OPBER" == t:"59775-7" // Operationsbericht -> Surgical operation note (fluids, postoperative diagnosis, surgical procedure, surgical complications [interpretation], implants) Narrative oder Procedure disposition Narrative (https://loinc.org/59775-7/) - enthält status und Zustand des Patienten nach Operation sowie das Vergeungsziel für weitere Maßnahmen
+  s:"OUTCOMEMEAS" == t:"??" // Outcome Measurement -> ??
+  s:"REHAZIELE" == t:"??" // Rehabilitationsziele -> ??
+}
+
+
+// ELGA_LaborparameterErgänzung
+// source: https://termpub.gesundheit.gv.at/TermBrowser/gui/main/main.zul?loadType=CodeSystem&loadName=ELGA_GDA_Aggregatrollen (ELGA_LaborparameterErgänzung)
+LOINC is used in both Standards -> no transformation required
+
+// HL7 Observation Interpretation
+// source: https://art-decor.org/art-decor/decor-valuesets--elga- (ELGA_ObservationInterpretation)
+// target: https://www.hl7.org/fhir/valueset-observation-interpretation.html
+// both standards use the same code system -> no transformation required (NOTE: Some values, namely AC, QCF, TOX, H>, L<, MS, VS are depriciated but still used in ELGA) 
+
+
+

@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ConceptMap xmlns="http://hl7.org/fhir">
+  <id value="103"/> 
+  <url value="http://hl7.org/fhir/ConceptMap/103"/> 
+  <identifier> 
+    <system value="urn:ietf:rfc:3986"/> 
+    <value value="urn:uuid:53cd62ee-033e-414c-9f58-3ca97b5ffc3b"/> 
+  </identifier> 
+  <version value="4.0.1"/> 
+  <name value="ELGA_TelecomAddressUse-FHIR-contact-point-use"/> 
+  <title value="ELGA-CDA/FHIR Telecom Address Use Mapping"/> 
+  <status value="draft"/> 
+  <experimental value="true"/> 
+  <date value="2012-06-13"/> 
+  <publisher value="BlackTusk GmbH"/> 
+  <contact> 
+    <name value="Maximilian Ossana"/> 
+    <telecom> 
+      <system value="url"/> 
+      <value value="http://blacktusk.eu"/> 
+    </telecom> 
+  </contact> 
+  <description value="A mapping between the ELGA-CDA and FHIR Telecom AddressUse Code systems"/> 
+  <useContext> 
+    <code> 
+      <system value="http://terminology.hl7.org/CodeSystem/usage-context-type"/> 
+      <code value="venue"/> 
+    </code> 
+    <valueCodeableConcept> 
+      <text value="for ELGA-CDA Usage"/> 
+    </valueCodeableConcept> 
+  </useContext> 
+  <jurisdiction> 
+    <coding> 
+      <system value="urn:iso:std:iso:3166"/> 
+      <code value="de-AT"/> 
+    </coding> 
+  </jurisdiction> 
+  <purpose value="To help implementers map from ELGA-CDA to FHIR"/> 
+  <copyright value="Creative Commons 0"/> 
+  <sourceUri value="https://www.hl7.org/fhir/cda/ELGA_TelecomAddressUse"/> 
+  <targetUri value="http://hl7.org/fhir/ValueSet/contact-point-use"/> 
+  <group> 
+    <source value="https://www.hl7.org/fhir/cda/ELGA_TelecomAddressUse"/> 
+    <target value="http://hl7.org/fhir/ValueSet/contact-point-use"/> 
+    <element> 
+      <code value="H"/>
+      <display value="home"/> 
+      <target> 
+        <code value="home"/> 
+        <display value="home"/> 
+        <equivalence value="equivalent"/> 
+      </target> 
+    </element> 
+    <element> 
+      <code value="HP"/> 
+      <display value="primary home"/> 
+      <target> 
+        <code value="home"/> 
+        <display value="home"/> 
+        <equivalence value="wider"/>
+      </target> 
+    </element>
+	<element> 
+      <code value="HV"/> 
+      <display value="vacation home"/> 
+      <target> 
+        <code value="home"/> 
+        <display value="home"/> 
+        <equivalence value="wider"/>
+      </target> 
+    </element>
+	<element> 
+      <code value="WP"/> 
+      <display value="work place"/> 
+      <target> 
+        <code value="work"/> 
+        <display value="work"/> 
+        <equivalence value="equivalent"/>
+      </target> 
+    </element> 
+	<element> 
+      <code value="AS"/> 
+      <display value="answering service"/> 
+      <target> 
+        <code value="work"/> 
+        <display value="work"/> 
+        <equivalence value="inexact"/>
+		<comment value="answering service is most likely work-related"/>
+      </target> 
+    </element> 
+	<element> 
+      <code value="EC"/> 
+      <display value="emergency contact"/> 
+      <target> 
+        <code value="home"/> 
+        <display value="home"/> 
+        <equivalence value="inexact"/>
+		<comment value="FHIR home 'typically used with urgent cases'"/>
+      </target> 
+    </element> 
+    <element> 
+      <code value="MC"/> 
+      <display value="mobile contact"/> 
+      <target> 
+        <code value="mobile"/> 
+        <display value="mobile"/> 
+        <equivalence value="equivalent"/> 
+      </target> 
+    </element> 
+    <element> 
+      <code value="PG"/> 
+      <display value="pager"/> 
+      <target> 
+        <code value="mobile"/>
+        <display value="mobile"/> 
+        <equivalence value="wider"/>
+      </target> 
+    </element> 
+	<element> 
+      <code value="TMP"/> 
+      <display value="temporary contact"/> 
+      <target> 
+        <code value="temp"/> 
+        <display value="temporary contact"/> 
+        <equivalence value="equivalent"/>
+      </target> 
+    </element>
+	<unmapped>
+		<mode value="provided"/>
+	</unmapped>
+  </group> 
+</ConceptMap>

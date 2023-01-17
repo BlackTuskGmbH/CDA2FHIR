@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ConceptMap xmlns="http://hl7.org/fhir">
+  <id value="104"/> 
+  <url value="http://hl7.org/fhir/ConceptMap/104"/> 
+  <identifier> 
+    <system value="urn:ietf:rfc:3986"/> 
+    <value value="urn:uuid:53cd62ee-033e-414c-9f58-3ca97b5ffc3b"/> 
+  </identifier> 
+  <version value="4.0.1"/> 
+  <name value="ELGA_AdministrativeGender-FHIR-valueset-gender-identity"/> 
+  <title value="ELGA-CDA/FHIR Gender Mapping"/> 
+  <status value="draft"/> 
+  <experimental value="true"/> 
+  <date value="2012-06-13"/> 
+  <publisher value="BlackTusk GmbH"/> 
+  <contact> 
+    <name value="Maximilian Ossana"/> 
+    <telecom> 
+      <system value="url"/> 
+      <value value="http://blacktusk.eu"/> 
+    </telecom> 
+  </contact> 
+  <description value="A mapping between the ELGA-CDA and FHIR Gender Code systems"/> 
+  <useContext> 
+    <code> 
+      <system value="http://terminology.hl7.org/CodeSystem/usage-context-type"/> 
+      <code value="venue"/> 
+    </code> 
+    <valueCodeableConcept> 
+      <text value="for ELGA-CDA Usage"/> 
+    </valueCodeableConcept> 
+  </useContext> 
+  <jurisdiction> 
+    <coding> 
+      <system value="urn:iso:std:iso:3166"/> 
+      <code value="de-AT"/> 
+    </coding> 
+  </jurisdiction> 
+  <purpose value="To help implementers map from ELGA-CDA to FHIR"/> 
+  <copyright value="Creative Commons 0"/> 
+  <sourceUri value="https://www.hl7.org/fhir/cda/ELGA_AdministrativeGender"/> 
+  <targetUri value="https://www.hl7.org/fhir/valueset-gender-identity"/> 
+  <group> 
+    <source value="https://www.hl7.org/fhir/cda/ELGA_AdministrativeGender"/> 
+    <target value="https://www.hl7.org/fhir/valueset-gender-identity"/> 
+    <element> 
+      <code value="M"/>
+      <display value="male"/> 
+      <target> 
+        <code value="male"/> 
+        <display value="male"/> 
+        <equivalence value="equivalent"/> 
+      </target> 
+    </element> 
+    <element> 
+      <code value="F"/> 
+      <display value="female"/> 
+      <target> 
+        <code value="female"/> 
+        <display value="female"/> 
+        <equivalence value="equivalent"/>
+      </target> 
+    </element>
+	<element> 
+      <code value="UN"/> 
+      <display value="undifferentiated"/> 
+      <target> 
+        <code value="non-binary"/> 
+        <display value="non-binary (patient identifies with neither/both female and male)"/> 
+        <equivalence value="equivalent"/>
+      </target> 
+    </element>
+	<unmapped>
+		<mode value="provided"/>
+	</unmapped>
+  </group> 
+</ConceptMap>

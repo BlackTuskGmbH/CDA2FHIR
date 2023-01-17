@@ -1,0 +1,60 @@
+map "http://hl7.org/fhir/cda2fhir/StructureMap/CDA2FHIRDiagnosticReport" = "CDA2FHIRDiagnosticReport"
+
+// Adapted from:
+// https://github.com/HL7/ccda-to-fhir/tree/master/mappings
+// https://github.com/hl7ch/cda-fhir-maps/tree/master/input/maps
+
+// CDA: https://elga.art-decor.org/elga-html-20200429T211548/project.html
+// FHIR: http://hl7.org/fhir/R4/
+
+uses "http://hl7.org/fhir/cda/StructureDefinition/ClinicalDocument" alias ClinicalDocument as source
+uses "http://hl7.org/fhir/cda/StructureDefinition/AssignedAuthor" alias AssignedAuthor as queried
+uses "http://hl7.org/fhir/cda/StructureDefinition/AssignedEntity" alias AssignedEntity as queried
+uses "http://hl7.org/fhir/cda/StructureDefinition/Organization" alias CDAOrganization as queried
+uses "http://hl7.org/fhir/cda/StructureDefinition/Section" alias Section as queried
+uses "http://hl7.org/fhir/cda/StructureDefinition/PatientRole" alias PatientRole as queried
+uses "http://hl7.org/fhir/cda/StructureDefinition/ParticipantRole" alias ParticipantRole as queried
+uses "http://hl7.org/fhir/cda/StructureDefinition/Person" alias Person as queried
+uses "http://hl7.org/fhir/cda/StructureDefinition/Observation" alias CDAObservation as queried
+
+uses "http://hl7.org/fhir/StructureDefinition/Bundle" alias Bundle as target
+uses "http://hl7.org/fhir/StructureDefinition/DiagnosticReport" alias DiagnosticReport as produced
+uses "http://hl7.org/fhir/StructureDefinition/Patient" alias Patient as produced
+uses "http://hl7.org/fhir/StructureDefinition/Practitioner" alias Practitioner as produced
+uses "http://hl7.org/fhir/StructureDefinition/PractitionerRole" alias PractitionerRole as produced
+uses "http://hl7.org/fhir/StructureDefinition/Organization" alias FHIROrganization as produced
+uses "http://hl7.org/fhir/StructureDefinition/Specimen" alias Specimen as produced
+uses "http://hl7.org/fhir/StructureDefinition/Reference" alias Reference as produced
+uses "http://hl7.org/fhir/StructureDefinition/Observation" alias FHIRObservation as produced
+uses "http://hl7.org/fhir/StructureDefinition/Condition" alias Condition as produced
+
+imports "http://hl7.org/fhir/cda2fhir/StructureMap/CDA2FHIRTypes"
+
+group CDA2Bundle(source cda:ClinicalDocument, target bundle:Bundle){
+	cda -> bundle.entry as entry, entry.resource = create('DiagnosticReport') as diagRep, diagRep.id = uuid() as uuid, entry.fullUrl = evaluate(uuid,'\'urn:uuid:\' + $this') then {
+        cda -> diagRep.meta as diagRepMeta then {
+            cda -> diagRepMeta.profile = 'http://hl7.org/fhir/MicrobiologyLaboratory/StructureDefinition/MicrobiologyLaboratoryDiagnosticReport' "microbiologyLaboratoryDiagnosticReportProfile";
+        } "diagnosticReportProfile";
+		cda then ClinicalDocument2Bundle(cda,diagRep,bundle) "clinicalDoc2Bundle";
+	} "CDA2Bundle";
+}
+
+group ClinicalDocument2Bundle(source cda:ClinicalDocument, target diagnosticReport:DiagnosticReport, target bundle:Bundle){
+	cda -> bundle.id = uuid() "bundleId";
+	cda.effectiveTime -> bundle.timestamp "cdaEffTimeTimestamp";
+	cda -> bundle.type = 'collection' "bundleType";
+	cda -> bundle.entry as entry2, entry2.resource = create('Patient') as patient, 
+	patient.id = uuid() as patuuid, entry2.fullUrl = evaluate(patuuid,'\'urn:uuid:\' + $this'),
+	bundle.entry as entry3, entry3.resource = create('Specimen') as specimen,
+	specimen.id = uuid() as specuuid, entry3.fullUrl = evaluate(specuuid,'\'urn:uuid:\' + $this'),
+    specimen.subject as subject, subject.reference = evaluate(patuuid,'\'Patient/\' + $this'), subject.type = 'Patient'
+	then ClinicalDocument2DiagnosticReport(cda,diagnosticReport,patient,specimen,bundle) "CD2DR";
+    //= create('Reference') as reference, reference.reference = 
+    // evaluate(patuuid,'\'Patient/\' + $this')
+    // evaluate(patient,'\'Patient/\' + $this.id')
+}
+
+group ClinicalDocument2DiagnosticReport(source cda:ClinicalDocument, target diagnosticReport:DiagnosticReport, target patientResource:Patient, target specimen:Specimen, target bundle:Bundle){
+    
+    cda.id as identCDA -> diagnosticReport.identifier = create('Identifier') as value then IIIdentifier(identCDA,value) "identValue"; // internal identifier
+}

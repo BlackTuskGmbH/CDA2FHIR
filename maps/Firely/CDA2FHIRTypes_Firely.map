@@ -1,0 +1,532 @@
+// version = 0.1
+// title = "CDA-FHIR Mapping : CDA2FHIRTypes"
+// status = draft
+
+map "http://hl7.org/fhir/cda2fhir/StructureMap/CDA2FHIRTypes" = "TransformationCDA2FHIRTypes"
+
+// Adapted from:
+// https://github.com/HL7/ccda-to-fhir/tree/master/mappings
+// https://github.com/hl7ch/cda-fhir-maps/tree/master/input/maps
+
+// CDA: https://art-decor.org/art-decor/decor-templates--at-lab-
+// FHIR: http://hl7.org/fhir/R4/
+
+
+uses "http://hl7.org/fhir/cda/StructureDefinition/ED" alias ED as source
+uses "http://hl7.org/fhir/cda/StructureDefinition/II" alias II as source
+uses "http://hl7.org/fhir/cda/StructureDefinition/TS" alias TS as source
+uses "http://hl7.org/fhir/cda/StructureDefinition/CS" alias CS as source
+uses "http://hl7.org/fhir/cda/StructureDefinition/CE" alias CE as source
+uses "http://hl7.org/fhir/cda/StructureDefinition/CD" alias CD as source
+uses "http://hl7.org/fhir/cda/StructureDefinition/CV" alias CV as source
+uses "http://hl7.org/fhir/cda/StructureDefinition/ST" alias ST as source
+uses "http://hl7.org/fhir/cda/StructureDefinition/SC" alias SC as source
+uses "http://hl7.org/fhir/cda/StructureDefinition/EN" alias EN as source
+uses "http://hl7.org/fhir/cda/StructureDefinition/AD" alias AD as source
+uses "http://hl7.org/fhir/cda/StructureDefinition/TEL" alias TEL as source
+uses "http://hl7.org/fhir/cda/StructureDefinition/BL" alias BL as source
+uses "http://hl7.org/fhir/cda/StructureDefinition/INT" alias INT as source
+uses "http://hl7.org/fhir/cda/StructureDefinition/ON" alias ON as source
+uses "http://hl7.org/fhir/cda/StructureDefinition/PQ" alias PQ as source
+uses "http://hl7.org/fhir/cda/StructureDefinition/RTO" alias RTO as source
+uses "http://hl7.org/fhir/cda/StructureDefinition/RTO_PQ_PQ" alias RTO_PQ_PQ as source
+uses "http://hl7.org/fhir/cda/StructureDefinition/RTO_QTY_QTY" alias RTO_QTY_QTY as source
+uses "http://hl7.org/fhir/cda/StructureDefinition/IVL_TS" alias IVL_TS as source
+uses "http://hl7.org/fhir/cda/StructureDefinition/IVL_PQ" alias IVL_PQ as source
+uses "http://hl7.org/fhir/cda/StructureDefinition/IVL_INT" alias IVL_INT as source
+
+uses "http://hl7.org/fhir/StructureDefinition/instant" alias instant as target
+uses "http://hl7.org/fhir/StructureDefinition/code" alias code as target
+uses "http://hl7.org/fhir/StructureDefinition/date" alias date as target
+uses "http://hl7.org/fhir/StructureDefinition/dateTime" alias dateTime as target
+uses "http://hl7.org/fhir/StructureDefinition/integer" alias integer as target
+uses "http://hl7.org/fhir/StructureDefinition/boolean" alias boolean as target
+uses "http://hl7.org/fhir/StructureDefinition/string" alias string as target
+uses "http://hl7.org/fhir/StructureDefinition/Identifier" alias Identifier as target
+uses "http://hl7.org/fhir/StructureDefinition/CodeableConcept" alias CodeableConcept as target
+uses "http://hl7.org/fhir/StructureDefinition/HumanName" alias HumanName as target
+uses "http://hl7.org/fhir/StructureDefinition/Address" alias Address as target
+uses "http://hl7.org/fhir/StructureDefinition/ContactPoint" alias ContactPoint as target
+uses "http://hl7.org/fhir/StructureDefinition/Quantity" alias Quantity as target
+uses "http://hl7.org/fhir/StructureDefinition/Period" alias Period as target
+uses "http://hl7.org/fhir/StructureDefinition/Range" alias Range as target
+uses "http://hl7.org/fhir/StructureDefinition/Ratio" alias Ratio as target
+
+
+// NullFlavour
+group Any(source src, target tgt) {
+  src.nullFlavor as nullFlavor -> tgt.extension as ext then {
+    nullFlavor -> ext.url = 'http://hl7.org/fhir/StructureDefinition/iso21090-nullFlavor' "url";
+    nullFlavor -> ext.value = create('code') as valueCode then {
+      nullFlavor.value as v -> valueCode.value = v "value";
+    } "valueCode";
+  } "extension";
+}
+
+// ContactPoint
+// source: https://art-decor.org/mediawiki/index.php?title=DTr1_TEL.AT
+// source: ELGA URL_Scheme, ELGA_TelecomAddressUse
+// target: https://www.hl7.org/fhir/datatypes.html#2.24.0.15
+// target: http://hl7.org/fhir/valueset-contact-point-system
+// interessant: https://www.ibm.com/support/knowledgecenter/de/SSMKHH_10.0.0/com.ibm.healthcare.pattern.HL7.doc/pattern/overview.htm
+// modem is IP-Address
+// nfs is 'Notfallsanitäter-Nummer'
+// me is 'Arztnummer lt. österreichischer Ärztekammer'
+// telnet für Rechner-Remotezugriff verwendet
+group TELContactPoint(source src : TEL, target tgt : ContactPoint) {
+  src.value as v where "value.startsWith('tel:')" ->  tgt.value = evaluate(v,'$this.substring(4)'); //  tgt.system = 'phone' "valuetel";
+  src.value as v where "value.startsWith('fax:')" ->  tgt.value = evaluate(v,'$this.substring(4)'); //  tgt.system = 'fax' "valuefax";
+  src.value as v where "value.startsWith('mailto:')" ->  tgt.value = evaluate(v,'$this.substring(7)'); //  tgt.system = 'email' "valuemail";
+  src.value as v where "value.startsWith('http:')" ->  tgt.value = evaluate(v,'$this.substring(7)'); //  tgt.system = 'url' "valuehttp";
+  src.value as v where "value.startsWith('file:')" -> tgt.value = evaluate(v,'$this.substring(5)'); // tgt.system = 'other' "valuefile";
+  src.value as v where "value.startsWith('ftp:')" -> tgt.value = evaluate(v,'$this.substring(4)'); // tgt.system = 'URL' "valueftp";
+  src.value as v where "value.startsWith('me:')" -> tgt.value = evaluate(v,'$this.substring(3)'); // tgt.system = 'other' "valueme";
+  src.value as v where "value.startsWith('mllp:')" -> tgt.value = evaluate(v,'$this.substring(5)'); // tgt.system = 'URL' "valuemllp";
+  src.value as v where "value.startsWith('modem:')" -> tgt.value = evaluate(v,'$this.substring(6)'); // tgt.system = 'other' "valuemodem";
+  src.value as v where "value.startsWith('nfs:')" -> tgt.value = evaluate(v,'$this.substring(4)'); // tgt.system = 'other' "valuenfs";
+  src.value as v where "value.startsWith('telnet:')" -> tgt.value = evaluate(v,'$this.substring(7)'); // tgt.system = 'URL' "valuetelnet";
+
+
+  src.use as u where "use.startsWith('H')" -> tgt.use = translate(u,'#ELGATelecomAddressUseFHIRContactPointUse','code') "usehome";
+  src.use as u where "use = 'WP' or use = 'DIR' or use = 'PUB'" -> tgt.use = translate(u,'#ELGATelecomAddressUseFHIRContactPointUse','code') "usework";
+  src.use as u where "use = 'TMP'" -> tgt.use = translate(u,'#ELGATelecomAddressUseFHIRContactPointUse','code') "usetmp";
+  src.use as u where "use = 'PHYS'" -> tgt.use = translate(u,'#ELGATelecomAddressUseFHIRContactPointUse','code') "usephys";
+  src.use as u where "use = 'PST'" -> tgt.use = translate(u,'#ELGATelecomAddressUseFHIRContactPointUse','code') "usepst";
+  // codes MC and BAD not used in ELGA 
+  
+  //src.use where (src.use.startsWith('H')) -> tgt.use = 'home' "usehome";
+  //src.use where "src.use = 'WP' and src.use = 'ghjkg'" ((src.use = 'WP') or (src.use = 'DIR') or (src.use = 'PUB')) -> tgt.use = 'work' "usework";
+  //src.use where (src.use = 'BAD') -> tgt.use = 'old' "usebad";
+  //src.use where (src.use = 'TMP') -> tgt.use = 'temp' "usetmp";
+  //src.use where (src.use = 'MC') -> tgt.use = 'mobile' "usemobile";
+
+  // useablePeriod not used in ELGA
+  //src.useablePeriod -> tgt.period; 
+}
+
+
+// Identifier
+// source: https://art-decor.org/mediawiki/index.php?title=Instance_Identifier_(II)
+// source: Allgemeiner ELGA-CDA Implementierungsleitfaden, Abschnitt 5.1.1.2
+// target: https://www.hl7.org/fhir/datatypes.html#2.24.0.12
+group IIIdentifier(source src : II, target tgt : Identifier) {
+  src.root as r where "extension.exists()" 
+     -> tgt.system = translate(r, 'http://hl7.org/fhir/ConceptMap/special-oid2uri', 'uri') "root1";
+  src.root as r where "extension.empty() and src.root.matches('[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}')" 
+     -> tgt.system = 'urn:ietf:rfc:3986', tgt.value = evaluate('urn:uuid:','r.lower()') "rootuuid";
+  src.root as r where "extension.empty() and root.contains('.')"
+     ->  tgt.system = 'urn:ietf:rfc:3986', tgt.value = evaluate('urn:oid:', r) "rootoid";
+
+  src.extension as e -> tgt.value = e;
+  src.assigningAuthorityName as s ->  tgt.assigner as a, a.display = s;
+
+  // displayable not used in ELGA
+  // src.displayable as displayable -> tgt.extension as ext then { // there's no equivalent for displayable in FHIR - and it probably will never matter, but if it does, it might map to Identifier.use.
+  //  displayable -> ext.url = 'http://hl7.org/fhir/cdaStructureDefinition/extension-displayable' "url";
+  //  displayable.value as v -> ext.value = v;
+  //} "extension";
+}
+
+// Integer
+// source: https://art-decor.org/mediawiki/index.php?title=DTr1_INT
+// target: https://www.hl7.org/fhir/datatypes.html#2.24.0.1
+group INT(source src : INT, target tgt : integer) {
+  src.value as v -> tgt.value = v "integer";
+}
+
+// Interval Integer
+// source: https://art-decor.org/mediawiki/index.php?title=DTr1_IVL_INT
+// target: https://www.hl7.org/fhir/datatypes.html#Range
+group IVLINTRange(source src : IVL_INT, target tgt : Range) {
+  src.low as sourceLow -> tgt.low = create('Quantity') as lowQuant then {
+    sourceLow -> lowQuant.value = cast(sourceLow,'decimal') "lowQuantValue";
+  } "INTIntervalLow";
+  src.high as sourceHigh -> tgt.high = create('Quantity') as highQuant then {
+    sourceHigh -> highQuant.value = cast(sourceHigh,'decimal') "highQuantValue";
+  } "INTIntervalHigh";
+}
+
+// TemplateID
+// source: Allgemeiner ELGA-CDA Implementierungsleitfaden, Abschnitt 6.2.5
+// target: https://www.hl7.org/fhir/datatypes.html#2.24.0.12
+group TemplateID(source template : II, target tgt) {
+  template -> tgt.extension as ext then {
+    template -> ext.url = 'http://hl7.org/fhir/cda/StructureDefinition/templateID' "templateIDurl";
+    template -> ext.value = create('Identifier') as value then II(template, value) "identifiervalue";
+  } "templateId";
+}
+
+// Boolean
+// source: https://art-decor.org/mediawiki/index.php?title=DTr1_BL
+// target: https://www.hl7.org/fhir/datatypes.html#boolean
+group Boolean(source boolean : BL, target tgt) {
+  boolean-> tgt.modifierExtension as ext then {
+    boolean -> ext.url = 'http://hl7.org/fhir/cda/StructureDefinition/BL' "templateIDurl";
+    boolean as bool ->  ext.value = bool "boolvalue";
+  } "boolean";
+}
+
+// Point in Time Simple
+// source: Allgemeiner ELGA-CDA Implementierungsleitfaden, Abschnitt 5.3.2.
+// source: https://art-decor.org/mediawiki/index.php?title=DTr1_TS.AT.TZ
+// target: https://www.hl7.org/fhir/datatypes.html#instant
+group TSInstant(source src : TS, target tgt : instant) {
+  src.value as v -> tgt.value = v;
+  //src.value as v where (value.matches("([0-9]([0-9]([0-9][1-9]|[1-9]0)|[1-9]00)|[1-9]000)(-(0[1-9]|1[0-2])(-(0[1-9]|[1-2][0-9]|3[0-1])(T([01][0-9]|2[0-3]):[0-5][0-9]:([0-5][0-9]|60)(\\.[0-9]+)?(Z|(\\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00)))?)?)?")) -> tgt.value = v "officialInstantValue";
+  //src.value as v where (value.matches("([0-9]([0-9]([0-9][1-9]|[1-9]0)|[1-9]00)|[1-9]000)(-(0[1-9]|1[0-2])(-(0[1-9]|[1-2][0-9]|3[0-1])(T([01][0-9]|2[0-3]):[0-5][0-9]:([0-5][0-9]|60)(\\.[0-9]+)?")) -> tgt.value = append(v,"Z") "modifiedInstantValue";
+}
+
+// derived from TSInstant
+group TSDateTime(source src : TS, target tgt : dateTime) {
+  src.value as v -> tgt.value = v;
+  //src.value as v where (value.matches("([0-9]([0-9]([0-9][1-9]|[1-9]0)|[1-9]00)|[1-9]000)(-(0[1-9]|1[0-2])(-(0[1-9]|[1-2][0-9]|3[0-1])(T([01][0-9]|2[0-3]):[0-5][0-9]:([0-5][0-9]|60)(\\.[0-9]+)?(Z|(\\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00)))?)?)?")) -> tgt.value = v "officialInstantValue";
+  //src.value as v where (value.matches("([0-9]([0-9]([0-9][1-9]|[1-9]0)|[1-9]00)|[1-9]000)(-(0[1-9]|1[0-2])(-(0[1-9]|[1-2][0-9]|3[0-1])(T([01][0-9]|2[0-3]):[0-5][0-9]:([0-5][0-9]|60)(\\.[0-9]+)?")) -> tgt.value = append(v,"Z") "modifiedInstantValue";
+}
+
+// derived from TSInstant
+group TSDate(source src : TS, target tgt : date) {
+  src.value as v -> tgt.value = v;
+  //src.value as v where (value.matches("([0-9]([0-9]([0-9][1-9]|[1-9]0)|[1-9]00)|[1-9]000)(-(0[1-9]|1[0-2])(-(0[1-9]|[1-2][0-9]|3[0-1])(T([01][0-9]|2[0-3]):[0-5][0-9]:([0-5][0-9]|60)(\\.[0-9]+)?(Z|(\\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00)))?)?)?")) -> tgt.value = v "officialInstantValue";
+  //src.value as v where (value.matches("([0-9]([0-9]([0-9][1-9]|[1-9]0)|[1-9]00)|[1-9]000)(-(0[1-9]|1[0-2])(-(0[1-9]|[1-2][0-9]|3[0-1])(T([01][0-9]|2[0-3]):[0-5][0-9]:([0-5][0-9]|60)(\\.[0-9]+)?")) -> tgt.value = append(v,"Z") "modifiedInstantValue";
+}
+
+// Time interval
+// source: Allgemeiner ELGA-CDA Implementierungsleitfaden, Abschnitt 5.3.3.2.
+// target: https://www.hl7.org/fhir/datatypes.html#2.24.0.10
+// !!! ATTENTION boundary differences -> in IVL_TS boundaries are exclusive, but in Period inclusive !!!
+group IVLTSPeriod(source src : IVL_TS, target tgt : Period) {
+  src.low as l -> tgt.start = evaluate(l,'$this.value');
+  src.high as h -> tgt.end = evaluate(h,'$this.value');
+}
+
+// Time interval with date
+// source: Allgemeiner ELGA-CDA Implementierungsleitfaden, Abschnitt 5.3.3.2.
+// target: https://www.hl7.org/fhir/datatypes.html#2.24.0.10
+group IVLTSDateTime(source src : IVL_TS, target tgt : dateTime) {
+  src.low as l then TSDateTime(l, tgt);
+  src.high as h then TSDateTime(h, tgt);
+}
+
+// String
+// source: https://art-decor.org/mediawiki/index.php?title=DTr1_ST
+// target: https://www.hl7.org/fhir/datatypes.html#string
+group STstring(source src : ST, target tgt : string) {
+  src as v -> tgt.value = evaluate(v,'$this.dataString') "stringvalue";
+  //src as v -> tgt.value = cast(v, 'string') "stringvalue";
+}
+
+// derived from STstring
+group EDstring(source src : ED, target tgt : string) {
+  src as v -> tgt.value = evaluate(v,'$this.dataString') "stringvalue";
+  //src as v -> tgt.value = cast(v, 'string') "stringvalue";
+}
+
+// derived from STstring
+group ONstring(source src : ON, target tgt : string) {
+  src as v -> tgt.value = evaluate(v,'$this.dataString') "stringvalue";
+  //src as v -> tgt.value = cast(v, 'string') "stringvalue";
+}
+
+// CS CNE (Coded simple - coded no exception): defined vocabulary has to be used with no exceptions
+// source: Allgemeiner ELGA-CDA Implementierungsleitfaden, Abschnitt 5.2.2.
+// target: https://www.hl7.org/fhir/datatypes.html#code
+group CScode(source src : CS, target tgt : code) {
+  src.code as c -> tgt.value = c;
+}
+
+// derived from CSCode
+group CEcode(source src : CE, target tgt : code) {
+  src.code as c -> tgt.value = c;
+}
+
+// derived from CSCode 
+group CDcode(source src : CD, target tgt : code) {
+  src.code as c -> tgt.value = c;
+}
+
+// CE CWE (Coded with equivalents - coded with exceptions): defined vocabulary should be used, but exceptions can be defined
+// source: Allgemeiner ELGA-CDA Implementierungsleitfaden, Abschnitt 6.2.1.2 (Spezifikation)
+// target: https://www.hl7.org/fhir/datatypes.html#code
+group CECodeableConcept(source src : CE, target tgt : CodeableConcept) {
+  src.originalText -> tgt.text; // either original text or codeSystemName can be depicted
+  src -> tgt.coding as coding then {
+    src.code as code -> coding.code = code;
+    src.codeSystem as system -> coding.system = translate(system, 'http://hl7.org/fhir/ConceptMap/special-oid2uri', 'uri');
+    src.displayName as display -> coding.display = display "displayNameWhitespaces"; //.replace('[ ]{2,}','')
+    //src.codeSystemName as codeSystemName -> tgt.text = codeSystemName;
+    //src.codeSystemVersion as codeSystemVersion -> tgt.text = codeSystemVersion;
+  } "coding";
+
+  
+  src.translation as translation where "translation.exists()" -> tgt.coding as coding then {
+    translation.code as code -> coding.code = code;
+    translation.codeSystem as system -> coding.system = translate(system, 'http://hl7.org/fhir/ConceptMap/special-oid2uri', 'uri');
+    translation.displayName as display -> coding.display = display;
+  } "translation";
+}
+
+// derived from CECodeableConcept
+group CSCodeableConcept(source src : CS, target tgt : CodeableConcept) {
+  src.originalText -> tgt.text; // either original text or codeSystemName can be depicted
+  src -> tgt.coding as coding then {
+    src.code as code -> coding.code = code;
+    src.codeSystem as system -> coding.system = translate(system, 'http://hl7.org/fhir/ConceptMap/special-oid2uri', 'uri');
+    src.displayName as display -> coding.display = display "displayNameWhitespaces"; //.replace('[ ]{2,}','')
+    //src.codeSystemName as codeSystemName -> tgt.text = codeSystemName;
+    //src.codeSystemVersion as codeSystemVersion -> tgt.text = codeSystemVersion;
+  } "coding";
+
+  
+  src.translation as translation where "translation.exists()" -> tgt.coding as coding then {
+    translation.code as code -> coding.code = code;
+    translation.codeSystem as system -> coding.system = translate(system, 'http://hl7.org/fhir/ConceptMap/special-oid2uri', 'uri');
+    translation.displayName as display -> coding.display = display;
+  } "translation";
+}
+
+// derived from CECodeableConcept
+group CVCodeableConcept(source src : CV, target tgt : CodeableConcept) {
+  src.originalText -> tgt.text; // either original text or codeSystemName can be depicted
+  src -> tgt.coding as coding then {
+    src.code as code -> coding.code = code;
+    src.codeSystem as system -> coding.system = translate(system, 'http://hl7.org/fhir/ConceptMap/special-oid2uri', 'uri');
+    src.displayName as display -> coding.display = display "displayNameWhitespaces"; //.replace('[ ]{2,}','')
+    //src.codeSystemName as codeSystemName -> tgt.text = codeSystemName;
+    //src.codeSystemVersion as codeSystemVersion -> tgt.text = codeSystemVersion;
+  } "coding";
+
+  
+  src.translation as translation where "translation.exists()" -> tgt.coding as coding then {
+    translation.code as code -> coding.code = code;
+    translation.codeSystem as system -> coding.system = translate(system, 'http://hl7.org/fhir/ConceptMap/special-oid2uri', 'uri');
+    translation.displayName as display -> coding.display = display;
+  } "translation";
+}
+
+// derived from CECodeableConcept
+group CDCodeableConcept(source src : CD, target tgt : CodeableConcept) {
+  //src.codeSystemName as codeName where src.codeSystemName.exists() -> tgt.text = codeName;
+
+  src.originalText -> tgt.text; // either original text or codeSystemName can be depicted
+  src -> tgt.coding as coding then {
+    src.code as code -> coding.code = code;
+    src.codeSystem as system -> coding.system = translate(system, 'http://hl7.org/fhir/ConceptMap/special-oid2uri', 'uri');
+    src.displayName as display -> coding.display = display "displayNameWhitespaces"; //.replace('[ ]{2,}','')
+    //src.codeSystemName as codeSystemName -> tgt.text = codeSystemName;
+    //src.codeSystemVersion as codeSystemVersion -> tgt.text = codeSystemVersion;
+  } "coding";
+
+  
+  src.translation as translation where "translation.exists()" -> tgt.coding as coding then {
+    translation.code as code -> coding.code = code;
+    translation.codeSystem as system -> coding.system = translate(system, 'http://hl7.org/fhir/ConceptMap/special-oid2uri', 'uri');
+    translation.displayName as display -> coding.display = display;
+  } "translation";
+}
+
+// derived from CECodeableConcept
+group SCCodeableConcept(source src : SC, target tgt : CodeableConcept) {  // need to assess which FHIR type SC maps to
+  //src as v -> tgt.value = (v.dataString) "stringvalue";
+
+  src.originalText -> tgt.text; // either original text or codeSystemName can be depicted
+  src -> tgt.coding as coding then {
+    src.code as code -> coding.code = code;
+    src.codeSystem as system -> coding.system = translate(system, 'http://hl7.org/fhir/ConceptMap/special-oid2uri', 'uri');
+    src.displayName as display -> coding.display = display "displayNameWhitespaces"; //.replace('[ ]{2,}','')
+    //src.codeSystemName as codeSystemName -> tgt.text = codeSystemName;
+    //src.codeSystemVersion as codeSystemVersion -> tgt.text = codeSystemVersion;
+  } "coding";
+
+  
+  src.translation as translation where "translation.exists()" -> tgt.coding as coding then {
+    translation.code as code -> coding.code = code;
+    translation.codeSystem as system -> coding.system = translate(system, 'http://hl7.org/fhir/ConceptMap/special-oid2uri', 'uri');
+    translation.displayName as display -> coding.display = display;
+  } "translation";
+}
+
+// HumanName
+// source: Allgemeiner ELGA-CDA Implementierungsleitfaden, Abschnitt 5.5.1.2.2 (Granularitätsstufe 2)
+// target: https://www.hl7.org/fhir/datatypes.html#HumanName
+
+group ENHumanName(source src : EN, target tgt : HumanName) {
+
+  src.use as u -> tgt.use = translate(u, '#ELGAEntityNameUseFHIRNameUse', 'code');
+
+  src.prefix as v -> tgt.prefix = evaluate(v,'$this.dataString');
+  //src.prefix as cdaPrefix where prefix.qualifier.exists() -> tgt.prefix as fhirPrefix then {
+  //  cdaPrefix -> fhirPrefix.extension as ext then {
+  //    cdaPrefix -> ext.url = 'https://www.hl7.org/fhir/extension-prefix-qualifier' "url";
+  //    cdaPrefix.qualifier as qualifier -> ext.value = (qualifier.dataString) "prefixqualifiervalue1";
+  //  } "prefixqualifiervalue2";
+  //} "prefixqualifier";
+
+  src.given as v -> tgt.given = evaluate(v,'$this.dataString');
+  //src.given as cdaGiven where given.qualifier.exists() -> tgt.given as fhirGiven then {
+  //  cdaGiven -> fhirGiven.extension as ext then {
+  //    cdaGiven -> ext.url = 'https://www.hl7.org/fhir/extension-given-qualifier' "url";
+  //    cdaGiven.qualifier as qualifier -> ext.value = (qualifier.dataString) "givenqualifiervalue1";
+  //  } "givenqualifiervalue2";
+  //} "givenqualifier";
+
+  src.family as family -> tgt.family = evaluate(family,'$this.dataString');
+  //src.family as family where "family.qualifier.empty() or (family.qualifier != 'SP' and family.qualifier != 'BR')" -> tgt.family = evaluate(family,'$this.dataString');
+  src.family as cdaFamily where "family.qualifier = 'BR'" -> tgt.family as fhirFamily then {
+    cdaFamily -> fhirFamily.extension as ext then {
+      cdaFamily -> ext.url = 'http://hl7.org/fhir/StructureDefinition/humanname-own-name' "url";
+      cdaFamily -> ext.value = evaluate(cdaFamily,'$this.dataString') "ownnamevalue";
+    } "familyownnamevalue";
+  } "familyownname";
+  src.family as cdaFamily where "family.qualifier = 'SP'" -> tgt.family as fhirFamily then {
+    cdaFamily -> fhirFamily.extension as ext then {
+      cdaFamily -> ext.url = 'http://hl7.org/fhir/StructureDefinition/humanname-partner-name' "url";
+      cdaFamily -> ext.value = evaluate(cdaFamily,'$this.dataString') "partnernamevalue";
+    } "familypartnernamevalue";
+  } "familypartnername";
+  //src.family as cdaFamily where sec.family.qualifier.exists() -> tgt.family as fhirFamily then {
+  //  cdaFamily -> fhirFamily.extension as ext then {
+  //    cdaFamily -> ext.url = 'https://www.hl7.org/fhir/extension-family-qualifier' "url";
+  //    cdaFamily.qualifier as qualifier -> ext.value = (qualifier.dataString) "familyqualifiervalue1";
+  //  } "familyqualifiervalue2";
+  //} "familyqualifier";
+  
+  src.suffix as v -> tgt.suffix = evaluate(v,'$this.dataString'); //("v.dataString");
+  //src.suffix as cdaSuffix where suffix.qualifier.exists() -> tgt.suffix as fhirSuffix then {
+  //  cdaSuffix -> fhirSuffix.extension as ext then {
+  //    cdaSuffix -> ext.url = 'https://www.hl7.org/fhir/extension-suffix-qualifier' "url";
+  //    cdaSuffix.qualifier as qualifier -> ext.value = (qualifier.dataString) "suffixqualifiervalue1";
+  //  } "suffixqualifiervalue2";
+  //} "suffixqualifier";
+  
+  // not used in ELGA
+  //src.validTime -> tgt.period;
+}
+
+// Address
+// source: Allgemeiner ELGA-CDA Implementierungsleitfaden, Abschnitt 5.6.3.2 (Granularitätsstufe 3)
+// target: https://www.hl7.org/fhir/datatypes.html#Address
+group ADAddress(source src : AD, target tgt : Address) {
+  src.use as c -> tgt.use = translate(c, '#ELGA2FHIRAddressUse', 'code') "addressUse";
+  src.streetAddressLine as v where "houseNumber.exists()" -> tgt.line = evaluate(v,'$this.dataString + \' \' + houseNumber.dataString') "streetAddressLineConcat";
+  //src.streetAddressLine as v -> tgt.line as line share line, line = ("v.dataString");
+  //src.houseNumber as v -> tgt.line = evaluate(line, v); // appending house number to address
+  src.streetAddressLine as v where "houseNumber.empty()" -> tgt.line = evaluate(v,'$this.dataString') "streetAddressLine";
+  src.streetName as v where "houseNumber.exists()" -> tgt.line = evaluate(v,'$this.dataString + \' \' + houseNumber.dataString') "streetNameConcat";
+  src.streetName as v where "streetName.empty()" -> tgt.line = evaluate(v,'$this.dataString');
+  src.postalCode as v -> tgt.postalCode = evaluate(v,'$this.dataString');
+  src.city as v -> tgt.city = evaluate(v,'$this.dataString');
+  src.state as v -> tgt.state = evaluate(v,'$this.dataString');
+  src.country as v -> tgt.country = evaluate(v,'$this.dataString');
+
+  src.additionalLocator as additionalLocator -> tgt.extension as ext then {
+    additionalLocator -> ext.url = 'https://www.hl7.org/fhir/extension-iso21090-adxp-additionallocator' "url";
+    additionalLocator -> ext.value = additionalLocator "additionalLocatorValue";
+  } "additionalLocatorExtension";
+
+}
+
+// AustrianAddress
+// source: Allgemeiner ELGA-CDA Implementierungsleitfaden, Abschnitt 5.6.3.2 (Granularitätsstufe 3)
+// target: https://hl7austria.github.io/r4-core-master/StructureDefinition-AustrianRepresentationOfAddress.html
+group ADAustrianAddress(source src : AD, target tgt : Address) {
+  //src -> tgt.profile = "http://hl7.at/fhir/HL7ATCoreProfiles/4.0.1/StructureDefinition/AustrianRepresentationOfAddress" "austrianAddressProfile"; Profile definition not allowed here
+
+  // unchanged elements
+  src.use as c -> tgt.use = translate(c, '#ELGA2FHIRAddressUse', 'code') "addressUse";
+  src.postalCode as v -> tgt.postalCode = evaluate(v,'$this.dataString');
+  src.city as v -> tgt.city = evaluate(v, '$this.dataString');
+  src.state as v -> tgt.state = evaluate(v, '$this.dataString');
+  src.country as v -> tgt.country = evaluate(v, '$this.dataString');
+
+  
+
+  src where "streetName.exists() or houseNumber.exists() or additionalLocator.exists()" -> tgt.line as line then {
+
+    src.streetName as v where "houseNumber.exists()" -> tgt.line = evaluate(v,'$this.dataString + \' \' + houseNumber.dataString') "streetNameConcat";
+    src.streetName as v where "houseNumber.empty()" -> tgt.line = evaluate(v,'$this.dataString');
+
+    // changed elements
+    src.streetName as streetName -> line.extension as lineExt then {
+      streetName -> lineExt.url = 'http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-streetName' "streetNameExtensionUrl";
+      streetName -> lineExt.value = evaluate(streetName, '$this.dataString') "streetNameExtensionValue";
+    } "streetNameExtension";
+
+    src.houseNumber as houseNumber -> line.extension as lineExt then {
+      houseNumber -> lineExt.url = 'http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-houseNumber' "houseNumberExtensionUrl";
+      houseNumber -> lineExt.value = evaluate(houseNumber, '$this.dataString') "houseNumberExtensionValue";
+    } "houseNumberExtension";
+
+    src.additionalLocator as additionalLocator -> line.extension as lineExt then { // floor and/or door number
+      additionalLocator -> lineExt.url = 'http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-additionalLocator' "additionalLocatorExtensionUrl";
+      additionalLocator -> lineExt.value = evaluate(additionalLocator, '$this.dataString') "additionalLocatorExtensionValue";
+    } "additionalLocatorExtension";
+
+  } "lineExtension";
+  
+  src.streetAddressLine as streetAddressLine -> tgt.line as line, line.extension as streetLineExt then {
+
+    // separate street and house number
+    src.streetAddressLine as v where "houseNumber.exists()" -> line.value = evaluate(v,'$this.dataString + \' \' + houseNumber.dataString') "streetAddressLineHouseNumber";
+    src.streetAddressLine as v where "houseNumber.empty()" -> line.value = evaluate(v,'$this.dataString') "streetAddressLine";
+
+    // house number present
+    /*src.streetAddressLine where "streetAddressLine.dataString.matches('\\d')" -> line.extension as houseLineExt then {
+      src.streetAddressLine -> streetLineExt.url = 'http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-streetName' "streetNameExtensionUrl";
+      src.streetAddressLine as streetAddressLine -> streetLineExt.value = evaluate(streetAddressLine, '$this.dataString.replaceMatches(\'\\s+\\d+\',\'\')') "streetNameExtensionValue"; // replace all whitespaces and digits at the end - remove house number
+
+      src.houseNumber -> houseLineExt.url = 'http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-houseNumber' "houseNumberExtensionUrl";
+      src.houseNumber as houseNumber -> houseLineExt.value = evaluate(houseNumber, '$this.dataString.replaceMatches(\'\\D+\\s+\',\'\')') "houseNumberExtensionValue";
+    } "streetAddressLineHouseNumber";
+    
+    // house number not present
+    src.streetAddressLine where "streetAddressLine.dataString.matches('\\d').not()" then {
+      src.streetAddressLine -> streetLineExt.url = 'http://hl7.org/fhir/StructureDefinition/iso21090-ADXP-streetName' "streetNameExtensionUrl";
+      src.streetAddressLine -> streetLineExt.value = evaluate(streetLineExt, '$this.dataString') "streetNameExtensionValue";
+    } "streetAddressLineNoHouseNumber";*/
+    
+  } "streetAddressLine";
+}
+
+// Physical Quantity
+// source: https://art-decor.org/mediawiki/index.php?title=DTr1_PQ
+// target: https://www.hl7.org/fhir/datatypes.html#Quantity
+group PQQuantity(source src : PQ, target tgt : Quantity) {
+  src.value as value -> tgt.value = value;
+  src.unit as unit -> tgt.unit = unit;
+  //src.unit as unit -> tgt.code = unit; // code is used for computer processable unit codes, e.g. UCUM, SNOMED or ISO 4179 for currency
+}
+
+// Interval Physical Quantity
+// source: https://art-decor.org/mediawiki/index.php?title=DTr1_IVL_PQ
+// target: https://www.hl7.org/fhir/datatypes.html#Range
+group IVLPQRange(source src : IVL_PQ, target tgt : Range) {
+  src.low as sourceLow -> tgt.low as targetLow then PQQuantity(sourceLow, targetLow) "PQIntervalLow";
+  src.high as sourceHigh -> tgt.high as targetHigh then PQQuantity(sourceHigh, targetHigh) "PQIntervalHigh";
+  // Range does not support any other elements, no official extensions defined
+}
+
+// Ratio Physical Quantity
+// source: https://art-decor.org/mediawiki/index.php?title=DTr1_RTO_PQ_PQ
+// target: https://www.hl7.org/fhir/datatypes.html#Ratio
+group RTOPQPQRatio(source src : RTO_PQ_PQ, target tgt : Ratio) {
+  src.numerator as numerator -> tgt.numerator as targetNumerator then PQQuantity(numerator, targetNumerator) "numerator";
+  src.denominator as denominator -> tgt.denominator as targetDenominator then PQQuantity(denominator, targetDenominator) "denominator"; 
+}
+
+// Ratio, derived from RTOPQPQRatio
+// source: https://art-decor.org/mediawiki/index.php?title=DTr1_RTO
+// target: https://www.hl7.org/fhir/datatypes.html#Ratio
+group RTORatio(source src : RTO, target tgt: Ratio) {
+  src.numerator as numerator -> tgt.numerator as targetNumerator then PQQuantity(numerator, targetNumerator) "numerator";
+  src.denominator as denominator -> tgt.denominator as targetDenominator then PQQuantity(denominator, targetDenominator) "denominator"; 
+}
+
+// Ratio Quantity, derived from RTOPQPQRatio
+// source: https://art-decor.org/mediawiki/index.php?title=DTr1_RTO_QTY_QTY
+// target: https://www.hl7.org/fhir/datatypes.html#Ratio
+group RTOQTYQTYRatio(source src : RTO_QTY_QTY, target tgt: Ratio) {
+  src.numerator as numerator -> tgt.numerator as targetNumerator then PQQuantity(numerator, targetNumerator) "numerator";
+  src.denominator as denominator -> tgt.denominator as targetDenominator then PQQuantity(denominator, targetDenominator) "denominator"; 
+}
+
+

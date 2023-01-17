@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ConceptMap xmlns="http://hl7.org/fhir">
+  <id value="102"/>
+  <url value="http://hl7.org/fhir/ConceptMap/102"/> 
+  <identifier> 
+    <system value="urn:ietf:rfc:3986"/> 
+    <value value="urn:uuid:53cd62ee-033e-414c-9f58-3ca97b5ffc3b"/> 
+  </identifier> 
+  <version value="4.0.1"/> 
+  <name value="ELGA_EntityNameUse-FHIR-Address-Use"/> 
+  <title value="ELGA_EntityNameUse FHIR-Address-Use Mapping"/> 
+  <status value="draft"/> 
+  <experimental value="true"/> 
+  <date value="2012-06-13"/> 
+  <publisher value="BlackTusk GmbH"/> 
+  <contact> 
+    <name value="Maximilian Ossana"/> 
+    <telecom> 
+      <system value="url"/> 
+      <value value="http://blacktusk.eu"/>
+    </telecom> 
+  </contact> 
+  <description value="A mapping between the ELGA-CDA and FHIR AddressUse Code systems"/> 
+  <useContext> 
+    <code> 
+      <system value="http://terminology.hl7.org/CodeSystem/usage-context-type"/> 
+      <code value="venue"/> 
+    </code> 
+    <valueCodeableConcept> 
+      <text value="for ELGA-CDA Usage"/> 
+    </valueCodeableConcept> 
+  </useContext> 
+  <jurisdiction> 
+    <coding> 
+      <system value="urn:iso:std:iso:3166"/> 
+      <code value="de-AT"/> 
+    </coding> 
+  </jurisdiction> 
+  <purpose value="To help implementers map from ELGA-CDA to FHIR"/> 
+  <copyright value="Creative Commons 0"/> 
+  <sourceUri value="https://www.hl7.org/fhir/cda/ELGA_EntityNameUse"/> 
+  <targetUri value="http://hl7.org/fhir/ValueSet/name-use"/> 
+  <group> 
+    <source value="https://www.hl7.org/fhir/cda/ELGA_EntityNameUse"/> 
+    <target value="http://hl7.org/fhir/ValueSet/name-use"/> 
+    <element> 
+      <code value="ASGN"/> 
+      <display value="assigned"/> 
+      <target> 
+        <code value="usual"/> 
+        <display value="usual (name normally used)"/> 
+        <equivalence value="inexact"/>
+		<comment value="assigned name is name used normally"/>
+      </target> 
+    </element> 
+    <element> 
+      <code value="C"/> 
+      <display value="license"/> 
+      <target> 
+        <code value="usual"/> 
+        <display value="usual (name normally used)"/> 
+        <equivalence value="unmatched"/> 
+      </target> 
+    </element> 
+    <element> 
+      <code value="I"/> 
+      <display value="Indigenious/Tribal"/> 
+      <target> 
+        <code value="anonymous"/> 
+        <display value="anonymous (nickname not part of formal name)"/> 
+        <equivalence value="unmatched"/>
+      </target> 
+    </element> 
+    <element> 
+      <code value="L"/> 
+      <display value="legal"/> 
+      <target> 
+        <code value="official"/> 
+        <display value="official name, no common use implied"/> 
+        <equivalence value="wider"/>  
+      </target> 
+    </element>
+	<element> 
+      <code value="OR"/> 
+      <display value="official registry"/> 
+      <target> 
+        <code value="official"/> 
+        <display value="official name, legal"/> 
+        <equivalence value="wider"/> 
+      </target> 
+    </element> 
+	<element> 
+      <code value="P"/> 
+      <display value="pseudonym"/> 
+      <target> 
+        <code value="anonymous"/> 
+        <display value="anonymous (pseudonym)"/> 
+        <equivalence value="wider"/> 
+      </target> 
+    </element> 
+	<element> 
+      <code value="A"/> 
+      <display value="Artist/Stage"/> 
+      <target> 
+        <code value="anonymous"/> 
+        <display value="anonymous (pseudonym)"/> 
+        <equivalence value="wider"/> 
+      </target> 
+    </element> 
+	<element> 
+      <code value="R"/> 
+      <display value="religious"/> 
+      <target> 
+        <code value="anonymous"/> 
+        <display value="anonymous (nickname not part of formal name)"/> 
+        <equivalence value="wider"/> 
+      </target> 
+    </element>
+	<element> 
+      <code value="SRCH"/> 
+      <display value="SearchUse"/> 
+      <target> 
+        <code value="??"/> 
+        <display value="??"/> 
+        <equivalence value="disjoint"/> 
+      </target> 
+    </element>
+	<element> 
+      <code value="PHON"/> 
+      <display value="phonetic"/> 
+      <target> 
+        <code value="nickname"/> 
+        <display value="nickname (SearchUse)"/> 
+        <equivalence value="relatedto"/> 
+      </target> 
+    </element> 
+	<element> 
+      <code value="SNDX"/>
+      <display value="soundex"/> 
+      <target> 
+        <code value="nickname"/> 
+        <display value="nickname (SearchUse)"/> 
+        <equivalence value="relatedto"/> 
+      </target> 
+    </element> 
+	<element> 
+      <code value="ABC"/> 
+      <display value="alphabetic"/> 
+      <target> 
+        <code value="nickname"/> 
+        <display value="nickname (NameRepresentationUse)"/> 
+        <equivalence value="relatedto"/> 
+      </target> 
+    </element> 
+	<element> 
+      <code value="IDE"/> 
+      <display value="ideographic"/> 
+      <target> 
+        <code value="nickname"/> 
+        <display value="nickname (NameRepresentationUse)"/> 
+        <equivalence value="relatedto"/> 
+      </target> 
+    </element>
+	<element> 
+      <code value="SYL"/> 
+      <display value="syllabic"/> 
+      <target> 
+        <code value="nickname"/> 
+        <display value="nickname (NameRepresentationUse)"/> 
+        <equivalence value="relatedto"/> 
+      </target> 
+    </element>
+	<unmapped>
+		<mode value="provided"/>
+	</unmapped>	
+  </group> 
+</ConceptMap>

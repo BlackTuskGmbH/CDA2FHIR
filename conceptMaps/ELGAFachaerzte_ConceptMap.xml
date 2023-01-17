@@ -1,0 +1,560 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ConceptMap xmlns="http://hl7.org/fhir">
+  <id value="104"/> 
+  <url value="http://hl7.org/fhir/ConceptMap/104"/> 
+  <identifier> 
+    <system value="urn:ietf:rfc:3986"/> 
+    <value value="urn:uuid:53cd62ee-033e-414c-9f58-3ca97b5ffc3b"/> 
+  </identifier> 
+  <version value="4.0.1"/> 
+  <name value="ELGA_Fachaerzte-FHIR-valueset-performer-role"/> 
+  <title value="ELGA-CDA/FHIR Fachaerzte Mapping"/> 
+  <status value="draft"/> 
+  <experimental value="true"/> 
+  <date value="2012-06-13"/> 
+  <publisher value="BlackTusk GmbH"/> 
+  <contact> 
+    <name value="Maximilian Ossana"/> 
+    <telecom> 
+      <system value="url"/> 
+      <value value="http://blacktusk.eu"/> 
+    </telecom> 
+  </contact> 
+  <description value="A mapping between the ELGA-CDA and FHIR Fachaerzte Code systems"/> 
+  <useContext> 
+    <code> 
+      <system value="http://terminology.hl7.org/CodeSystem/usage-context-type"/> 
+      <code value="venue"/> 
+    </code> 
+    <valueCodeableConcept> 
+      <text value="for ELGA-CDA Usage"/> 
+    </valueCodeableConcept> 
+  </useContext> 
+  <jurisdiction> 
+    <coding> 
+      <system value="urn:iso:std:iso:3166"/> 
+      <code value="de-AT"/> 
+    </coding> 
+  </jurisdiction> 
+  <purpose value="To help implementers map from ELGA-CDA to FHIR"/> 
+  <copyright value="Creative Commons 0"/> 
+  <sourceUri value="https://www.hl7.org/fhir/cda/ELGA_Fachaerzte"/> 
+  <targetUri value="https://www.hl7.org/fhir/valueset-performer-role"/> 
+  <group> 
+    <source value="https://www.hl7.org/fhir/cda/ELGA_Fachaerzte"/> 
+    <target value="https://www.hl7.org/fhir/valueset-performer-role"/> 
+    <element> 
+      <code value="102"/>
+      <display value="Fachärztin/Facharzt für Anästhesiologie und Intensivmedizin"/> 
+      <target> 
+        <code value="88189002"/> 
+        <display value="Anesthesiologist"/> 
+        <equivalence value="narrower"/>
+		<comment value="doctor, not nurse - auch Intensivmedizin?"/>
+      </target> 
+    </element> 
+    <element> 
+      <code value="103"/>
+      <display value="Fachärztin/Facharzt für Anatomie"/> 
+      <target> 
+        <code value="83273008"/> 
+        <display value="Anatomic pathologist"/> 
+        <equivalence value="equivalent"/>
+      </target> 
+    </element>
+	<element> 
+      <code value="104"/> 
+      <display value="Fachärztin/Facharzt für Arbeitsmedizin"/> 
+      <target> 
+        <code value="682131381000087105"/> 
+        <display value="Occupational medicine specialist"/> 
+        <equivalence value="equivalent"/>
+      </target> 
+    </element>
+	<element> 
+      <code value="105"/>
+      <display value=" Fachärztin/Facharzt für Augenheilkunde und Optometrie"/> 
+      <target> 
+        <code value="28229004"/> 
+        <display value="Optometrist"/> 
+        <equivalence value="narrower"/>
+		<comment value="auch Augenheilkunde?"/>
+      </target> 
+    </element>
+	<element> 
+      <code value="106"/>
+      <display value="Fachärztin/Facharzt für Blutgruppenserologie und Transfusionsmedizin"/> 
+      <target> 
+        <code value="309341008"/> 
+        <display value="Blood transfusion doctor"/> 
+        <equivalence value="narrower"/>
+		<comment value="auch Blutgruppenserologie?"/>
+      </target> 
+    </element>
+	<element> 
+      <code value="107"/>
+      <display value="Fachärztin/Facharzt für Chirurgie"/> 
+      <target> 
+        <code value="78703002"/> 
+        <display value="General surgeon"/> 
+        <equivalence value="equivalent"/>
+      </target> 
+    </element>
+	<element> 
+      <code value="108"/>
+      <display value="Fachärztin/Facharzt für Frauenheilkunde und Geburtshilfe"/> 
+      <target> 
+        <code value="309367003"/> 
+        <display value="Obstetrician and gynecologist"/> 
+        <equivalence value="equivalent"/>
+      </target> 
+    </element>
+	<element> 
+      <code value="109"/>
+      <display value="Fachärztin/Facharzt für Gerichtsmedizin"/> 
+      <target> 
+        <code value="310193003"/> 
+        <display value="Coroner"/> 
+        <equivalence value="equivalent"/>
+      </target>
+    </element>
+	<element> 
+      <code value="110"/>
+      <display value="Fachärztin/Facharzt für Hals-, Nasen- und Ohrenkrankheiten"/> 
+      <target> 
+        <code value="61345009"/> 
+        <display value="Otorhinolaryngologist"/> 
+        <equivalence value="equivalent"/>
+      </target> 
+    </element>
+	<element> 
+      <code value="111"/>
+      <display value="Fachärztin/Facharzt für Haut- und Geschlechtskrankheiten"/> 
+      <target> 
+        <code value="18803008"/> 
+        <display value="Dermatologist"/> 
+        <equivalence value="narrower"/>
+		<comment value="auch für Geschlechtskrankheiten zuständig?"/>
+      </target> 
+    </element>
+	<element> 
+      <code value="112"/>
+      <display value="Fachärztin/Facharzt für Herzchirurgie"/> 
+      <target> 
+        <code value="309371000"/> 
+        <display value="Cardiac surgeon"/> 
+        <equivalence value="equivalent"/>
+		<comment value="alternativ auch cardiothoracic surgeon möglich"/>
+      </target> 
+    </element>
+	<element> 
+      <code value="113"/>
+      <display value="Fachärztin/Facharzt für Histologie und Embryologie"/> 
+      <target> 
+        <code value="309342001"/> 
+        <display value="Histopathologist"/> 
+        <equivalence value="narrower"/>
+		<comment value="auch für Embryologie zuständig?"/>
+      </target> 
+    </element>
+	<element> 
+      <code value="114"/>
+      <display value="Fachärztin/Facharzt für Hygiene und Mikrobiologie"/> 
+      <target> 
+        <code value="14698002"/> 
+        <display value="Medical microbiologist"/> 
+        <equivalence value="narrower"/>
+		<comment value="auch für Hygiene zuständig?"/>
+      </target>
+    </element>
+	<element> 
+      <code value="115"/>
+      <display value="Fachärztin/Facharzt für Immunologie"/> 
+      <target> 
+        <code value="63098009"/> 
+        <display value="Clinical immunologist"/> 
+        <equivalence value="equivalent"/>
+		<comment value="alternativ auch Immunopathologist 310171008 möglich"/>
+      </target> 
+    </element>
+	<element> 
+      <code value="116"/>
+      <display value="Fachärztin/Facharzt für Innere Medizin"/> 
+      <target> 
+        <code value="39677007"/> 
+        <display value="Internal medicine specialist"/> 
+        <equivalence value="equivalent"/>
+      </target> 
+    </element>
+	<element> 
+      <code value="117"/>
+      <display value="Fachärztin/Facharzt für Kinder- und Jugendchirurgie"/> 
+      <target> 
+        <code value="309383003"/> 
+        <display value="Pediatric surgeon"/> 
+        <equivalence value="equivalent"/>
+		<comment value="auch für Jugendchirurgie zuständig?"/>
+      </target>
+    </element>
+	<element> 
+      <code value="118"/>
+      <display value="Fachärztin/Facharzt für Kinder- und Jugendheilkunde"/> 
+      <target> 
+        <code value="82296001"/> 
+        <display value="Pediatrician"/> 
+        <equivalence value="equivalent"/>
+		<comment value="auch für Jugendheilkunde?"/>
+      </target> 
+    </element>
+	<element> 
+      <code value="119"/>
+      <display value="Fachärztin/Facharzt für Kinder- und Jugendpsychiatrie"/> 
+      <target> 
+        <code value="309361002"/> 
+        <display value="Child and adolescent psychiatrist"/> 
+        <equivalence value="equivalent"/>
+      </target> 
+    </element>
+	<element> 
+      <code value="120"/>
+      <display value="Fachärztin/Facharzt für Lungenkrankheiten"/> 
+      <target> 
+        <code value="41672002"/> 
+        <display value="Respiratory physician"/> 
+        <equivalence value="equivalent"/>
+      </target> 
+    </element>
+	<element> 
+      <code value="121"/>
+      <display value="Fachärztin/Facharzt für Medizinische Biologie"/> 
+      <target> 
+        <code value="14698002"/> 
+        <display value="Medical microbiologist"/> 
+        <equivalence value="equivalent"/>
+		<comment value="biologist == microbiologist?"/>
+      </target> 
+    </element>
+	<element> 
+      <code value="122"/>
+      <display value="Fachärztin/Facharzt für Medizinische Biophysik"/> 
+      <target> 
+        <code value="24430003"/> 
+        <display value="Physical medicine specialist"/> 
+        <equivalence value="equivalent"/>
+		<comment value="korrekt?"/>
+      </target> 
+    </element>
+	<element> 
+      <code value="123"/>
+      <display value="Fachärztin/Facharzt für Medizinische Genetik"/> 
+      <target> 
+        <code value="159141008"/> 
+        <display value="Geneticist"/> 
+        <equivalence value="equivalent"/>
+      </target> 
+    </element>
+	<element> 
+      <code value="124"/>
+      <display value="Fachärztin/Facharzt für Medizinische und Chemische Labordiagnostik"/> 
+      <target> 
+        <code value="61246008"/> 
+        <display value="Laboratory medicine specialist"/> 
+        <equivalence value="equivalent"/>
+		<comment value="auch chemische Labordiagnostik enthalten?"/>
+      </target> 
+    </element>
+	<element> 
+      <code value="125"/>
+      <display value="Fachärztin/Facharzt für Medizinische Leistungsphysiologie"/> 
+      <target> 
+        <code value="309348002"/> 
+        <display value="Clinical physiologist"/> 
+        <equivalence value="equivalent"/>
+		<comment value="auch Leistungsphysiologie?"/>
+      </target> 
+    </element>
+	<element> 
+      <code value="126"/>
+      <display value="Fachärztin/Facharzt für Mikrobiologisch-Serologische Labordiagnostik"/> 
+      <target> 
+        <code value="18850004"/> 
+        <display value="Laboratory hematologist"/> 
+        <equivalence value="equivalent"/>
+		<comment value="korrekt?"/>
+      </target> 
+    </element>
+	<element> 
+      <code value="127"/>
+      <display value="Fachärztin/Facharzt für Mund-, Kiefer- und Gesichtschirurgie"/> 
+      <target> 
+        <code value="49993003"/> 
+        <display value="Maxillofacial surgeon"/> 
+        <equivalence value="equivalent"/>
+      </target> 
+    </element>
+	<element> 
+      <code value="128"/>
+      <display value="Fachärztin/Facharzt für Neurobiologie"/> 
+      <target> 
+        <code value="??"/> 
+        <display value="??"/> 
+        <equivalence value="disjoint"/>
+		<comment value="in SNOMED-CT International Edition kein Neurobiologist vorhanden"/>
+      </target> 
+    </element>
+	<element> 
+      <code value="129"/>
+      <display value="Fachärztin/Facharzt für Neurochirurgie"/> 
+      <target> 
+        <code value="45544007"/> 
+        <display value="Neurosurgeon"/> 
+        <equivalence value="equivalent"/>
+      </target> 
+    </element>
+	<element> 
+      <code value="130"/>
+      <display value="Fachärztin/Facharzt für Neurologie"/> 
+      <target> 
+        <code value="56397003"/> 
+        <display value="Neurologist"/> 
+        <equivalence value="equivalent"/>
+      </target> 
+    </element>
+	<element> 
+      <code value="131"/>
+      <display value="Fachärztin/Facharzt für Neurologie und Psychiatrie"/> 
+      <target> 
+        <code value="21450003"/> 
+        <display value="Neuropsychiatrist"/> 
+        <equivalence value="equivalent"/>
+		<comment value="auch Neurologie?"/>
+      </target> 
+    </element>
+	<element> 
+      <code value="132"/>
+      <display value="Fachärztin/Facharzt für Neuropathologie"/> 
+      <target> 
+        <code value="11661002"/> 
+        <display value="Neuropathologist"/> 
+        <equivalence value="equivalent"/>
+      </target> 
+    </element>
+	<element> 
+      <code value="133"/>
+      <display value="Fachärztin/Facharzt für Nuklearmedizin"/> 
+      <target> 
+        <code value="80933006"/> 
+        <display value="Nuclear medicine physician"/> 
+        <equivalence value="equivalent"/>
+      </target> 
+    </element>
+	<element> 
+      <code value="134"/>
+      <display value="Fachärztin/Facharzt für Orthopädie und Orthopädische Chirurgie"/> 
+      <target> 
+        <code value="22731001"/> 
+        <display value="Orthopedic surgeon"/> 
+        <equivalence value="narrower"/>
+		<comment value="auch Orthopädie enthalten?"/>
+      </target> 
+    </element>
+	<element> 
+      <code value="135"/>
+      <display value="Fachärztin/Facharzt für Pathologie"/> 
+      <target> 
+        <code value="61207006"/> 
+        <display value="Medical pathologist"/> 
+        <equivalence value="equivalent"/>
+      </target> 
+    </element>
+	<element> 
+      <code value="136"/>
+      <display value="Fachärztin/Facharzt für Pathophysiologie"/> 
+      <target> 
+        <code value="??"/> 
+        <display value="??"/> 
+        <equivalence value="disjoint"/>
+		<comment value="in SNOMED-CT International Edition kein Patophysiologist vorhanden"/>
+      </target> 
+    </element>
+	<element> 
+      <code value="137"/>
+      <display value="Fachärztin/Facharzt für Pharmakologie und Toxikologie"/> 
+      <target> 
+        <code value="310173006"/> 
+        <display value="Clinical pharmacologist"/> 
+        <equivalence value="narrower"/>
+		<comment value="auch Toxikologie?"/>
+      </target>
+    </element>
+	<element> 
+      <code value="138"/>
+      <display value="Fachärztin/Facharzt für Physikalische Medizin und Allgemeine Rehabilitation"/> 
+      <target> 
+        <code value="309360001"/> 
+        <display value="Rehabilitation physician"/> 
+        <equivalence value="narrower"/>
+		<comment value="auch physikalische Medizin?"/>
+      </target> 
+    </element>
+	<element> 
+      <code value="139"/>
+      <display value="Fachärztin/Facharzt für Physiologie"/> 
+      <target> 
+        <code value="309349005"/> 
+        <display value="Clinical physiologist"/> 
+        <equivalence value="equivalent"/>
+      </target> 
+    </element>
+	<element> 
+      <code value="140"/>
+      <display value="Fachärztin/Facharzt für Plastische, Ästhetische und Rekonstruktive Chirurgie"/> 
+      <target> 
+        <code value="8724009"/> 
+        <display value="Plastic surgeon"/> 
+        <equivalence value="equivalent"/>
+		<comment value="auch ästhetische und rekonstruktive Chirurgie?"/>
+      </target> 
+    </element>
+	<element> 
+      <code value="141"/>
+      <display value="Fachärztin/Facharzt für Psychiatrie"/> 
+      <target> 
+        <code value="80584001"/> 
+        <display value="Psychiatrist"/> 
+        <equivalence value="equivalent"/>
+		<comment value="auch forensic psychiatrist, liaison psychiatrist, psychiatrist for mental handicap, rehabilitation psychiatrist möglich"/>
+      </target> 
+    </element>
+	<element> 
+      <code value="142"/>
+      <display value="Fachärztin/Facharzt für Psychiatrie und Neurologie"/> 
+      <target> 
+        <code value="21450003"/> 
+        <display value="Neuropsychiatrist"/> 
+        <equivalence value="equivalent"/>
+      </target> 
+    </element>
+	<element> 
+      <code value="143"/>
+      <display value="Fachärztin/Facharzt für Psychiatrie und Psychotherapeutische Medizin"/> 
+      <target> 
+        <code value="224588003"/> 
+        <display value="Psychotherapist"/> 
+        <equivalence value="narrower"/>
+		<comment value="auch Psychiatrie?"/>
+      </target> 
+    </element>
+	<element> 
+      <code value="144"/>
+      <display value="Fachärztin/Facharzt für Radiologie"/> 
+      <target> 
+        <code value="66862007"/> 
+        <display value="Radiologist"/> 
+        <equivalence value="equivalent"/>
+		<comment value="auch disgnostic/interventional/pediatric radiologist, neuroradiologist möglich"/>
+      </target> 
+    </element>
+	<element> 
+      <code value="145"/>
+      <display value="Fachärztin/Facharzt für Sozialmedizin"/> 
+      <target> 
+        <code value="??"/> 
+        <display value="??"/> 
+        <equivalence value="disjoint"/>
+		<comment value="in SNOMED-CT International Edition kein Social medicine specialist o.ä. vorhanden"/>
+      </target> 
+    </element>
+	<element> 
+      <code value="146"/>
+      <display value="Fachärztin/Facharzt für Spezifische Prophylaxe und Tropenmedizin"/> 
+      <target> 
+        <code value="766788081000087100"/> 
+        <display value="Travel medicine specialist"/> 
+        <equivalence value="equivalent"/>
+		<comment value="auch spezifische Prophylaxe?"/>
+      </target> 
+    </element>
+	<element> 
+      <code value="147"/>
+      <display value="Fachärztin/Facharzt für Strahlentherapie-Radioonkologie"/> 
+      <target> 
+        <code value="3430008"/> 
+        <display value="Radiation therapist"/> 
+        <equivalence value="narrower"/>
+		<comment value="auch Radioonkologie?"/>
+      </target> 
+    </element>
+	<element> 
+      <code value="148"/>
+      <display value="Fachärztin/Facharzt für Theoretische Sonderfächer"/> 
+      <target> 
+        <code value="??"/> 
+        <display value="??"/> 
+        <equivalence value="disjoint"/>
+		<comment value="in SNOMED-CT International Edition nicht vorhanden"/>
+      </target> 
+    </element>
+	<element> 
+      <code value="149"/>
+      <display value="Fachärztin/Facharzt für Thoraxchirurgie"/> 
+      <target> 
+        <code value="22983004"/> 
+        <display value="Thoracic surgeon"/> 
+        <equivalence value="equivalent"/>
+      </target> 
+    </element>
+	<element> 
+      <code value="150"/>
+      <display value="Fachärztin/Facharzt für Tumorbiologie"/> 
+      <target> 
+        <code value="??"/> 
+        <display value="??"/> 
+        <equivalence value="disjoint"/>
+		<comment value="in SNOMED-CT International Edition kein Tumorbiologe vorhanden, evtl. Onkologe?"/>
+      </target> 
+    </element>
+	<element> 
+      <code value="151"/>
+      <display value="Fachärztin/Facharzt für Unfallchirurgie"/> 
+      <target> 
+        <code value="309386006"/> 
+        <display value="Trauma surgeon"/> 
+        <equivalence value="equivalent"/>
+      </target> 
+    </element>
+	<element> 
+      <code value="152"/>
+      <display value="Fachärztin/Facharzt für Urologie"/> 
+      <target> 
+        <code value="24590004"/> 
+        <display value="Urologist"/> 
+        <equivalence value="equivalent"/>
+      </target> 
+    </element>
+	<element> 
+      <code value="153"/>
+      <display value="Fachärztin/Facharzt für Virologie"/> 
+      <target> 
+        <code value="76899008"/> 
+        <display value="Infectious disease specialist"/> 
+        <equivalence value="equivalent"/>
+		<comment value="korrekt?"/>
+      </target> 
+    </element>
+	<element> 
+      <code value="154"/>
+      <display value="Fachärztin/Facharzt für Zahn-, Mund- und Kieferheilkunde"/> 
+      <target> 
+        <code value="66476003"/> 
+        <display value="Oral pathologist"/> 
+        <equivalence value="narrower"/>
+		<comment value="auch Specialized dentist (21365001), Orthodontist (37504001) möglich"/>
+      </target>
+    </element>
+	<unmapped>
+		<mode value="provided"/>
+	</unmapped>
+  </group> 
+</ConceptMap>

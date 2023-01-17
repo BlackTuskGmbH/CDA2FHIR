@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ConceptMap xmlns="http://hl7.org/fhir">
+  <id value="101"/> 
+  <url value="http://hl7.org/fhir/ConceptMap/101"/> 
+  <identifier> 
+    <system value="urn:ietf:rfc:3986"/> 
+    <value value="urn:uuid:53cd62ee-033e-414c-9f58-3ca97b5ffc3b"/> 
+  </identifier> 
+  <version value="4.0.1"/> 
+  <name value="ELGA_AddressUse-FHIR-Address-Use"/> 
+  <title value="ELGA-CDA/FHIR Address Use Mapping"/> 
+  <status value="draft"/> 
+  <experimental value="true"/> 
+  <date value="2012-06-13"/> 
+  <publisher value="BlackTusk GmbH"/> 
+  <contact> 
+    <name value="Maximilian Ossana"/> 
+    <telecom> 
+      <system value="url"/> 
+      <value value="http://blacktusk.eu"/> 
+    </telecom> 
+  </contact> 
+  <description value="A mapping between the ELGA-CDA and FHIR AddressUse Code systems"/> 
+  <useContext> 
+    <code> 
+      <system value="http://terminology.hl7.org/CodeSystem/usage-context-type"/> 
+      <code value="venue"/> 
+    </code> 
+    <valueCodeableConcept> 
+      <text value="for ELGA-CDA Usage"/> 
+    </valueCodeableConcept> 
+  </useContext> 
+  <jurisdiction> 
+    <coding> 
+      <system value="urn:iso:std:iso:3166"/> 
+      <code value="de-AT"/> 
+    </coding> 
+  </jurisdiction> 
+  <purpose value="To help implementers map from ELGA-CDA to FHIR"/> 
+  <copyright value="Creative Commons 0"/> 
+  <sourceUri value="https://www.hl7.org/fhir/cda/ELGA_AddressUse"/> 
+  <targetUri value="http://hl7.org/fhir/ValueSet/address-use"/> 
+  <group> 
+    <source value="https://www.hl7.org/fhir/cda/ELGA_AddressUse"/> 
+    <target value="http://hl7.org/fhir/ValueSet/address-use"/> 
+    <element> 
+      <code value="H"/>
+      <display value="home"/> 
+      <target> 
+        <code value="home"/> 
+        <display value="home"/> 
+        <equivalence value="equivalent"/> 
+      </target> 
+    </element> 
+    <element> 
+      <code value="HP"/> 
+      <display value="primary home"/> 
+      <target> 
+        <code value="home"/> 
+        <display value="home"/> 
+        <equivalence value="wider"/>
+      </target> 
+    </element>
+	<element> 
+      <code value="HV"/> 
+      <display value="vacation home"/> 
+      <target> 
+        <code value="home"/> 
+        <display value="home"/> 
+        <equivalence value="wider"/>
+      </target> 
+    </element>
+	<element> 
+      <code value="WP"/> 
+      <display value="work place"/> 
+      <target> 
+        <code value="work"/> 
+        <display value="work"/> 
+        <equivalence value="equivalent"/>
+      </target> 
+    </element> 
+	<element> 
+      <code value="DIR"/> 
+      <display value="direct"/> 
+      <target> 
+        <code value="work"/> 
+        <display value="work"/> 
+        <equivalence value="inexact"/>
+		<comment value="direct contact is assumed to be work-related"/>
+      </target> 
+    </element> 
+	<element> 
+      <code value="PUB"/> 
+      <display value="public"/> 
+      <target> 
+        <code value="work"/> 
+        <display value="work"/> 
+        <equivalence value="inexact"/>
+		<comment value="public contact is assumed to be work-related"/>
+      </target> 
+    </element> 
+    <element> 
+      <code value="TMP"/> 
+      <display value="temporary address"/> 
+      <target> 
+        <code value="temp"/> 
+        <display value="temporary"/> 
+        <equivalence value="equivalent"/> 
+      </target> 
+    </element> 
+    <element> 
+      <code value="PHYS"/> 
+      <display value="physical visit address"/> 
+      <target> 
+        <code value="temp"/>
+        <display value="temporary"/> 
+        <equivalence value="wider"/>
+      </target> 
+    </element> 
+	<element> 
+      <code value="PST"/> 
+      <display value="billing address"/> 
+      <target> 
+        <code value="billing"/> 
+        <display value="billing address"/> 
+        <equivalence value="equivalent"/>
+      </target> 
+    </element>
+	<unmapped>
+		<mode value="provided"/>
+	</unmapped>
+  </group> 
+</ConceptMap>

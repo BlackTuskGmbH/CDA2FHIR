@@ -1,0 +1,43 @@
+map "http://hl7.org/fhir/cda2fhir/StructureMap/CDA2FHIROrganizationTest" = "TransformationCDA2FHIROrganizationTest"
+
+// Adapted from:
+// https://github.com/HL7/ccda-to-fhir/tree/master/mappings
+// https://github.com/hl7ch/cda-fhir-maps/tree/master/input/maps
+
+// CDA: https://elga.art-decor.org/elga-html-20200429T211548/project.html
+// FHIR: http://hl7.org/fhir/R4/
+
+uses "http://hl7.org/fhir/cda/StructureDefinition/ClinicalDocument" alias CD as source
+uses "http://hl7.org/fhir/StructureDefinition/Organization" as target
+
+group OrganizationTest(source cda:CD, target organization:Organization){
+    cda.author as cdaAuthor then {
+        cdaAuthor.assignedAuthor as cdaAuthorAss then {
+            cdaAuthorAss.representedOrganization as cdaAuthorAssRepOrg then {
+                cdaAuthorAssRepOrg.name as repOrgName -> organization.name = create('string') as value then ONstring(repOrgName,value) "repOrgNameValue";
+            } "repOrg";
+        } "assAuthor";
+    } "author";
+}
+
+// String
+// source: https://art-decor.org/mediawiki/index.php?title=DTr1_ST
+// target: https://www.hl7.org/fhir/datatypes.html#string
+group STstring(source src : ST, target tgt : string) extends Any <<types>> {
+  src as v -> tgt.value = (v.dataString) "stringvalue";
+  //src as v -> tgt.value = cast(v, 'string') "stringvalue";
+}
+
+// derived from STstring
+group ONstring(source src : ON, target tgt : string) extends STstring <<types>> {
+}
+
+// NullFlavour
+group Any(source src, target tgt) {
+  src.nullFlavor as nullFlavor -> tgt.extension as ext then {
+    nullFlavor -> ext.url = 'http://hl7.org/fhir/StructureDefinition/iso21090-nullFlavor' "url";
+    nullFlavor -> ext.value = create('code') as valueCode then {
+      nullFlavor.value as v -> valueCode.value = v "value";
+    } "valueCode";
+  } "extension";
+}
